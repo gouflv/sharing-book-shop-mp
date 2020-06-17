@@ -1,7 +1,7 @@
 @import "theme/var";
 
 view {
-  font-size: $font-size-base;
+  box-sizing: border-box;
 }
 
 image {
@@ -47,12 +47,12 @@ image {
 }
 
 .page-space-wing {
-  margin-right: 30px;
-  margin-left: 30px;
+  padding-right: 30px;
+  padding-left: 30px;
 }
 
 .page-space-around {
-  margin: 30px;
+  padding: 30px;
 }
 
 .tag {

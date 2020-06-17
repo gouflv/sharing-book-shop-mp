@@ -1,0 +1,51 @@
+@import "../../../app";
+
+.subject-card {
+  margin-bottom: 20px;
+  width: 330px;
+
+  .thumb {
+    position: relative;
+    margin-bottom: 10px;
+    border-radius: $border-radius;
+    overflow: hidden;
+
+    image {
+      width: 330px;
+      height: 184px;
+    }
+
+    .mask {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0) 100%);
+    }
+
+    .tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .plays {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      color: #fff;
+      font-size: $font-size-xsmall;
+    }
+  }
+
+  .title {
+    margin-bottom: 6px;
+    font-size: $font-size-base + 2;
+    line-height: 1.4;
+  }
+
+  .footer {
+    font-size: $font-size-small;
+  }
+}

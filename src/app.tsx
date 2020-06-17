@@ -26,8 +26,9 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/user-bind-phone/index',
       'pages/home/index',
+      'pages/user-bind-phone/index',
+      'pages/subject/index',
       'pages/index/index'
     ],
     window: {
