@@ -2,10 +2,10 @@
 
 .page-subject {
   .tabs-container {
-    height: 94px;
-    overflow: hidden;
     display: flex;
     align-items: flex-end;
+    height: 94px;
+    overflow: hidden;
 
     image {
       width: 750px;
@@ -18,34 +18,36 @@
     flex-wrap: nowrap;
     padding-left: 30px;
     overflow-x: auto;
+
     .tab-item {
       position: relative;
-      flex: auto;
       display: flex;
+      flex: auto;
       align-items: flex-end;
       height: 64px;
       padding-bottom: 12px;
       margin-right: 50px;
-      white-space: nowrap;
-      color: rgba(#fff, 0.9);
       font-size: $font-size-base - 2;
+      color: rgba(#fff, 0.9);
+      white-space: nowrap;
 
       &::after {
-        display: none;
         position: absolute;
         bottom: 4px;
         left: 50%;
-        transform: translateX(-50%);
+        display: none;
         width: 1.8em;
         height: 4px;
-        border-radius: 4px;
-        background-color: #fff;
         content: '';
+        background-color: #fff;
+        border-radius: 4px;
+        transform: translateX(-50%);
       }
 
       &.active {
         font-size: $font-size-large;
         color: #fff;
+
         &::after {
           display: block;
         }
@@ -57,6 +59,7 @@
     display: flex;
     flex-wrap: wrap;
     margin-left: -30px;
+
     subject-card {
       flex: 1 1 calc(50% - 30px);
       margin-left: 30px;

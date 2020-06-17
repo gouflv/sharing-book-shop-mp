@@ -1,14 +1,14 @@
 @import "../../../app";
 
 .subject-card {
-  margin-bottom: 20px;
   width: 330px;
+  margin-bottom: 20px;
 
   .thumb {
     position: relative;
     margin-bottom: 10px;
-    border-radius: $border-radius;
     overflow: hidden;
+    border-radius: $border-radius;
 
     image {
       width: 330px;
@@ -21,7 +21,7 @@
       right: 0;
       bottom: 0;
       left: 0;
-      background: linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0) 100%);
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 30%, rgba(0, 0, 0, 0) 100%);
     }
 
     .tag {
@@ -32,10 +32,10 @@
 
     .plays {
       position: absolute;
-      left: 16px;
       bottom: 16px;
-      color: #fff;
+      left: 16px;
       font-size: $font-size-xsmall;
+      color: #fff;
     }
   }
 
