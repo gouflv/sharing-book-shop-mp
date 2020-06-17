@@ -2,24 +2,27 @@
 
 .page-header {
   position: fixed;
-  width: 100vw;
   top: 0;
   left: 0;
   z-index: 100;
+  width: 100vw;
   background-position: center top;
   background-size: 100%;
 
   .content {
     position: relative;
-    padding: 0 30px;
     display: flex;
     align-items: center;
+    padding: 0 30px;
   }
 
   .left {
+    display: flex;
     flex: 0 0 44px;
+    align-items: center;
     height: 44px;
     margin-right: 10px;
+
     .back {
       width: 14px;
       height: 24px;
@@ -28,9 +31,9 @@
 
   .title {
     max-width: 60vw;
-    color: #fff;
     font-size: $font-size-large;
     font-weight: bold;
+    color: #fff;
   }
 }
 

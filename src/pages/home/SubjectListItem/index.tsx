@@ -1,5 +1,5 @@
 import './index.scss'
-import { FC } from '@tarojs/taro'
+import Taro, { FC } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 
 export const SubjectListItem: FC = props => {

@@ -1,0 +1,29 @@
+@import "../../app";
+
+.form {
+  padding-top: 40px;
+
+  .form-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 2px solid $border-color;
+    border-radius: $border-radius;
+
+    input {
+      flex: auto;
+      height: 86px;
+      padding: 0 32px;
+    }
+
+    .append {
+      margin-right: 32px;
+      color: rgba($blue, 0.8);
+    }
+  }
+
+  .btn-primary {
+    margin-top: 40px;
+  }
+}

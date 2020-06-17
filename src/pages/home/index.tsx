@@ -1,5 +1,5 @@
 import './index.scss'
-import { FC } from '@tarojs/taro'
+import Taro, { FC } from '@tarojs/taro'
 import { View, Image, Swiper, SwiperItem } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { useHeaderSize } from '../../hooks/useHeaderSize'

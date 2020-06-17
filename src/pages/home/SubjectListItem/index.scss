@@ -2,7 +2,7 @@
 
 .subject-list-item {
   margin-bottom: 16px;
-  border-radius: 6px;
+  border-radius: $border-radius;
   box-shadow: 0 4px 16px rgba(#000, 0.1);
 
   .main {
@@ -10,9 +10,9 @@
   }
 
   .thumb {
-    margin-right: 16px;
     width: 226px;
     height: 126px;
+    margin-right: 16px;
   }
 
   .title {
