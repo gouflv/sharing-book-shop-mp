@@ -1,0 +1,39 @@
+@import "../../app.scss";
+
+.page-header {
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-position: center top;
+  background-size: 100%;
+
+  .content {
+    position: relative;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+  }
+
+  .left {
+    flex: 0 0 44px;
+    height: 44px;
+    margin-right: 10px;
+    .back {
+      width: 14px;
+      height: 24px;
+    }
+  }
+
+  .title {
+    max-width: 60vw;
+    color: #fff;
+    font-size: $font-size-large;
+    font-weight: bold;
+  }
+}
+
+.page-header-wrapper {
+  position: relative;
+}

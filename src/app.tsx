@@ -4,7 +4,7 @@ import Index from './pages/index'
 
 import counterStore from './store/counter'
 
-import './app.less'
+import './app.scss'
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -28,9 +28,10 @@ class App extends Component {
     pages: ['pages/home/index', 'pages/index/index'],
     window: {
       backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
+      navigationBarBackgroundColor: '#1989ff',
       navigationBarTitleText: '共享图书',
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: 'white',
+      navigationStyle: 'custom'
     }
   }
 

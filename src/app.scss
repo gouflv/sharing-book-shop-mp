@@ -1,0 +1,65 @@
+@import "theme/var";
+
+view {
+  font-size: $font-size-base;
+}
+
+image {
+  display: block;
+}
+
+.d-flex {
+  display: flex;
+}
+.flex-fill {
+  flex: auto;
+}
+
+.primary {
+  color: $blue;
+}
+
+.danger {
+  color: $red;
+}
+
+.success {
+  color: $green;
+}
+
+.text-second {
+  color: $text-gray;
+}
+
+.with-image-bg {
+  position: relative;
+  .bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.page-space-wing {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.tag {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 4px 8px;
+  font-size: $font-size-xsmall;
+  border: 1px solid $blue;
+  border-radius: 6px;
+  background-color: #fff;
+  color: $blue;
+  &--primary {
+    background-color: $blue;
+    color: #fff;
+  }
+}

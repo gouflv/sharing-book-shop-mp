@@ -1,0 +1,32 @@
+@import "../../../app.scss";
+
+.subject-list-item {
+  margin-bottom: 16px;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(#000, 0.1);
+
+  .main {
+    padding: 24px 20px;
+  }
+
+  .thumb {
+    margin-right: 16px;
+    width: 226px;
+    height: 126px;
+  }
+
+  .title {
+    margin-bottom: 4px;
+    font-size: $font-size-large;
+  }
+
+  .desc {
+    margin-bottom: 6px;
+    font-size: $font-size-small;
+  }
+
+  .footer {
+    padding: 24px 20px;
+    border-top: 1px solid #f5f7f9;
+  }
+}
