@@ -1,22 +1,14 @@
 @import "../../app";
 
 .page-subject {
-  .tabs-container {
-    display: flex;
-    align-items: flex-end;
-    height: 94px;
-    overflow: hidden;
-
-    image {
-      width: 750px;
-      height: 300px;
-    }
-  }
 
   .tabs {
     display: flex;
+    align-items: flex-end;
     flex-wrap: nowrap;
+    height: 90px;
     padding-left: 30px;
+    padding-right: 30px;
     overflow-x: auto;
 
     .tab-item {
@@ -36,7 +28,7 @@
         bottom: 4px;
         left: 50%;
         display: none;
-        width: 1.8em;
+        width: 1.5em;
         height: 4px;
         content: '';
         background-color: #fff;

@@ -15,7 +15,7 @@ const PageHeader: FC<PageHeaderProps> = props => {
   return (
     <View className={'page-header with-image-bg'}>
       <Image
-        className={'bg'}
+        className='brand-image'
         mode={'aspectFill'}
         src={require('../../assets/home_top_bg.jpg')}
       />

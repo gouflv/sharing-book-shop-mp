@@ -5,6 +5,7 @@ import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { useHeaderSize } from '../../hooks/useHeaderSize'
 import { SubjectListItem } from './SubjectListItem'
 import { Panel } from '../../components/Panel'
+import { PageHeaderExt } from '../../components/PageHeaderExt'
 
 const Page: FC = () => {
   const { statusHeight, headerHeight } = useHeaderSize()
@@ -12,18 +13,10 @@ const Page: FC = () => {
   return (
     <View className={'page-home'}>
       <PageHeaderWrapper title={'共享图书'} hideBackArrow>
-        <View
-          className={'header-extend with-image-bg'}
-          style={{
-            marginTop: `-${150 - statusHeight - headerHeight}px`
-          }}
-        >
-          <Image
-            mode={'aspectFill'}
-            src={require('../../assets/home_top_bg.jpg')}
-            className={'bg'}
-          />
-        </View>
+        <PageHeaderExt
+          absolute
+          height={`${305 / 2 - statusHeight - headerHeight}px`}
+        />
 
         <View className={'page-space-wing'}>
           <Swiper
