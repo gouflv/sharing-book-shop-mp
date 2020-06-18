@@ -13,6 +13,7 @@ const store = {
 class App extends Component {
   config: Config = {
     pages: [
+      'pages/order/index',
       'pages/home/index',
       'pages/subject/index',
       'pages/user-bind-phone/index',

@@ -23,7 +23,8 @@ const PageHeaderExt: FC<{
           : {}),
         ...(props.absolute
           ? {
-              position: 'absolute'
+              position: 'absolute',
+              zIndex: -1
             }
           : {})
       }}

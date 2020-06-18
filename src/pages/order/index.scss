@@ -1,0 +1,87 @@
+@import "../../app";
+
+.page-order {
+  .page-space-wing {
+    padding-top: 10px;
+  }
+
+  .summary {
+    position: relative;
+    display: flex;
+    padding: 20px 30px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+
+    .state {
+      margin-top: 6px;
+      margin-right: 10px;
+
+      image {
+        width: 28px;
+        height: 30px;
+      }
+    }
+
+    .content {
+      flex: auto;
+
+      .title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        font-size: $font-size-base + 2;
+
+        .date {
+          margin-left: 1em;
+          font-size: $font-size-xsmall;
+        }
+      }
+
+      .summary-list {
+        display: flex;
+        flex-wrap: wrap;
+        font-size: $font-size-small;
+
+        .item {
+          flex: 0 0 50%;
+          margin-top: 8px;
+        }
+
+        .num {
+          margin-left: 0.5em;
+        }
+      }
+    }
+
+    .action {
+      font-size: $font-size-small;
+      text-align: right;
+
+      view {
+        margin-top: 4px;
+        margin-right: 4px;
+      }
+
+      button {
+        margin-top: 30px;
+        white-space: nowrap;
+      }
+    }
+
+    .mark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 88px;
+      height: 24px;
+    }
+  }
+
+  .list {
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+  }
+}

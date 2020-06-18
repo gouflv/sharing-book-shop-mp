@@ -1,14 +1,13 @@
 @import "../../app";
 
 .page-subject {
-
   .tabs {
     display: flex;
-    align-items: flex-end;
     flex-wrap: nowrap;
+    align-items: flex-end;
     height: 90px;
-    padding-left: 30px;
     padding-right: 30px;
+    padding-left: 30px;
     overflow-x: auto;
 
     .tab-item {

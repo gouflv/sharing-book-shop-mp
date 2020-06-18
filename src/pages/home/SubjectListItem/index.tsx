@@ -2,7 +2,7 @@ import './index.scss'
 import Taro, { FC } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 
-export const SubjectListItem: FC = props => {
+export const SubjectListItem: FC = () => {
   return (
     <View className='subject-list-item'>
       <View className='d-flex main'>
