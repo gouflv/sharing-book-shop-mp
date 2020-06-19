@@ -1,6 +1,5 @@
 @import "../../../app";
 
-
 .comment-list {
   padding: 30px;
   border-radius: $border-radius;
@@ -14,20 +13,22 @@
   .header {
     .thumb {
       flex: 0 0 72px;
-      margin-right: 20px;
-      margin-top: 4px;
       height: 72px;
+      margin-top: 4px;
+      margin-right: 20px;
       border-radius: 100%;
-
     }
+
     .title {
       margin-bottom: 4px;
       font-size: $font-size-base;
     }
+
     .desc {
       font-size: $font-size-small;
     }
   }
+
   .body {
     padding: 20px 0;
     font-size: $font-size-small;
@@ -40,16 +41,16 @@
   left: 0;
   z-index: 10;
   width: 100vw;
-  padding: 0 30px;
+  padding: 0 30px $safe-area-bottom;
 
   .form {
-    height: 100px;
     display: flex;
     align-items: center;
-    background-color: #fff;
-    box-shadow: 0 4px 20px rgba(#000, 0.2);
-    border-radius: $border-radius * 2;
+    height: 100px;
     overflow: hidden;
+    background-color: #fff;
+    border-radius: $border-radius * 2;
+    box-shadow: 0 4px 20px rgba(#000, 0.2);
   }
 
   input {
@@ -58,6 +59,7 @@
     padding: 0 30px;
     font-size: $font-size-base;
   }
+
   .send {
     display: flex;
     align-items: center;
@@ -67,6 +69,7 @@
     margin-right: 30px;
     background-color: #e2f0ff;
     border-radius: $border-radius * 2;
+
     image {
       width: 31px;
       height: 29px;

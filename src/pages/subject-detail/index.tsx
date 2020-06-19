@@ -1,5 +1,5 @@
 import './index.scss'
-import Taro, { FC, useState } from '@tarojs/taro'
+import Taro, { FC, useState, useEffect } from '@tarojs/taro'
 import { Image, RichText, Video, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import classNames from 'classnames'
@@ -8,8 +8,14 @@ import { CommentList } from './CommentList'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 
 const Page: FC = () => {
-  const [hasVideo] = useState(false)
+  const [hasVideo] = useState(!true)
   const [tab, setTab] = useState(0)
+
+  useEffect(() => {
+    if (!hasVideo) {
+      Taro.pageScrollTo({ scrollTop: 0, duration: 0 })
+    }
+  }, [tab])
 
   const renderTabs = () => {
     return (

@@ -45,6 +45,7 @@
 
     &--header {
       height: 90px;
+
       .tab-item {
         margin-bottom: 2px;
         color: rgba(#fff, 0.9);
@@ -73,14 +74,16 @@
 
       .action {
         flex: 0 0 auto;
+
         .share {
           display: flex;
           align-items: center;
           font-size: $font-size-small + 2;
+
           image {
-            margin-right: 10px;
             width: 30px;
             height: 28px;
+            margin-right: 10px;
           }
         }
       }
@@ -96,11 +99,12 @@
         align-items: center;
         margin-right: 50px;
         font-size: $font-size-small;
+
         image {
-          margin-right: 8px;
-          margin-bottom: 2px;
           width: 28px;
           height: 28px;
+          margin-right: 8px;
+          margin-bottom: 2px;
         }
       }
     }

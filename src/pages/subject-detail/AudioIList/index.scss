@@ -10,24 +10,29 @@
   .header {
     margin-bottom: 20px;
   }
+
   .content {
     padding-bottom: 20px;
   }
+
   .footer {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     padding: 0 20px;
     border-top: 1px solid $border-color;
+
     .btn-play {
-      margin-right: 20px;
       padding: 18px;
+      margin-right: 20px;
+
       image {
         width: 64px;
         height: 64px;
       }
     }
   }
+
   .mark {
     position: absolute;
     top: 10px;
@@ -42,8 +47,10 @@
   bottom: 30px;
   left: 0;
   width: 100vw;
+  padding-bottom: $safe-area-bottom;
+
   button {
-    margin: 0 auto;
     width: 340px;
+    margin: 0 auto;
   }
 }
