@@ -13,9 +13,10 @@ const store = {
 class App extends Component {
   config: Config = {
     pages: [
+      'pages/user/index',
+      'pages/home/index',
       'pages/subject/index',
       'pages/subject-detail/index',
-      'pages/home/index',
       'pages/order/index',
       'pages/user-bind-phone/index',
       'pages/index/index'
@@ -26,6 +27,36 @@ class App extends Component {
       navigationBarTitleText: '共享图书',
       navigationBarTextStyle: 'white',
       navigationStyle: 'custom'
+    },
+    tabBar: {
+      color: '#999999',
+      selectedColor: '#1989ff',
+      list: [
+        {
+          text: '首页',
+          pagePath: 'pages/home/index',
+          iconPath: './assets/ico_home@2x.png',
+          selectedIconPath: './assets/ico_home_pre@2x.png'
+        },
+        {
+          text: '借阅',
+          pagePath: 'pages/order/index',
+          iconPath: './assets/ico_borrow@2x.png',
+          selectedIconPath: './assets/ico_borrow_pre@2x.png'
+        },
+        {
+          text: '课程',
+          pagePath: 'pages/subject/index',
+          iconPath: './assets/ico_course@2x.png',
+          selectedIconPath: './assets/ico_course_pre@2x.png'
+        },
+        {
+          text: '会员',
+          pagePath: 'pages/user/index',
+          iconPath: './assets/ico_vip@2x.png',
+          selectedIconPath: './assets/ico_vip_pre@2x.png'
+        }
+      ]
     }
   }
 
