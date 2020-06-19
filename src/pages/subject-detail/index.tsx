@@ -1,11 +1,14 @@
 import './index.scss'
 import Taro, { FC } from '@tarojs/taro'
-import { View, Video, RichText } from '@tarojs/components'
+import { Image, RichText, Video, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
+import classNames from 'classnames'
+import { AudioList } from './AudioIList'
+import { CommentList } from './CommentList'
 import useState = Taro.useState
 
 const Page: FC = () => {
-  const [tab, setTab] = useState(0)
+  const [tab, setTab] = useState(1)
 
   return (
     <View className='page-subject-detail'>
@@ -19,35 +22,59 @@ const Page: FC = () => {
         </View>
 
         <View className='tabs'>
-          <View className='tab-item active' onClick={() => setTab(0)}>
+          <View
+            className={classNames('tab-item', { active: tab === 0 })}
+            onClick={() => setTab(0)}
+          >
             简介
           </View>
-          <View className='tab-item' onClick={() => setTab(1)}>
+          <View
+            className={classNames('tab-item', { active: tab === 1 })}
+            onClick={() => setTab(1)}
+          >
             配音
           </View>
-          <View className='tab-item' onClick={() => setTab(2)}>
+          <View
+            className={classNames('tab-item', { active: tab === 2 })}
+            onClick={() => setTab(2)}
+          >
             评论
           </View>
         </View>
 
-        <View className='page-space-around subject-summary'>
-          <View className='header'>
-            <View className='title'>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque,
-              ipsa!
+        <View className='page-space-around'>
+          {tab === 0 && (
+            <View className='subject-summary'>
+              <View className='header'>
+                <View className='title'>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Cumque, ipsa!
+                </View>
+                <View className='action text-second'>
+                  <View className='share'>
+                    <Image
+                      src={require('../../assets/course_detail_ico_share@2x.png')}
+                    />
+                    分享
+                  </View>
+                </View>
+              </View>
+              <View className='desc text-second'>
+                <View className='d'>10086</View>
+                <View className='d'>10人配音</View>
+                <View className='d'>10课</View>
+              </View>
+              <View className='content'>
+                <RichText
+                  nodes={`<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, possimus!</p> <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, possimus!</p> <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, possimus!</p> <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, possimus!</p>`}
+                />
+              </View>
             </View>
-            <View className='action text-second'>分享</View>
-          </View>
-          <View className='desc text-second'>
-            <View className='d'>10086</View>
-            <View className='d'>10人配音</View>
-            <View className='d'>10课</View>
-          </View>
-          <View className='content'>
-            <RichText
-              nodes={`<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, possimus!</p> <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, possimus!</p> <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, possimus!</p> <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, possimus!</p>`}
-            />
-          </View>
+          )}
+
+          {tab === 1 && <AudioList />}
+
+          {tab === 2 && <CommentList />}
         </View>
       </PageHeaderWrapper>
     </View>

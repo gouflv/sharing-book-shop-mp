@@ -1,0 +1,75 @@
+@import "../../../app";
+
+
+.comment-list {
+  padding: 30px;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+}
+
+.comment {
+  margin-bottom: 20px;
+  border-bottom: 1px solid $border-color;
+
+  .header {
+    .thumb {
+      flex: 0 0 72px;
+      margin-right: 20px;
+      margin-top: 4px;
+      height: 72px;
+      border-radius: 100%;
+
+    }
+    .title {
+      margin-bottom: 4px;
+      font-size: $font-size-base;
+    }
+    .desc {
+      font-size: $font-size-small;
+    }
+  }
+  .body {
+    padding: 20px 0;
+    font-size: $font-size-small;
+  }
+}
+
+.action-bar {
+  position: fixed;
+  bottom: 30px;
+  left: 0;
+  z-index: 10;
+  width: 100vw;
+  padding: 0 30px;
+
+  .form {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0 4px 20px rgba(#000, 0.2);
+    border-radius: $border-radius * 2;
+    overflow: hidden;
+  }
+
+  input {
+    flex: auto;
+    height: 100px;
+    padding: 0 30px;
+    font-size: $font-size-base;
+  }
+  .send {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    margin-right: 30px;
+    background-color: #e2f0ff;
+    border-radius: $border-radius * 2;
+    image {
+      width: 31px;
+      height: 29px;
+    }
+  }
+}
