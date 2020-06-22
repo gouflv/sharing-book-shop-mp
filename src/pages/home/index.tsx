@@ -1,6 +1,6 @@
 import './index.scss'
 import Taro, { FC } from '@tarojs/taro'
-import { View, Image, Swiper, SwiperItem } from '@tarojs/components'
+import { Image, Swiper, SwiperItem, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { useHeaderSize } from '../../hooks/useHeaderSize'
 import { SubjectListItem } from './SubjectListItem'
@@ -28,14 +28,21 @@ const Page: FC = () => {
             <SwiperItem>
               <Image
                 mode={'aspectFill'}
-                src={'http://placehold.it/690x220'}
+                src={'http://placehold.it/690x220?text=690x220@1'}
                 className={'banner-item'}
               />
             </SwiperItem>
             <SwiperItem>
               <Image
                 mode={'aspectFill'}
-                src={'http://placehold.it/690x220'}
+                src={'http://placehold.it/690x220?text=690x220@2'}
+                className={'banner-item'}
+              />
+            </SwiperItem>
+            <SwiperItem>
+              <Image
+                mode={'aspectFill'}
+                src={'http://placehold.it/690x220?text=690x220@3'}
                 className={'banner-item'}
               />
             </SwiperItem>
