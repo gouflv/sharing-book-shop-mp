@@ -6,6 +6,8 @@ import './index.scss'
 export type PageHeaderProps = {
   title: string
   hideBackArrow?: boolean
+  bg?: string
+  bgHeight?: string
 }
 
 const PageHeader: FC<PageHeaderProps> = props => {
@@ -17,7 +19,8 @@ const PageHeader: FC<PageHeaderProps> = props => {
       <Image
         className='brand-image'
         mode={'aspectFill'}
-        src={require('../../assets/home_top_bg.jpg')}
+        src={props.bg || require('../../assets/home_top_bg.jpg')}
+        style={{ height: props.bgHeight || '305rpx' }}
       />
       <View className='status' style={{ height: `${statusHeight}px` }} />
       <View className='content' style={{ height: `${headerHeight}px` }}>

@@ -4,14 +4,13 @@ import Index from './pages/index'
 
 import './app.scss'
 
-const store = {
-}
+const store = {}
 
 class App extends Component {
   config: Config = {
     pages: [
-      'pages/home/index',
       'pages/user/index',
+      'pages/home/index',
       'pages/subject/index',
       'pages/subject-detail/index',
       'pages/order/index',

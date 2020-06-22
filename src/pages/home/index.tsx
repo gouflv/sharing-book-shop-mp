@@ -24,6 +24,8 @@ const Page: FC = () => {
             indicatorDots
             indicatorColor={'rgba(#fff, 0.5)'}
             indicatorActiveColor={'#fff'}
+            circular
+            autoplay
           >
             <SwiperItem>
               <Image
