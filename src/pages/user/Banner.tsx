@@ -9,10 +9,20 @@ export const Banner: FC = () => {
 
   return (
     <View className='banner-wrapper'>
-      <Swiper className={'banner'} onChange={i => setCurrent(i.detail.current)}>
+      <Swiper
+        className={'swiper'}
+        previousMargin={'70rpx'}
+        nextMargin={'70rpx'}
+        onChange={i => setCurrent(i.detail.current)}
+        circular
+      >
         {items.map((_, i) => (
           <SwiperItem key={i}>
-            <View className='vip-card-wrapper'>
+            <View
+              className={classNames('vip-card-wrapper', {
+                'in-active': i !== current
+              })}
+            >
               {!i && (
                 <View className='vip-card vip-card--dark'>
                   <Image

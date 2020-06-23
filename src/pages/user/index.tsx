@@ -35,79 +35,79 @@ const Page: FC = () => {
             </View>
             <View className='action'>收费规则</View>
           </View>
+        </View>
 
-          <Banner />
+        <Banner />
 
-          <View>
-            <View className='baby-info'>
+        <View className='page-space-wing'>
+          <View className='baby-info'>
+            <Image
+              className='bg'
+              src={require('../../assets/vip_baby_bg.png')}
+              mode={'aspectFill'}
+            />
+            <View className='title'>我的宝宝</View>
+            <View className='desc text-second'>完善宝宝基本信息</View>
+          </View>
+
+          <View className='menu'>
+            <View className='item'>
               <Image
-                className='bg'
-                src={require('../../assets/vip_baby_bg.png')}
-                mode={'aspectFill'}
+                src={require('../../assets/vip_ico_works@2x.png')}
+                mode={'aspectFit'}
               />
-              <View className='title'>我的宝宝</View>
-              <View className='desc text-second'>完善宝宝基本信息</View>
+              <View className='content'>我的作品</View>
+              <Image
+                className='link'
+                src={require('../../assets/vip_ico_arrow@2x.png')}
+              />
             </View>
-
-            <View className='menu'>
-              <View className='item'>
-                <Image
-                  src={require('../../assets/vip_ico_works@2x.png')}
-                  mode={'aspectFit'}
-                />
-                <View className='content'>我的作品</View>
-                <Image
-                  className='link'
-                  src={require('../../assets/vip_ico_arrow@2x.png')}
-                />
+            <View className='item'>
+              <Image
+                src={require('../../assets/vip_ico_borrow@2x.png')}
+                mode={'aspectFit'}
+              />
+              <View className='content'>借阅记录</View>
+              <Image
+                className='link'
+                src={require('../../assets/vip_ico_arrow@2x.png')}
+              />
+            </View>
+            <View className='item'>
+              <Image
+                src={require('../../assets/vip_ico_message@2x.png')}
+                mode={'aspectFit'}
+              />
+              <View className='content'>
+                我的消息
+                <View className='badge'>1</View>
               </View>
-              <View className='item'>
-                <Image
-                  src={require('../../assets/vip_ico_borrow@2x.png')}
-                  mode={'aspectFit'}
-                />
-                <View className='content'>借阅记录</View>
-                <Image
-                  className='link'
-                  src={require('../../assets/vip_ico_arrow@2x.png')}
-                />
-              </View>
-              <View className='item'>
-                <Image
-                  src={require('../../assets/vip_ico_message@2x.png')}
-                  mode={'aspectFit'}
-                />
-                <View className='content'>
-                  我的消息
-                  <View className='badge'>1</View>
-                </View>
-                <Image
-                  className='link'
-                  src={require('../../assets/vip_ico_arrow@2x.png')}
-                />
-              </View>
-              <View className='item'>
-                <Image
-                  src={require('../../assets/vip_ico_pay@2x.png')}
-                  mode={'aspectFit'}
-                />
-                <View className='content'>支付记录</View>
-                <Image
-                  className='link'
-                  src={require('../../assets/vip_ico_arrow@2x.png')}
-                />
-              </View>
-              <View className='item'>
-                <Image
-                  src={require('../../assets/vip_ico_sug@2x.png')}
-                  mode={'aspectFit'}
-                />
-                <View className='content'>意见反馈</View>
-                <Image
-                  className='link'
-                  src={require('../../assets/vip_ico_arrow@2x.png')}
-                />
-              </View>
+              <Image
+                className='link'
+                src={require('../../assets/vip_ico_arrow@2x.png')}
+              />
+            </View>
+            <View className='item'>
+              <Image
+                src={require('../../assets/vip_ico_pay@2x.png')}
+                mode={'aspectFit'}
+              />
+              <View className='content'>支付记录</View>
+              <Image
+                className='link'
+                src={require('../../assets/vip_ico_arrow@2x.png')}
+              />
+            </View>
+            <View className='item'>
+              <Image
+                src={require('../../assets/vip_ico_sug@2x.png')}
+                mode={'aspectFit'}
+              />
+              <View className='content'>意见反馈</View>
+              <Image
+                className='link'
+                src={require('../../assets/vip_ico_arrow@2x.png')}
+              />
             </View>
           </View>
         </View>
