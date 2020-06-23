@@ -1,0 +1,57 @@
+@import "../../theme/var";
+
+.date-filter {
+  position: relative;
+  height: 100px;
+  padding: 0 30px 18px;
+  display: flex;
+  align-items: flex-end;
+  .label {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    .time {
+      margin-right: 20px;
+      width: 32px;
+      height: 32px;
+    }
+    .arrow {
+      margin-left: 20px;
+      width: 9px;
+      height: 14px;
+    }
+  }
+}
+
+.user-order-list {
+  .item {
+    box-shadow: $box-shadow;
+    border-radius: $border-radius;
+    font-size: $font-size-small;
+    margin-bottom: 20px;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    padding: 0 36px;
+    border-bottom: 1px solid $border-color;
+    .title {
+      flex: 1 1 auto;
+    }
+    .link {
+      flex: 0 0 auto;
+    }
+  }
+  .body {
+    display: flex;
+    padding: 20px 36px;
+    .left, .right {
+      flex: 0 0 50%;
+    }
+    .right {
+      padding-left: 80px;
+      border-left: 1px solid $border-color;
+    }
+  }
+}
