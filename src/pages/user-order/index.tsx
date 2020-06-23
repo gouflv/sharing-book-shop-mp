@@ -17,6 +17,7 @@ const Page: FC = () => {
           <View className='date-filter'>
             <Picker
               mode={'date'}
+              fields={'month'}
               value={'2020-09-01'}
               onChange={e => onDateChange(e.detail.value)}
             >
