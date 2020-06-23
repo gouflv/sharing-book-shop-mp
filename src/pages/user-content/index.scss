@@ -1,0 +1,43 @@
+@import "../../theme/var";
+
+.user-content-list {
+  .item {
+    margin-bottom: 20px;
+    box-shadow: $box-shadow;
+    border-radius: $border-radius;
+    padding: 20px;
+    display: flex;
+
+    .thumb {
+      margin-right: 20px;
+      width: 230px;
+      height: 140px;
+      border-radius: $border-radius;
+    }
+
+    .content {
+      flex: auto;
+      display: flex;
+      flex-direction: column;
+
+      .title {
+        font-size: $font-size-base + 2;
+      }
+      .desc {
+        margin-top: auto;
+        font-size: $font-size-small;
+        color: $text-gray;
+
+        .times {
+          display: flex;
+          align-items: center;
+          image {
+            margin-right: 10px;
+            width: 28px;
+            height: 28px;
+          }
+        }
+      }
+    }
+  }
+}
