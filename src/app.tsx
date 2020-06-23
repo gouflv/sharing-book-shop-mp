@@ -9,6 +9,8 @@ const store = {}
 class App extends Component {
   config: Config = {
     pages: [
+      'pages/buy-card/result',
+      'pages/buy-card/index',
       'pages/user/index',
       'pages/home/index',
       'pages/subject/index',

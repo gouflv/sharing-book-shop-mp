@@ -27,8 +27,19 @@
         }
 
         .desc {
+          display: flex;
+          align-items: center;
           font-size: $font-size-base;
+
+          .unbind-phone {
+            margin-left: 10px;
+            padding: 0 16px;
+            border: 1px solid #fff;
+            border-radius: 40px;
+            font-size: $font-size-xsmall;
+          }
         }
+
       }
     }
 
@@ -125,7 +136,7 @@
     transition: transform 300ms ease;
 
     &.in-active {
-      transform: scale(0.9);
+      transform: scale(0.96, 0.9);
     }
   }
 
@@ -211,7 +222,7 @@
   .indicator {
     display: flex;
     justify-content: center;
-    margin-top: 26px;
+    margin-top: 20px;
 
     .dot {
       width: 16px;

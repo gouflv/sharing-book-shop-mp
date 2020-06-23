@@ -32,7 +32,10 @@ const Page: FC = () => {
               <Image className='avatar' src={'http://placehold.it/80x80'} />
               <View className='content'>
                 <View className='title'>Lorem ipsum.</View>
-                <View className='desc'>138 0000 9999</View>
+                <View className='desc'>
+                  138 0000 9999
+                  <View className='unbind-phone'>解绑</View>
+                </View>
               </View>
             </View>
             <View className='action'>收费规则</View>
