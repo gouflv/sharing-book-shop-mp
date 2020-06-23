@@ -5,6 +5,8 @@ import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { useHeaderSize } from '../../hooks/useHeaderSize'
 import { Banner } from './Banner'
+import { UserActiveModal } from '../../components/Modals/UserActiveModal'
+import { UserRuleModal } from '../../components/Modals/UserRuleModal'
 
 const Page: FC = () => {
   const { statusHeight, headerHeight } = useHeaderSize()
@@ -112,6 +114,9 @@ const Page: FC = () => {
           </View>
         </View>
       </PageHeaderWrapper>
+
+      <UserRuleModal />
+      <UserActiveModal />
     </View>
   )
 }

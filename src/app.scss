@@ -1,4 +1,5 @@
 @import "theme/var";
+@import '~taro-ui/dist/style/components/modal.scss';
 
 view,
 cover-view {
@@ -85,4 +86,59 @@ image {
   background-color: $blue;
   border: none;
   box-shadow: 0 4px 16px rgba($blue, 0.4), 0 8px 20px 6px rgba($blue, 0.2);
+}
+
+//
+.user-active-modal {
+  .at-modal__container {
+    top: 40%;
+    width: 378px;
+    overflow: visible;
+  }
+
+  @at-root {
+    &__top {
+      position: absolute;
+      top: -84rpx;
+      left: 50%;
+      width: 384px;
+      height: 188px;
+      transform: translateX(-50%);
+    }
+    &__top2 {
+      position: absolute;
+      top: -68rpx;
+      left: 54%;
+      width: 194px;
+      height: 154px;
+      transform: translateX(-50%);
+    }
+
+    &__content {
+      padding: 140px 36px 40px;
+      .title {
+        margin-bottom: 12px;
+        font-size: $font-size-base - 2;
+        text-align: center;
+      }
+      .text {
+        font-size: $font-size-small;
+        text-align: justify;
+      }
+    }
+    &__content2 {
+      padding-top: 110px;
+    }
+
+    &__close {
+      position: absolute;
+      bottom: -76px;
+      left: 50%;
+      transform: translateX(-50%);
+      image {
+        width: 44px;
+        height: 86px;
+      }
+    }
+  }
 }
