@@ -1,0 +1,111 @@
+@import "../../app";
+
+.page-baby-profile {
+  .box {
+    padding: 50px 70px;
+    border-radius: $border-radius * 2;
+    background-color: #fff;
+    box-shadow: $box-shadow;
+  }
+
+  .title {
+    position: relative;
+    margin-bottom: 60px;
+    text-align: center;
+
+    .edit {
+      position: absolute;
+      right: 0;
+      top: 6px;
+      width: 40px;
+      height: 40px;
+      image {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+
+  .form {
+    .form-item {
+      display: flex;
+      align-items: center;
+      height: 66px;
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 30px;
+      .label {
+        flex: 0 0 auto;
+        padding-left: 20px;
+        margin-right: auto;
+        font-size: $font-size-base;
+        image {
+          width: 42px;
+          height: 42px;
+        }
+      }
+      .value {
+        flex: 0 0 auto;
+        font-size: $font-size-base;
+        input {
+          text-align: right;
+          font-size: $font-size-base;
+        }
+      }
+      .link {
+        flex: 0 0 12px;
+        margin-left: 20px;
+        width: 12px;
+        height: 20px;
+      }
+    }
+    &.disabled {
+      .form-item {
+        .value {
+          color: $text-gray;
+        }
+      }
+    }
+
+    .btn-primary {
+      margin-top: 60px;
+    }
+  }
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  .checkbox {
+    margin-left: 40px;
+    display: flex;
+    align-items: center;
+    image {
+      margin-right: 18px;
+      width: 30px;
+      height: 30px;
+    }
+    &__input {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #444;
+      border-radius: 24px;
+      &__inner {
+        width: 16px;
+        height: 16px;
+        background-color: #444;
+        border-radius: 24px;
+        opacity: 0;
+        transition: opacity 200ms ease;
+      }
+
+      &.checked {
+        .checkbox__input__inner {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

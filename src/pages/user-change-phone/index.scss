@@ -1,0 +1,16 @@
+@import "../../app";
+
+.page {
+  padding: 90px 70px 0;
+
+  .title {
+    margin-bottom: 16px;
+    text-align: center;
+    font-size: $font-size-small;
+  }
+  .countdown {
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: $font-size-small;
+  }
+}
