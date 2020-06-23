@@ -77,7 +77,10 @@ const Page: FC = () => {
                   src={require('../../assets/vip_ico_message@2x.png')}
                   mode={'aspectFit'}
                 />
-                <View className='content'>我的消息</View>
+                <View className='content'>
+                  我的消息
+                  <View className='badge'>1</View>
+                </View>
                 <Image
                   className='link'
                   src={require('../../assets/vip_ico_arrow@2x.png')}
