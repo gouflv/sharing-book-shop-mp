@@ -9,7 +9,7 @@ const Page: FC = () => {
   const [tab, setTab] = useState(0)
 
   return (
-    <View className='page'>
+    <View className='page-user-content'>
       <PageHeaderWrapper title={'我的作品'}>
         <PageHeaderExt fixed height={'90rpx'}>
           <View className='tabs tabs--header tabs--large'>

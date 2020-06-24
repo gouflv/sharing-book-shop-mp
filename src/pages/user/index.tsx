@@ -137,7 +137,7 @@ const Page: FC = () => {
             </View>
             <View
               className='item'
-              onClick={() => Taro.navigateTo({ url: '/' })}
+              onClick={() => Taro.navigateTo({ url: '/pages/feed-back/index' })}
             >
               <Image
                 src={require('../../assets/vip_ico_sug@2x.png')}

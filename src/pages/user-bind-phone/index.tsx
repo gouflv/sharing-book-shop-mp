@@ -5,7 +5,7 @@ import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 
 const Page: FC = () => {
   return (
-    <View>
+    <View className='page-user-bind-phone'>
       <PageHeaderWrapper title={'绑定手机号'}>
         <View className={'page-space-around'}>
           <View className='form'>

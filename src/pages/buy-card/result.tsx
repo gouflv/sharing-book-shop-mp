@@ -6,7 +6,7 @@ import { View, Image, Button } from '@tarojs/components'
 
 const Page: FC = () => {
   return (
-    <View className='page-result'>
+    <View className='page-buy-card-result'>
       <PageHeaderWrapper
         title={'购买会员卡'}
         bg={require('../../assets/vip_top_bg2.jpg')}

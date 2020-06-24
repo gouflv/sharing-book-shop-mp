@@ -6,7 +6,7 @@ import { PageHeaderExt } from '../../components/PageHeaderExt'
 
 const Page: FC = () => {
   return (
-    <View className={'page-order-detail'}>
+    <View className={'page-message'}>
       <PageHeaderWrapper title={'我的消息'}>
         <PageHeaderExt absolute height={'90rpx'} />
       </PageHeaderWrapper>

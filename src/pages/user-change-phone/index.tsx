@@ -8,7 +8,7 @@ const Page: FC = () => {
   const [smsCode, setSmsCode] = useState('')
 
   return (
-    <View className='page'>
+    <View className='page-user-change-phone'>
       <PageHeaderWrapper title={'手机号更换'}>
         <View className='title'>已发送短信验证码至 138****9999</View>
         <View className='countdown'>10s</View>

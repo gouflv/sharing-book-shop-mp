@@ -1,27 +1,29 @@
 @import "../../app";
 
-.message {
-  padding: 30px;
-  margin-bottom: 20px;
-  background-color: #fff;
-  border-radius: $border-radius;
-  box-shadow: $box-shadow;
+.page-message {
+  .message {
+    padding: 30px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
 
-  .date {
-    margin-right: 30px;
-    font-size: 30px;
-    .text-second {
-      font-size: $font-size-small;
-    }
-  }
-  .content {
-    .title {
-      margin-bottom: 16px;
+    .date {
+      margin-right: 30px;
       font-size: 30px;
+      .text-second {
+        font-size: $font-size-small;
+      }
     }
-    .desc {
-      font-size: $font-size-small;
-      color: #555;
+    .content {
+      .title {
+        margin-bottom: 16px;
+        font-size: 30px;
+      }
+      .desc {
+        font-size: $font-size-small;
+        color: #555;
+      }
     }
   }
 }

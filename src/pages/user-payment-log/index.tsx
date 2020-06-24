@@ -10,7 +10,7 @@ const Page: FC = () => {
   }
 
   return (
-    <View className='page'>
+    <View className='page-payment-log'>
       <PageHeaderWrapper title={'支付记录'}>
         <PageHeaderExt fixed height={'100rpx'}>
           <View className='date-filter'>
