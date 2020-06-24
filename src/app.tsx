@@ -9,6 +9,7 @@ const store = {}
 class App extends Component {
   config: Config = {
     pages: [
+      'pages/user-order/detail',
       'pages/user-order/index',
       'pages/user/index',
       'pages/user-change-phone/index',

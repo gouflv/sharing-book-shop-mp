@@ -1,0 +1,11 @@
+@import "../../../app";
+@import "../../order/OrderItem/index";
+
+.order-item {
+  position: relative;
+  padding: 30px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  box-shadow: $box-shadow;
+  border-radius: $border-radius;
+}
