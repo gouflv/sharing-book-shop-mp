@@ -9,6 +9,7 @@ const store = {}
 class App extends Component {
   config: Config = {
     pages: [
+      'pages/user-message/index',
       'pages/user/index',
 
       'pages/home/index',
