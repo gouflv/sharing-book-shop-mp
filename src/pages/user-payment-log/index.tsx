@@ -40,7 +40,13 @@ const Page: FC = () => {
         <View className='page-space-around'>
           <View className='user-payment-list'>
             {Array.from({ length: 3 }).map((_, i) => (
-              <View key={i} className='item'></View>
+              <View key={i} className='item'>
+                <View className='content'>
+                  <View className='title'>Lorem ipsum dolor sit amet.</View>
+                  <View className='desc text-second'>2020/6/8</View>
+                </View>
+                <View className='value'>¥99</View>
+              </View>
             ))}
           </View>
         </View>
