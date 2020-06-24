@@ -1,1 +1,67 @@
 @import "../../app";
+
+.page-feed-back {
+  .box {
+    padding: 46px 50px;
+    background-color: #fff;
+    border-radius: $border-radius * 2;
+    box-shadow: $box-shadow;
+
+    .type-selector {
+      display: flex;
+      margin-bottom: 54px;
+      margin-left: -24px;
+
+      .option {
+        flex: 0 0 calc(25% - 24px);
+        height: 54px;
+        margin-left: 24px;
+        font-size: $font-size-small;
+        line-height: 54px;
+        text-align: center;
+        background-color: #f3f3f5;
+        border-radius: $border-radius;
+        transition: background-color 200ms ease;
+
+        &.selected {
+          color: #fff;
+          background-color: $blue;
+        }
+      }
+    }
+
+    .form {
+      .label {
+        margin-bottom: 16px;
+        font-size: $font-size-small + 2;
+        color: #333;
+      }
+
+      .control {
+        margin-bottom: 50px;
+      }
+    }
+
+    .at-textarea {
+      position: relative;
+      overflow: hidden;
+      background-color: #f3f3f5;
+      border-radius: $border-radius;
+
+      textarea {
+        box-sizing: border-box;
+        height: 262px;
+        padding: 20px 16px;
+        font-size: 26px;
+      }
+
+      .at-textarea__counter {
+        position: absolute;
+        right: 16px;
+        bottom: 20px;
+        font-size: $font-size-xsmall;
+        color: $text-gray;
+      }
+    }
+  }
+}

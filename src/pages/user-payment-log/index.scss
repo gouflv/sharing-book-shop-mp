@@ -5,29 +5,32 @@ page {
 }
 
 .page-payment-log {
-
   .user-payment-list {
     padding: 20px 30px;
     background-color: #fff;
-    box-shadow: $box-shadow;
     border-radius: $border-radius;
+    box-shadow: $box-shadow;
 
     .item {
-      margin: 20px 0;
       display: flex;
       align-items: center;
+      margin: 20px 0;
+
       .content {
         flex: auto;
+
         .title {
           font-size: $font-size-small;
         }
+
         .desc {
           font-size: 22px;
         }
       }
+
       .value {
         font-size: $font-size-small;
       }
     }
   }
-  }
+}

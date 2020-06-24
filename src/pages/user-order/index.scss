@@ -1,33 +1,39 @@
 @import "../../app";
 
 .page-user-order {
-
   .user-order-list {
     .item {
-      box-shadow: $box-shadow;
-      border-radius: $border-radius;
-      font-size: $font-size-small;
       margin-bottom: 20px;
+      font-size: $font-size-small;
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
     }
+
     .header {
       display: flex;
       align-items: center;
       height: 56px;
       padding: 0 36px;
       border-bottom: 1px solid $border-color;
+
       .title {
         flex: 1 1 auto;
       }
+
       .link {
         flex: 0 0 auto;
       }
     }
+
     .body {
       display: flex;
       padding: 20px 36px;
-      .left, .right {
+
+      .left,
+      .right {
         flex: 0 0 50%;
       }
+
       .right {
         padding-left: 80px;
         border-left: 1px solid $border-color;
@@ -35,4 +41,3 @@
     }
   }
 }
-

@@ -3,8 +3,8 @@
 .page-baby-profile {
   .box {
     padding: 50px 70px;
-    border-radius: $border-radius * 2;
     background-color: #fff;
+    border-radius: $border-radius * 2;
     box-shadow: $box-shadow;
   }
 
@@ -15,10 +15,11 @@
 
     .edit {
       position: absolute;
-      right: 0;
       top: 6px;
+      right: 0;
       width: 40px;
       height: 40px;
+
       image {
         width: 32px;
         height: 32px;
@@ -31,33 +32,39 @@
       display: flex;
       align-items: center;
       height: 66px;
-      border-bottom: 1px solid $border-color;
       margin-bottom: 30px;
+      border-bottom: 1px solid $border-color;
+
       .label {
         flex: 0 0 auto;
         padding-left: 20px;
         margin-right: auto;
         font-size: $font-size-base;
+
         image {
           width: 42px;
           height: 42px;
         }
       }
+
       .value {
         flex: 0 0 auto;
         font-size: $font-size-base;
+
         input {
-          text-align: right;
           font-size: $font-size-base;
+          text-align: right;
         }
       }
+
       .link {
         flex: 0 0 12px;
-        margin-left: 20px;
         width: 12px;
         height: 20px;
+        margin-left: 20px;
       }
     }
+
     &.disabled {
       .form-item {
         .value {
@@ -75,23 +82,27 @@
 .checkbox-group {
   display: flex;
   align-items: center;
+
   .checkbox {
-    margin-left: 40px;
     display: flex;
     align-items: center;
+    margin-left: 40px;
+
     image {
-      margin-right: 18px;
       width: 30px;
       height: 30px;
+      margin-right: 18px;
     }
+
     &__input {
-      width: 24px;
-      height: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 24px;
+      height: 24px;
       border: 1px solid #444;
       border-radius: 24px;
+
       &__inner {
         width: 16px;
         height: 16px;

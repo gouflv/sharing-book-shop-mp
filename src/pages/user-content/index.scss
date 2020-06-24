@@ -3,27 +3,28 @@
 .page-user-content {
   .user-content-list {
     .item {
-      margin-bottom: 20px;
-      box-shadow: $box-shadow;
-      border-radius: $border-radius;
-      padding: 20px;
       display: flex;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
 
       .thumb {
-        margin-right: 20px;
         width: 230px;
         height: 140px;
+        margin-right: 20px;
         border-radius: $border-radius;
       }
 
       .content {
-        flex: auto;
         display: flex;
+        flex: auto;
         flex-direction: column;
 
         .title {
           font-size: $font-size-base + 2;
         }
+
         .desc {
           margin-top: auto;
           font-size: $font-size-small;
@@ -32,15 +33,15 @@
           .times {
             display: flex;
             align-items: center;
+
             image {
-              margin-right: 10px;
               width: 28px;
               height: 28px;
+              margin-right: 10px;
             }
           }
         }
       }
     }
   }
-
 }

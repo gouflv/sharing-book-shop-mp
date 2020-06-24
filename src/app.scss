@@ -86,11 +86,12 @@ image {
   background-color: $blue;
   border: none;
   box-shadow: 0 4px 16px rgba($blue, 0.4), 0 8px 20px 6px rgba($blue, 0.2);
+
   &--plain {
-    background-color: #fff;
-    box-shadow: none;
-    border: 1px solid $blue;
     color: $blue;
+    background-color: #fff;
+    border: 1px solid $blue;
+    box-shadow: none;
   }
 }
 
@@ -111,6 +112,7 @@ image {
       height: 188px;
       transform: translateX(-50%);
     }
+
     &__top2 {
       position: absolute;
       top: -68rpx;
@@ -122,16 +124,19 @@ image {
 
     &__content {
       padding: 140px 36px 40px;
+
       .title {
         margin-bottom: 12px;
         font-size: $font-size-base - 2;
         text-align: center;
       }
+
       .text {
         font-size: $font-size-small;
         text-align: justify;
       }
     }
+
     &__content2 {
       padding-top: 110px;
     }
@@ -141,6 +146,7 @@ image {
       bottom: -76px;
       left: 50%;
       transform: translateX(-50%);
+
       image {
         width: 44px;
         height: 86px;
@@ -206,12 +212,14 @@ image {
 
   &--large {
     justify-content: space-around;
+
     .tab-item {
       flex: 0 0 auto;
       font-size: $font-size-large;
+
       &::after {
-        width: 1.5em;
         left: 50%;
+        width: 1.5em;
         transform: translateX(-50%);
       }
     }
@@ -220,23 +228,26 @@ image {
 
 .date-filter {
   position: relative;
-  height: 100px;
-  padding: 0 30px 18px;
   display: flex;
   align-items: flex-end;
+  height: 100px;
+  padding: 0 30px 18px;
+
   .label {
     display: flex;
     align-items: center;
     color: #fff;
+
     .time {
-      margin-right: 20px;
       width: 32px;
       height: 32px;
+      margin-right: 20px;
     }
+
     .arrow {
-      margin-left: 20px;
       width: 9px;
       height: 14px;
+      margin-left: 20px;
     }
   }
 }

@@ -32,14 +32,13 @@
           font-size: $font-size-base;
 
           .unbind-phone {
-            margin-left: 10px;
             padding: 0 16px;
+            margin-left: 10px;
+            font-size: $font-size-xsmall;
             border: 1px solid #fff;
             border-radius: 40px;
-            font-size: $font-size-xsmall;
           }
         }
-
       }
     }
 
