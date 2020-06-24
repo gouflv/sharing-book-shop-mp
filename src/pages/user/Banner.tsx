@@ -32,7 +32,14 @@ export const Banner: FC = () => {
                   <View className='content'>
                     <View className='title'>暂无会员卡</View>
                     <View className='desc'>
-                      <View className='link'>立即购买会员卡 &gt;</View>
+                      <View
+                        className='link'
+                        onClick={() =>
+                          Taro.navigateTo({ url: '/pages/buy-card/index' })
+                        }
+                      >
+                        立即购买会员卡 &gt;
+                      </View>
                     </View>
                   </View>
                 </View>
@@ -52,7 +59,14 @@ export const Banner: FC = () => {
                     <View className='title'>会员卡</View>
                     <View className='desc'>
                       <View>2020/7/1-2020/7/30</View>
-                      <View className='link'>购买会员卡 &gt;</View>
+                      <View
+                        className='link'
+                        onClick={() =>
+                          Taro.navigateTo({ url: '/pages/buy-card/index' })
+                        }
+                      >
+                        购买会员卡 &gt;
+                      </View>
                     </View>
                   </View>
                 </View>
@@ -72,7 +86,14 @@ export const Banner: FC = () => {
                     <View className='title'>会员卡</View>
                     <View className='desc'>
                       <View>将在2020/7/1到期</View>
-                      <View className='link'>购买会员卡 &gt;</View>
+                      <View
+                        className='link'
+                        onClick={() =>
+                          Taro.navigateTo({ url: '/pages/buy-card/index' })
+                        }
+                      >
+                        购买会员卡 &gt;
+                      </View>
                     </View>
                   </View>
                 </View>

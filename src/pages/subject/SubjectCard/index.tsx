@@ -1,10 +1,13 @@
 import './index.scss'
 import Taro, { FC } from '@tarojs/taro'
-import { View, Image } from '@tarojs/components'
+import { Image, View } from '@tarojs/components'
 
 export const SubjectCard: FC = () => {
   return (
-    <View className={'subject-card'}>
+    <View
+      className={'subject-card'}
+      onClick={() => Taro.navigateTo({ url: '/pages/subject-detail/index' })}
+    >
       <View className='thumb'>
         <Image src={'http://placehold.it/330x184'} mode={'aspectFill'} />
         <View className='mask' />

@@ -25,7 +25,10 @@ const Page: FC = () => {
         <View className='page-space-around'>
           <View className='title primary'>恭喜您! 购买成功</View>
           <View className='action'>
-            <Button className='btn-primary btn-primary--plain'>
+            <Button
+              className='btn-primary btn-primary--plain'
+              onClick={() => Taro.redirectTo({ url: '/pages' })}
+            >
               查看支付记录
             </Button>
             <Button className='btn-primary'>立即激活会员卡</Button>

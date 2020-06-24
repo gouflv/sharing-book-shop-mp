@@ -14,6 +14,10 @@ const PageHeader: FC<PageHeaderProps> = props => {
   const { title, hideBackArrow } = props
   const { statusHeight, headerHeight } = useHeaderSize()
 
+  function onBack() {
+    Taro.navigateBack()
+  }
+
   return (
     <View className={'page-header with-image-bg'}>
       <Image
@@ -25,7 +29,7 @@ const PageHeader: FC<PageHeaderProps> = props => {
       <View className='status' style={{ height: `${statusHeight}px` }} />
       <View className='content' style={{ height: `${headerHeight}px` }}>
         {!hideBackArrow && (
-          <View className={'left'}>
+          <View className={'left'} onClick={onBack}>
             <Image
               mode={'aspectFill'}
               className={'back'}

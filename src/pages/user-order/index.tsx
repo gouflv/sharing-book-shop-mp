@@ -44,7 +44,14 @@ const Page: FC = () => {
               <View key={i} className='item'>
                 <View className='header'>
                   <View className='title'>2020/6/1</View>
-                  <View className='link primary'>本日详情</View>
+                  <View
+                    className='link primary'
+                    onClick={() =>
+                      Taro.navigateTo({ url: '/pages/user-order/detail' })
+                    }
+                  >
+                    本日详情
+                  </View>
                 </View>
                 <View className='body'>
                   <View className='left'>

@@ -4,7 +4,10 @@ import { View, Image, Text } from '@tarojs/components'
 
 export const SubjectListItem: FC = () => {
   return (
-    <View className='subject-list-item'>
+    <View
+      className='subject-list-item'
+      onClick={() => Taro.navigateTo({ url: '/pages/subject-detail/index' })}
+    >
       <View className='d-flex main'>
         <View className='flex-fill d-flex'>
           <Image

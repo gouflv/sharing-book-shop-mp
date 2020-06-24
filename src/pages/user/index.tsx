@@ -34,7 +34,14 @@ const Page: FC = () => {
                 <View className='title'>Lorem ipsum.</View>
                 <View className='desc'>
                   138 0000 9999
-                  <View className='unbind-phone'>解绑</View>
+                  <View
+                    className='unbind-phone'
+                    onClick={() =>
+                      Taro.navigateTo({ url: '/pages/user-change-phone/index' })
+                    }
+                  >
+                    解绑
+                  </View>
                 </View>
               </View>
             </View>
@@ -45,7 +52,12 @@ const Page: FC = () => {
         <Banner />
 
         <View className='page-space-wing'>
-          <View className='baby-info'>
+          <View
+            className='baby-info'
+            onClick={() =>
+              Taro.navigateTo({ url: '/pages/baby-profile/index' })
+            }
+          >
             <Image
               className='bg'
               src={require('../../assets/vip_baby_bg.png')}
@@ -56,7 +68,12 @@ const Page: FC = () => {
           </View>
 
           <View className='menu'>
-            <View className='item'>
+            <View
+              className='item'
+              onClick={() =>
+                Taro.navigateTo({ url: '/pages/user-content/index' })
+              }
+            >
               <Image
                 src={require('../../assets/vip_ico_works@2x.png')}
                 mode={'aspectFit'}
@@ -67,7 +84,12 @@ const Page: FC = () => {
                 src={require('../../assets/vip_ico_arrow@2x.png')}
               />
             </View>
-            <View className='item'>
+            <View
+              className='item'
+              onClick={() =>
+                Taro.navigateTo({ url: '/pages/user-order/index' })
+              }
+            >
               <Image
                 src={require('../../assets/vip_ico_borrow@2x.png')}
                 mode={'aspectFit'}
@@ -78,7 +100,10 @@ const Page: FC = () => {
                 src={require('../../assets/vip_ico_arrow@2x.png')}
               />
             </View>
-            <View className='item'>
+            <View
+              className='item'
+              onClick={() => Taro.navigateTo({ url: '/' })}
+            >
               <Image
                 src={require('../../assets/vip_ico_message@2x.png')}
                 mode={'aspectFit'}
@@ -92,7 +117,10 @@ const Page: FC = () => {
                 src={require('../../assets/vip_ico_arrow@2x.png')}
               />
             </View>
-            <View className='item'>
+            <View
+              className='item'
+              onClick={() => Taro.navigateTo({ url: '/' })}
+            >
               <Image
                 src={require('../../assets/vip_ico_pay@2x.png')}
                 mode={'aspectFit'}
@@ -103,7 +131,10 @@ const Page: FC = () => {
                 src={require('../../assets/vip_ico_arrow@2x.png')}
               />
             </View>
-            <View className='item'>
+            <View
+              className='item'
+              onClick={() => Taro.navigateTo({ url: '/' })}
+            >
               <Image
                 src={require('../../assets/vip_ico_sug@2x.png')}
                 mode={'aspectFit'}

@@ -8,6 +8,7 @@ const Page: FC = () => {
   async function onSubmit() {
     //TODO showConfirm
     //会员卡有效时间30天，书位权益1个，购卡后自动激活。
+    Taro.redirectTo({ url: '/pages/buy-card/result' })
   }
 
   return (
