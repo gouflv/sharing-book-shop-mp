@@ -1,6 +1,6 @@
 import './index.scss'
-import Taro, { FC, useState, useEffect } from '@tarojs/taro'
-import { Image, RichText, Video, View } from '@tarojs/components'
+import Taro, { FC, useEffect, useState } from '@tarojs/taro'
+import { CoverView, Image, RichText, Video, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import classNames from 'classnames'
 import { AudioList } from './AudioIList'
@@ -8,8 +8,8 @@ import { CommentList } from './CommentList'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 
 const Page: FC = () => {
-  const [hasVideo] = useState(!true)
-  const [tab, setTab] = useState(0)
+  const [hasVideo] = useState(false)
+  const [tab, setTab] = useState(1)
 
   useEffect(() => {
     if (!hasVideo) {
@@ -19,26 +19,26 @@ const Page: FC = () => {
 
   const renderTabs = () => {
     return (
-      <View className={classNames('tabs', { 'tabs--header': !hasVideo })}>
-        <View
+      <CoverView className={classNames('tabs', { 'tabs--header': !hasVideo })}>
+        <CoverView
           className={classNames('tab-item', { active: tab === 0 })}
           onClick={() => setTab(0)}
         >
           简介
-        </View>
-        <View
+        </CoverView>
+        <CoverView
           className={classNames('tab-item', { active: tab === 1 })}
           onClick={() => setTab(1)}
         >
           配音
-        </View>
-        <View
+        </CoverView>
+        <CoverView
           className={classNames('tab-item', { active: tab === 2 })}
           onClick={() => setTab(2)}
         >
           评论
-        </View>
-      </View>
+        </CoverView>
+      </CoverView>
     )
   }
 
