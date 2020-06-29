@@ -49,7 +49,7 @@ const config = {
         config: {}
       },
       url: {
-        enable: true,
+        enable: false,
         config: {
           limit: 10240 // 设定转换尺寸上限
         }
@@ -61,6 +61,9 @@ const config = {
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
       }
+    },
+    imageUrlLoaderOption: {
+      limit: 0
     }
   },
   h5: {

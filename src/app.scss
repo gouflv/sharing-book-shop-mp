@@ -43,8 +43,6 @@ image {
 }
 
 .with-image-bg {
-  position: relative;
-  z-index: 100;
   width: 100vw;
   overflow: hidden;
 
@@ -53,6 +51,7 @@ image {
     width: 750px;
     height: 305px;
     background-color: $blue;
+    z-index: 10;
   }
 }
 

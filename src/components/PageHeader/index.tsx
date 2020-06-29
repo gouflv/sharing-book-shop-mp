@@ -1,5 +1,5 @@
-import { FC } from '@tarojs/taro'
-import { View, Image } from '@tarojs/components'
+import Taro, { FC } from '@tarojs/taro'
+import { CoverImage, CoverView } from '@tarojs/components'
 import { useHeaderSize } from '../../hooks/useHeaderSize'
 import './index.scss'
 
@@ -19,27 +19,25 @@ const PageHeader: FC<PageHeaderProps> = props => {
   }
 
   return (
-    <View className={'page-header with-image-bg'}>
-      <Image
+    <CoverView className={'page-header with-image-bg'}>
+      <CoverImage
         className='brand-image'
-        mode={'aspectFill'}
         src={props.bg || require('../../assets/home_top_bg.jpg')}
         style={{ height: props.bgHeight || '305rpx' }}
       />
-      <View className='status' style={{ height: `${statusHeight}px` }} />
-      <View className='content' style={{ height: `${headerHeight}px` }}>
+      <CoverView className='status' style={{ height: `${statusHeight}px` }} />
+      <CoverView className='content' style={{ height: `${headerHeight}px` }}>
         {!hideBackArrow && (
-          <View className={'left'} onClick={onBack}>
-            <Image
-              mode={'aspectFill'}
+          <CoverView className={'left'} onClick={onBack}>
+            <CoverImage
               className={'back'}
               src={require('../../assets/back.png')}
             />
-          </View>
+          </CoverView>
         )}
-        <View className={'title'}>{title}</View>
-      </View>
-    </View>
+        <CoverView className={'title'}>{title}</CoverView>
+      </CoverView>
+    </CoverView>
   )
 }
 
