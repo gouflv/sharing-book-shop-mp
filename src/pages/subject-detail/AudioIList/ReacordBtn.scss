@@ -1,8 +1,20 @@
+@import "../../../theme/var";
+
 .record-btn {
+  position: relative;
   background-color: #fff;
 
   canvas {
-    width: 64px;
-    height: 64px;
+    width: 72px;
+    height: 72px;
+  }
+
+  .icon {
+    position: absolute;
+    top: 21px;
+    left: 26px;
+    width: 22px;
+    height: 30px;
+    z-index: 1;
   }
 }
