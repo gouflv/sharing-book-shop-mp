@@ -5,6 +5,14 @@
   background-color: #fff;
 
   canvas {
+    position: absolute;
+    left: -100vw;
+    width: 72px;
+    height: 72px;
+    visibility: hidden;
+  }
+
+  image {
     width: 72px;
     height: 72px;
   }

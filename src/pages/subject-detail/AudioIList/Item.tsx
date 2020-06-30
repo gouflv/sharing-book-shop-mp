@@ -1,13 +1,39 @@
 import './index.scss'
-import Taro, { FC } from '@tarojs/taro'
+import Taro, { FC, useState, useEffect } from '@tarojs/taro'
 import { Image, View } from '@tarojs/components'
 import { RecordBtn } from './ReacordBtn'
+import { useInterval } from '../../../utils/useInterval'
 
 export const AudioItem: FC = () => {
+  const [time, setTime] = useState(10)
+  const [running, setRunning] = useState(false)
+
   function startRecord() {
-    const recorder = Taro.getRecorderManager()
-    recorder.start({})
+    // const recorder = Taro.getRecorderManager()
+    // recorder.start({})
+    if (running) {
+      setRunning(false)
+    } else {
+      setRunning(true)
+    }
   }
+
+  useInterval(
+    () => {
+      setTime(prev => {
+        if (prev + 1 > 100) {
+          setRunning(false)
+          return prev
+        }
+        return prev + 1
+      })
+    },
+    running ? 1000 : null
+  )
+
+  useEffect(() => {
+    console.log(time)
+  }, [time])
 
   return (
     <View className='audio-item'>
@@ -23,7 +49,7 @@ export const AudioItem: FC = () => {
             src={require('../../../assets/course_detail_ico_start@2x.png')}
           />
         </View>
-        <RecordBtn value={10} onClick={startRecord} />
+        <RecordBtn value={time} onClick={startRecord} />
       </View>
       <Image
         className='mark'
