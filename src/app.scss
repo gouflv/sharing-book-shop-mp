@@ -6,6 +6,10 @@ cover-view {
   box-sizing: border-box;
 }
 
+video {
+  display: block;
+}
+
 image {
   display: block;
 }
@@ -195,6 +199,7 @@ image {
 
   &--header {
     height: 90px;
+    border-bottom: none;
     z-index: 110;
 
     .tab-item {
@@ -202,6 +207,7 @@ image {
       color: rgba(#fff, 0.9);
 
       &::after {
+        bottom: 0;
         background-color: #fff;
       }
 
