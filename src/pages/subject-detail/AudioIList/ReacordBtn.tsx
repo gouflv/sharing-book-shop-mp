@@ -5,9 +5,12 @@ import Taro, {
   useEffect,
   useRef,
   useScope,
-  useState
+  useState,
+  useContext
 } from '@tarojs/taro'
 import { Canvas, Image, View } from '@tarojs/components'
+import { observer } from '@tarojs/mobx'
+import { AppStore } from '../../../store/AppStore'
 
 const size = 36
 const lineColor = '#1989ff'
@@ -16,7 +19,11 @@ const bgColor = '#d0e6ff'
 const minValue = 0
 const maxValue = 100
 
-export const RecordBtn: FC<{ value: number; onClick: () => void }> = props => {
+const RecordBtnComponent: FC<{
+  value: number
+  onClick: () => void
+}> = props => {
+  const { platform } = useContext(AppStore)
   const [value, setValue] = useState(props.value)
   const scope = useScope()
   const ctxRef = useRef<CanvasContext>()
@@ -43,20 +50,28 @@ export const RecordBtn: FC<{ value: number; onClick: () => void }> = props => {
 
     ctx.save()
 
+    // BG
     ctx.translate(size / 2, size / 2)
     ctx.beginPath()
     ctx.setStrokeStyle(bgColor)
     ctx.setLineWidth(lineWidth)
-    ctx.arc(0, 0, size / 2 - lineWidth, 0, 2 * Math.PI)
+    ctx.arc(
+      0,
+      0,
+      size / 2 - (platform === 'android' ? lineWidth + 2 : lineWidth),
+      0,
+      2 * Math.PI
+    )
     ctx.stroke()
 
+    // BAR
     ctx.beginPath()
     ctx.setStrokeStyle(lineColor)
     ctx.setLineWidth(lineWidth)
     ctx.arc(
       0,
       0,
-      size / 2 - lineWidth,
+      size / 2 - (platform === 'android' ? lineWidth + 2 : lineWidth),
       -0.5 * Math.PI,
       (percent * Math.PI) / 180 + -0.5 * Math.PI
     )
@@ -64,7 +79,7 @@ export const RecordBtn: FC<{ value: number; onClick: () => void }> = props => {
 
     ctx.beginPath()
     ctx.setFillStyle(lineColor)
-    ctx.arc(0, 0, 26 / 2, 0, 2 * Math.PI)
+    ctx.arc(0, 0, (platform === 'android' ? 26 - 2 : 26) / 2, 0, 2 * Math.PI)
     ctx.fill()
 
     // ctx.restore()
@@ -93,3 +108,5 @@ export const RecordBtn: FC<{ value: number; onClick: () => void }> = props => {
     </View>
   )
 }
+
+export const RecordBtn = observer(RecordBtnComponent)

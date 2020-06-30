@@ -12,7 +12,8 @@
     "build:weapp": "taro build --type weapp",
     "dev:weapp": "npm run build:weapp -- --watch",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
-    "lint:style": "stylelint --fix \"src/**/*.scss\" --syntax scss"
+    "lint:style": "stylelint --fix \"src/**/*.scss\" --syntax scss",
+    "preview": "/Applications/wechatwebdevtools.app/Contents/MacOS/cli auto-preview --project /Users/gouflv/Develops/workspace/wechat/sharing-book-shop/dist"
   },
   "author": "",
   "license": "MIT",
@@ -32,6 +33,7 @@
     "@tarojs/taro-weapp": "2.2.9",
     "babel-runtime": "^6.26.0",
     "classnames": "^2.2.6",
+    "eventemitter3": "^4.0.4",
     "mobx": "4.8.0",
     "nerv-devtools": "^1.5.5",
     "nervjs": "^1.5.5",

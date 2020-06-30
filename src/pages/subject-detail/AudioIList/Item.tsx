@@ -3,19 +3,45 @@ import Taro, { FC, useState, useEffect } from '@tarojs/taro'
 import { Image, View } from '@tarojs/components'
 import { RecordBtn } from './ReacordBtn'
 import { useInterval } from '../../../utils/useInterval'
+import EE from 'eventemitter3'
 
-export const AudioItem: FC = () => {
+interface AudioItemProps {
+  dataKey: number
+  data: any
+  onRecordStart: (dataKey: number) => void
+  onRecordStop: (dataKey: number) => void
+  eventBus: EE
+}
+
+export const AudioItem: FC<AudioItemProps> = props => {
+  console.log(props.dataKey)
   const [time, setTime] = useState(10)
   const [running, setRunning] = useState(false)
 
-  function startRecord() {
-    // const recorder = Taro.getRecorderManager()
-    // recorder.start({})
+  useEffect(() => {
+    props.eventBus.on('stop', dataKey => {
+      if (dataKey === props.dataKey) {
+        stop()
+      }
+    })
+  }, [])
+
+  function onRecordClick() {
     if (running) {
-      setRunning(false)
+      stop()
     } else {
-      setRunning(true)
+      start()
     }
+  }
+
+  function start() {
+    props.onRecordStart(props.dataKey)
+    setRunning(true)
+  }
+
+  function stop() {
+    props.onRecordStop(props.dataKey)
+    setRunning(false)
   }
 
   useInterval(
@@ -31,10 +57,6 @@ export const AudioItem: FC = () => {
     running ? 1000 : null
   )
 
-  useEffect(() => {
-    console.log(time)
-  }, [time])
-
   return (
     <View className='audio-item'>
       <View className='header'>
@@ -49,7 +71,7 @@ export const AudioItem: FC = () => {
             src={require('../../../assets/course_detail_ico_start@2x.png')}
           />
         </View>
-        <RecordBtn value={time} onClick={startRecord} />
+        <RecordBtn value={time} onClick={onRecordClick} />
       </View>
       <Image
         className='mark'
