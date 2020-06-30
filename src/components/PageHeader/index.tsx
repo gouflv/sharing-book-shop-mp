@@ -1,5 +1,5 @@
 import Taro, { FC } from '@tarojs/taro'
-import { CoverImage, CoverView } from '@tarojs/components'
+import { Image, View } from '@tarojs/components'
 import { useHeaderSize } from '../../hooks/useHeaderSize'
 import './index.scss'
 
@@ -15,34 +15,33 @@ const PageHeader: FC<PageHeaderProps> = props => {
   const { statusHeight, headerHeight } = useHeaderSize()
 
   function onBack() {
-    if (hideBackArrow) return
+    if (hideBackArrow) {
+      return
+    }
     Taro.navigateBack()
   }
 
   return (
-    <CoverView className={'page-header with-image-bg'}>
-      <CoverImage
+    <View className={'page-header with-image-bg'}>
+      <Image
         className='brand-image'
         src={props.bg || require('../../assets/home_top_bg.jpg')}
         style={{ height: props.bgHeight || '305rpx' }}
       />
-      <CoverView className='status' style={{ height: `${statusHeight}px` }} />
-      <CoverView
+      <View className='status' style={{ height: `${statusHeight}px` }} />
+      <View
         className='content'
         style={{ height: `${headerHeight}px` }}
         onClick={onBack}
       >
         {!hideBackArrow && (
-          <CoverView className={'left'}>
-            <CoverImage
-              className={'back'}
-              src={require('../../assets/back.png')}
-            />
-          </CoverView>
+          <View className={'left'}>
+            <Image className={'back'} src={require('../../assets/back.png')} />
+          </View>
         )}
-        <CoverView className={'title'}>{title}</CoverView>
-      </CoverView>
-    </CoverView>
+        <View className={'title'}>{title}</View>
+      </View>
+    </View>
   )
 }
 

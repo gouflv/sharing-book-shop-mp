@@ -1,5 +1,5 @@
 import Taro, { FC, useState, useEffect } from '@tarojs/taro'
-import { CoverImage, CoverView } from '@tarojs/components'
+import { CoverImage, CoverView, Image, View } from '@tarojs/components'
 import { useHeaderSize } from '../../hooks/useHeaderSize'
 import '../PageHeader/index.scss'
 
@@ -12,8 +12,15 @@ const PageHeaderExt: FC<{
 }> = props => {
   const { statusHeight, headerHeight } = useHeaderSize()
 
+  const [imageVisible, setImageVisible] = useState(false)
+  useEffect(() => {
+    setTimeout(() => {
+      setImageVisible(true)
+    }, 100)
+  }, [])
+
   return (
-    <CoverView
+    <View
       className={'page-header-ext with-image-bg'}
       style={{
         height: props.height || 'auto',
@@ -31,17 +38,19 @@ const PageHeaderExt: FC<{
           : {})
       }}
     >
-      <CoverImage
-        src={props.bg || require('../../assets/home_top_bg.jpg')}
-        className={'brand-image'}
-        style={{
-          top: `-${statusHeight + headerHeight}px`,
-          height: props.bgHeight || '305rpx'
-        }}
-      />
+      {imageVisible && (
+        <Image
+          src={props.bg || require('../../assets/home_top_bg.jpg')}
+          className={'brand-image'}
+          style={{
+            top: `-${statusHeight + headerHeight}px`,
+            height: props.bgHeight || '305rpx'
+          }}
+        />
+      )}
 
       {props.children}
-    </CoverView>
+    </View>
   )
 }
 
