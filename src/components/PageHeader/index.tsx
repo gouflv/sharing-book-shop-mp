@@ -15,6 +15,7 @@ const PageHeader: FC<PageHeaderProps> = props => {
   const { statusHeight, headerHeight } = useHeaderSize()
 
   function onBack() {
+    if (hideBackArrow) return
     Taro.navigateBack()
   }
 
@@ -26,9 +27,13 @@ const PageHeader: FC<PageHeaderProps> = props => {
         style={{ height: props.bgHeight || '305rpx' }}
       />
       <CoverView className='status' style={{ height: `${statusHeight}px` }} />
-      <CoverView className='content' style={{ height: `${headerHeight}px` }}>
+      <CoverView
+        className='content'
+        style={{ height: `${headerHeight}px` }}
+        onClick={onBack}
+      >
         {!hideBackArrow && (
-          <CoverView className={'left'} onClick={onBack}>
+          <CoverView className={'left'}>
             <CoverImage
               className={'back'}
               src={require('../../assets/back.png')}
