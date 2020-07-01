@@ -56,10 +56,10 @@ image {
 
   .brand-image {
     position: absolute;
+    z-index: -1;
     width: 750px;
     height: 305px;
     background-color: $blue;
-    z-index: -1;
   }
 }
 
@@ -202,9 +202,9 @@ image {
   }
 
   &--header {
+    z-index: 110;
     height: 90px;
     border-bottom: none;
-    z-index: 110;
 
     .tab-item {
       margin-bottom: 2px;

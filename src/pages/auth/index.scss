@@ -1,9 +1,9 @@
 @import "../../app";
 
 .page-auth {
-  min-height: 80vh;
   display: flex;
   align-items: center;
+  min-height: 80vh;
   text-align: center;
 
   .content {
@@ -12,27 +12,30 @@
 
     image {
       display: inline-block;
-      vertical-align: middle;
       width: 140px;
       height: 140px;
-      border-radius: 100%;
       margin-bottom: 80px;
+      vertical-align: middle;
+      border-radius: 100%;
     }
+
     .title {
       margin-bottom: 40px;
       font-size: 46px;
     }
+
     .desc {
       margin-bottom: 70px;
       font-size: $font-size-base;
     }
+
     .btn-primary {
       flex: auto;
       margin-bottom: 30px;
     }
+
     .extend {
       font-size: $font-size-base;
     }
   }
-
 }

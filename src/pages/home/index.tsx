@@ -7,9 +7,10 @@ import { SubjectListItem } from './SubjectListItem'
 import { Panel } from '../../components/Panel'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { AppStore } from '../../store/AppStore'
+import { observer } from '@tarojs/mobx'
 
 const Page: FC = () => {
-  const { setTab } = useContext(AppStore)
+  const { setTabIndex } = useContext(AppStore)
   const { statusHeight, headerHeight } = useHeaderSize()
 
   return (
@@ -57,7 +58,7 @@ const Page: FC = () => {
             action={'全部课程'}
             onActionClick={() => {
               Taro.switchTab({ url: '/pages/subject/index' })
-              setTab(2)
+              setTabIndex(2)
             }}
           >
             <View className={'subject-list'}>
@@ -72,4 +73,4 @@ const Page: FC = () => {
   )
 }
 
-export default Page
+export default observer(Page)

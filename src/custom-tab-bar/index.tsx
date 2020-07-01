@@ -1,10 +1,9 @@
 import './index.scss'
-import Taro, { FC } from '@tarojs/taro'
-import { CoverImage, CoverView } from '@tarojs/components'
+import Taro, { FC, useContext } from '@tarojs/taro'
+import { CoverImage, CoverView, View } from '@tarojs/components'
 import classNames from 'classnames'
 import { observer } from '@tarojs/mobx'
 import { AppStore } from '../store/AppStore'
-import useContext = Taro.useContext
 
 type TabBar = {
   text: string
@@ -51,10 +50,11 @@ const tabList: TabBar[] = [
 ]
 
 const Tabbar: FC = () => {
-  const { tabIndex, setTab } = useContext(AppStore)
+  const { tabBarIndex, setTabIndex } = useContext(AppStore)
 
   function onClick(item: TabBar, index: number) {
-    setTab(index)
+    // TODO auth
+    setTabIndex(index)
     Taro.switchTab({ url: `/${item.pagePath}` })
   }
 
@@ -63,13 +63,13 @@ const Tabbar: FC = () => {
       {tabList.map((tab, i) => (
         <CoverView
           className={classNames('item', {
-            active: i === tabIndex
+            active: i === tabBarIndex
           })}
           key={i}
           onClick={() => onClick(tab, i)}
         >
           <CoverImage
-            src={i === tabIndex ? tab.selectedIconPath : tab.iconPath}
+            src={i === tabBarIndex ? tab.selectedIconPath : tab.iconPath}
             style={{
               width: `${tab.width}rpx`,
               height: `${tab.height}rpx`

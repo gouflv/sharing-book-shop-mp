@@ -4,7 +4,7 @@ import { action, observable } from 'mobx'
 class App {
   @observable platform: 'ios' | 'android' = 'android'
   @observable loading = true
-  @observable tabIndex = 0
+  @observable tabBarIndex = 0
 
   constructor() {
     const res = Taro.getSystemInfoSync()
@@ -13,8 +13,8 @@ class App {
   }
 
   @action.bound
-  setTab(index: number) {
-    this.tabIndex = index
+  setTabIndex(index: number) {
+    this.tabBarIndex = index
   }
 }
 
