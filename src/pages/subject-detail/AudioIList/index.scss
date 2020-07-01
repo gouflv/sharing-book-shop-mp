@@ -1,5 +1,9 @@
 @import "../../../app";
 
+.audio-list {
+  margin-bottom: calc(140px + #{$safe-area-bottom});
+}
+
 .audio-item {
   position: relative;
   padding: 30px 30px 0;

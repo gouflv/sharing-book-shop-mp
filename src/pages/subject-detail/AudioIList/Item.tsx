@@ -14,7 +14,6 @@ interface AudioItemProps {
 }
 
 export const AudioItem: FC<AudioItemProps> = props => {
-  console.log(props.dataKey)
   const [time, setTime] = useState(10)
   const [running, setRunning] = useState(false)
 

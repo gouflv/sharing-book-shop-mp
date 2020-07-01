@@ -2,6 +2,7 @@
 
 .comment-list {
   padding: 30px;
+  margin-bottom: calc(120px + #{$safe-area-bottom});
   border-radius: $border-radius;
   box-shadow: $box-shadow;
 }

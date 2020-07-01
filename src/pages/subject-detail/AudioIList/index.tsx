@@ -29,7 +29,7 @@ export const AudioList: FC = () => {
     <View>
       {currentRecord}
       <View className='audio-list'>
-        {Array.from({ length: 3 }).map((_, i) => (
+        {Array.from({ length: 9 }).map((_, i) => (
           <AudioItem
             key={i}
             dataKey={i}

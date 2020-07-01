@@ -1,13 +1,15 @@
 import './index.scss'
-import Taro, { FC } from '@tarojs/taro'
+import Taro, { FC, useContext } from '@tarojs/taro'
 import { Image, Swiper, SwiperItem, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { useHeaderSize } from '../../hooks/useHeaderSize'
 import { SubjectListItem } from './SubjectListItem'
 import { Panel } from '../../components/Panel'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
+import { AppStore } from '../../store/AppStore'
 
 const Page: FC = () => {
+  const { setTab } = useContext(AppStore)
   const { statusHeight, headerHeight } = useHeaderSize()
 
   return (
@@ -50,10 +52,19 @@ const Page: FC = () => {
             </SwiperItem>
           </Swiper>
 
-          <Panel>
-            {Array.from({ length: 8 }).map((_, i) => (
-              <SubjectListItem key={i} />
-            ))}
+          <Panel
+            title='推荐视频'
+            action={'全部课程'}
+            onActionClick={() => {
+              Taro.switchTab({ url: '/pages/subject/index' })
+              setTab(2)
+            }}
+          >
+            <View className={'subject-list'}>
+              {Array.from({ length: 8 }).map((_, i) => (
+                <SubjectListItem key={i} />
+              ))}
+            </View>
           </Panel>
         </View>
       </PageHeaderWrapper>

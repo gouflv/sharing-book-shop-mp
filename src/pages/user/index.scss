@@ -78,6 +78,7 @@
 
   .menu {
     padding: 20px 30px 20px 40px;
+    margin-bottom: calc(140px + #{$safe-area-bottom});
     border-radius: $border-radius * 2;
     box-shadow: $box-shadow;
 

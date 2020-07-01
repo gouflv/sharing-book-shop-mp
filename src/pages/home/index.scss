@@ -14,4 +14,8 @@
       border-radius: 8px;
     }
   }
+
+  .subject-list {
+    margin-bottom: calc(140px + #{$safe-area-bottom});
+  }
 }

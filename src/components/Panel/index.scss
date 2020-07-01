@@ -1,0 +1,26 @@
+@import "../../theme/var";
+
+.panel {
+  .panel__header {
+    display: flex;
+    margin-bottom: 20px;
+
+    .title {
+      flex: auto;
+      font-size: $font-size-xlarge;
+    }
+
+    .action {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      font-size: $font-size-base;
+      image {
+        margin-left: 10px;
+        width: 12px;
+        height: 20px;
+      }
+    }
+  }
+  .panel__body {}
+}

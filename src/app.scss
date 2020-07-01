@@ -1,6 +1,10 @@
 @import "theme/var";
 @import '~taro-ui/dist/style/components/modal.scss';
 
+page {
+  padding-bottom: $safe-area-bottom;
+}
+
 view,
 cover-view {
   box-sizing: border-box;

@@ -32,7 +32,7 @@ const Page: FC = () => {
 
         <View className='page-space-around'>
           <View className='user-content-list'>
-            {Array.from({ length: 3 }).map((_, i) => (
+            {Array.from({ length: 12 }).map((_, i) => (
               <View key={i} className='item'>
                 <Image
                   className='thumb'

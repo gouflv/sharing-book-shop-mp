@@ -96,7 +96,6 @@ const RecordBtnComponent: FC<{
 
   const [imgPath, setImgPath] = useState<string>()
   async function updateImage() {
-    console.log('updateImage')
     const res = await Taro.canvasToTempFilePath({ canvasId: 'canvas' }, scope)
     setImgPath(res.tempFilePath)
   }

@@ -1,5 +1,5 @@
 import { action, observable } from 'mobx'
-import { createContext } from 'react'
+import { createContext } from '@tarojs/taro'
 
 export interface MessageProps {
   title?: string

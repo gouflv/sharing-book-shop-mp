@@ -81,6 +81,7 @@
   }
 
   .list {
+    margin-bottom: calc(140px + #{$safe-area-bottom});
     border-radius: $border-radius;
     box-shadow: $box-shadow;
   }

@@ -5,17 +5,15 @@
   bottom: 0;
   display: flex;
   align-items: flex-end;
-  width: 100vw;
-  height: 100px;
-  padding: 0 20px 12px;
-  padding-bottom: calc(12px + #{$safe-area-bottom});
+  width: calc(100vw - 30px * 2);
+  padding: 12px 30px calc(12px + #{$safe-area-bottom});
   background-color: #fff;
   border-top: 1px solid $border-color;
   box-sizing: content-box;
 
   .item {
     display: flex;
-    flex: 1 1 25%;
+    flex: 1 1 auto;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -27,7 +25,7 @@
     }
 
     cover-image {
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
   }
 }
