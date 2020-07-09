@@ -1,17 +1,30 @@
 import './index.scss'
-import Taro, { FC, useState } from '@tarojs/taro'
+import Taro, { FC, useContext, useState } from '@tarojs/taro'
 import { Button, Image, Navigator, View } from '@tarojs/components'
 import { observer } from '@tarojs/mobx'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
+import { defaultErrorHandler } from '../../utils/ajax'
+import { hideLoading, showLoading } from '../../utils'
+import { AppStore } from '../../store/AppStore'
 
 const Page: FC = () => {
+  const { loginWithData } = useContext(AppStore)
+
   const [mode, setMode] = useState<'useInfo' | 'phoneNumber'>('useInfo')
 
-  function onGetUserInfo({ encryptedData, iv }) {
+  async function onGetUserInfo({ encryptedData, iv }) {
     if (!encryptedData) {
       return
     }
-    setMode('phoneNumber')
+    try {
+      showLoading()
+      await loginWithData({ encryptedData, iv })
+      setMode('phoneNumber')
+    } catch (e) {
+      defaultErrorHandler(e)
+    } finally {
+      hideLoading()
+    }
   }
 
   function onGetPhoneNumber({ encryptedData, iv }) {
