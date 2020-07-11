@@ -26,14 +26,14 @@ export const Uploader: FC<{
       },
       name: 'file',
       filePath: choose.tempFilePaths[0],
-      success: function (res) {
+      success: res => {
         const data: UploadFile = JSON.parse(res.data).data
         props.onChange([...props.value, data])
       },
-      fail: function (res) {
+      fail: res => {
         showToast({ title: res.errMsg })
       },
-      complete: function () {
+      complete: () => {
         hideLoading()
       }
     })

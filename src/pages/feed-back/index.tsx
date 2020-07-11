@@ -20,7 +20,7 @@ const Page: FC = () => {
       const data = await POST('wxMember/getComplaintsLable')
       setOptions(data)
     }
-    // fetch()
+    fetch()
   }, [])
 
   // formData
