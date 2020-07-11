@@ -9,6 +9,7 @@ import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { AppStore } from '../../store/AppStore'
 import { observer } from '@tarojs/mobx'
 import { POST } from '../../utils/ajax'
+import { hideLoading, showLoading } from '../../utils'
 
 const Page: FC = () => {
   const { setTabIndex } = useContext(AppStore)
@@ -19,9 +20,13 @@ const Page: FC = () => {
   const [subjectItems, setSubjectItems] = useState([])
 
   async function fetch() {
-    await POST('common/getBanner')
-    await POST('curriculum/getIndexCurriculum')
+    showLoading()
+    const res1 = await POST('common/getBanner')
+    const res2 = await POST('curriculum/getIndexCurriculum')
+    setBanners(res1)
+    setSubjectItems(res2)
     setLoading(false)
+    hideLoading()
   }
 
   useEffect(() => {
@@ -80,8 +85,8 @@ const Page: FC = () => {
               }}
             >
               <View className={'subject-list'}>
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <SubjectListItem key={i} />
+                {subjectItems.map((item, i) => (
+                  <SubjectListItem key={i} data={item} />
                 ))}
               </View>
             </Panel>

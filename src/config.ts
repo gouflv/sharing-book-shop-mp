@@ -1,1 +1,1 @@
-export const API_BASE = 'http://8.129.221.8:8088/fzgdwl/api'
+export const API_BASE = 'https://www.fzgdwl.com//fzgdwl/api'

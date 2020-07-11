@@ -71,7 +71,7 @@ const Page: FC = () => {
               {options.map((op, i) => (
                 <View
                   key={i}
-                  className={classNames('item', {
+                  className={classNames('option', {
                     selected: op.name === label
                   })}
                   onClick={() => setLabel(op.name)}

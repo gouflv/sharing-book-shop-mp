@@ -16,7 +16,7 @@ export const ajax = (url, options?: AjaxOptions) =>
     const params: request.Option = {
       header: {
         'content-type': 'application/x-www-form-urlencoded',
-        clientToken: app.token
+        token: app.token
       },
       url: `${API_BASE}/${url}`,
       ...options

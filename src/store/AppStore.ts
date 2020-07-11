@@ -16,11 +16,14 @@ class App {
     const res = Taro.getSystemInfoSync()
     this.platform = res.platform as any
     console.log('platform', res.platform)
+
+    this.token = Taro.getStorageSync('token') || ''
   }
 
   @action.bound
   setToken(val: string) {
     this.token = val
+    Taro.setStorageSync('token', val)
   }
 
   @action.bound
@@ -29,14 +32,14 @@ class App {
   }
 
   @action.bound
-  async authLogin({ encryptedData, iv }) {
+  async authLogin({ encryptedData, iv, code }) {
     showLoading()
     try {
-      const { code, errMsg } = await Taro.login()
-      if (!code) {
-        showToast({ title: errMsg })
-        return
-      }
+      // const { code, errMsg } = await Taro.login()
+      // if (!code) {
+      //   showToast({ title: errMsg })
+      //   return
+      // }
       const res = await POST('auth/wxApplet', {
         data: { encryptedData, iv, code }
       })
@@ -50,14 +53,14 @@ class App {
   }
 
   @action.bound
-  async authLoginWithPhone({ encryptedData, iv }) {
+  async authLoginWithPhone({ encryptedData, iv, code }) {
     showLoading()
     try {
-      const { code, errMsg } = await Taro.login()
-      if (!code) {
-        showToast({ title: errMsg })
-        return
-      }
+      // const { code, errMsg } = await Taro.login()
+      // if (!code) {
+      //   showToast({ title: errMsg })
+      //   return
+      // }
       const res = await POST('common/phoneBindingWx', {
         data: { encryptedData, iv, code }
       })
