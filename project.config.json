@@ -1,10 +1,10 @@
 {
   "miniprogramRoot": "./dist",
   "projectname": "sharing-book-shop",
-  "description": "共享图书",
-  "appid": "wx0cc670165a996bc2",
+  "description": "共读未来",
+  "appid": "wxe38aa67f42466698",
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": false,
     "postcss": false,
     "minified": false

@@ -13,10 +13,12 @@ export function hideLoading() {
 }
 
 export function showToast(props: Taro.showToast.Option) {
+  hideLoading()
   setTimeout(() => {
     Taro.showToast({
       icon: 'none',
       duration: 3000,
+      mask: true,
       ...props
     })
   })

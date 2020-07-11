@@ -30,7 +30,7 @@ const Page: FC = () => {
 
   return (
     <View className={'page-home'}>
-      <PageHeaderWrapper title={'共享图书'} hideBackArrow>
+      <PageHeaderWrapper title={'共读未来'} hideBackArrow>
         <PageHeaderExt
           absolute
           height={`${305 / 2 - statusHeight - headerHeight}px`}

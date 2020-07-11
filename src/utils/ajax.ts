@@ -32,14 +32,14 @@ export const ajax = (url, options?: AjaxOptions) =>
       }
 
       if (data.code === 1001) {
-        reject({ ...data, handler: true })
+        reject({ ...data, message: data.msg, handler: true })
         // app.tryFetchTokenByLocalOpenId()
         Taro.redirectTo({ url: '/pages/auth/index' })
         return
       }
 
       if (data.code !== 200) {
-        reject({ ...data, handler: false })
+        reject({ ...data, message: data.msg, handler: false })
       }
 
       resolve(data.data || {})

@@ -1,12 +1,56 @@
 import './index.scss'
-import Taro, { FC } from '@tarojs/taro'
+import Taro, { FC, useState, useEffect } from '@tarojs/taro'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { Button, View } from '@tarojs/components'
 import { AtTextarea } from 'taro-ui'
 import { Uploader } from './Uploader'
+import { defaultErrorHandler, POST } from '../../utils/ajax'
+import classNames from 'classnames'
+import { hideLoading, showLoading, showToast } from '../../utils'
+
+export interface UploadFile {
+  url
+}
 
 const Page: FC = () => {
+  const [options, setOptions] = useState<{ name; code }[]>([])
+  useEffect(() => {
+    async function fetch() {
+      const data = await POST('wxMember/getComplaintsLable')
+      setOptions(data)
+    }
+    // fetch()
+  }, [])
+
+  // formData
+  const [label, setLabel] = useState('')
+  const [content, setContent] = useState('')
+  const [images, setImages] = useState<UploadFile[]>([])
+
+  async function onSubmit() {
+    //TODO validate
+
+    try {
+      showLoading()
+      await POST('wxMember/addComplaintsLable', {
+        data: {
+          label,
+          content,
+          image: images.map(img => img.url).join(',')
+        }
+      })
+      showToast({ title: '提交成功' })
+      setTimeout(() => {
+        Taro.navigateBack()
+      }, 1500)
+    } catch (e) {
+      defaultErrorHandler(e)
+    } finally {
+      hideLoading()
+    }
+  }
+
   return (
     <View className='page-feed-back'>
       <PageHeaderWrapper
@@ -24,18 +68,25 @@ const Page: FC = () => {
         <View className='page-space-around'>
           <View className='box'>
             <View className='type-selector'>
-              <View className='option selected'>课程太少</View>
-              <View className='option'>经常闪退</View>
-              <View className='option'>会员异常</View>
-              <View className='option'>其他</View>
+              {options.map((op, i) => (
+                <View
+                  key={i}
+                  className={classNames('item', {
+                    selected: op.name === label
+                  })}
+                  onClick={() => setLabel(op.name)}
+                >
+                  {op.name}
+                </View>
+              ))}
             </View>
 
             <View className='form'>
               <View className='label'>具体建议内容</View>
               <View className='control'>
                 <AtTextarea
-                  value={''}
-                  onChange={val => {}}
+                  value={content}
+                  onChange={val => setContent(val)}
                   maxLength={200}
                   placeholder={'请提交使用建议'}
                 />
@@ -43,10 +94,12 @@ const Page: FC = () => {
 
               <View className='label'>上传图片</View>
               <View className='control'>
-                <Uploader />
+                <Uploader value={images} onChange={val => setImages(val)} />
               </View>
 
-              <Button className='btn-primary'>提交</Button>
+              <Button className='btn-primary' onClick={onSubmit}>
+                提交
+              </Button>
             </View>
           </View>
         </View>

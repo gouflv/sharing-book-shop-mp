@@ -2,12 +2,15 @@ import Taro, { createContext } from '@tarojs/taro'
 import { action, observable } from 'mobx'
 import { defaultErrorHandler, POST } from '../utils/ajax'
 import { hideLoading, showLoading, showToast } from '../utils'
+import { Base64 } from 'js-base64'
 
 class App {
-  @observable token = ''
   @observable platform: 'ios' | 'android' = 'android'
   @observable loading = true
   @observable tabBarIndex = 0
+
+  @observable token = ''
+  @observable user: { nickName; memberImage; tel } | null = null
 
   constructor() {
     const res = Taro.getSystemInfoSync()
@@ -26,7 +29,7 @@ class App {
   }
 
   @action.bound
-  async loginWithData({ encryptedData, iv }) {
+  async authLogin({ encryptedData, iv }) {
     showLoading()
     try {
       const { code, errMsg } = await Taro.login()
@@ -40,9 +43,38 @@ class App {
       this.setToken(res.token)
     } catch (e) {
       defaultErrorHandler(e)
+      throw e
     } finally {
       hideLoading()
     }
+  }
+
+  @action.bound
+  async authLoginWithPhone({ encryptedData, iv }) {
+    showLoading()
+    try {
+      const { code, errMsg } = await Taro.login()
+      if (!code) {
+        showToast({ title: errMsg })
+        return
+      }
+      const res = await POST('common/phoneBindingWx', {
+        data: { encryptedData, iv, code }
+      })
+      // TODO refresh token
+      // this.setToken(res.token)
+    } catch (e) {
+      defaultErrorHandler(e)
+      throw e
+    } finally {
+      hideLoading()
+    }
+  }
+
+  @action.bound
+  async fetchUserInfo() {
+    const data = await POST('wxMember/getMemberInfo')
+    this.user = { ...data, nickName: Base64.decode(data.nickName) }
   }
 }
 

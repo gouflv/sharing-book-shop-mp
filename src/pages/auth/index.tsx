@@ -3,12 +3,11 @@ import Taro, { FC, useContext, useState } from '@tarojs/taro'
 import { Button, Image, Navigator, View } from '@tarojs/components'
 import { observer } from '@tarojs/mobx'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
-import { defaultErrorHandler } from '../../utils/ajax'
-import { hideLoading, showLoading } from '../../utils'
 import { AppStore } from '../../store/AppStore'
+import { showToast } from '../../utils'
 
 const Page: FC = () => {
-  const { loginWithData } = useContext(AppStore)
+  const { authLogin, authLoginWithPhone } = useContext(AppStore)
 
   const [mode, setMode] = useState<'useInfo' | 'phoneNumber'>('useInfo')
 
@@ -16,21 +15,17 @@ const Page: FC = () => {
     if (!encryptedData) {
       return
     }
-    try {
-      showLoading()
-      await loginWithData({ encryptedData, iv })
-      setMode('phoneNumber')
-    } catch (e) {
-      defaultErrorHandler(e)
-    } finally {
-      hideLoading()
-    }
+    await authLogin({ encryptedData, iv })
+    setMode('phoneNumber')
   }
 
-  function onGetPhoneNumber({ encryptedData, iv }) {
+  async function onGetPhoneNumber({ encryptedData, iv }) {
     if (!encryptedData) {
       return
     }
+    await authLoginWithPhone({ encryptedData, iv })
+    showToast({ title: '登录成功' })
+    Taro.navigateBack()
   }
 
   return (
