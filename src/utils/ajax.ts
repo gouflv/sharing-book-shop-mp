@@ -40,6 +40,7 @@ export const ajax = (url, options?: AjaxOptions) =>
 
       if (data.code !== 200) {
         reject({ ...data, message: data.msg, handler: false })
+        return
       }
 
       resolve(data.data || {})

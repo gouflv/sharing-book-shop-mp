@@ -1,15 +1,39 @@
 import './index.scss'
-import Taro, { FC, useEffect, useState } from '@tarojs/taro'
+import Taro, { FC, useEffect, useRouter, useState } from '@tarojs/taro'
 import { Image, RichText, Video, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import classNames from 'classnames'
 import { AudioList } from './AudioIList'
 import { CommentList } from './CommentList'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
+import { POST } from '../../utils/ajax'
+import { hideLoading, showLoading } from '../../utils'
 
 const Page: FC = () => {
-  const [hasVideo] = useState(!false)
-  const [tab, setTab] = useState(1)
+  const router = useRouter()
+  const [subjectId, setSubjectId] = useState('')
+  const [data, setData] = useState<any>()
+
+  async function fetch() {
+    showLoading()
+    const res = await POST('curriculum/getCurriculumById', {
+      data: {
+        curriculumId: router.params.id
+      }
+    })
+    setData(res)
+    setHasVideo(res.isVideo)
+
+    hideLoading()
+  }
+
+  useEffect(() => {
+    setSubjectId(router.params.id)
+    fetch()
+  }, [])
+
+  const [hasVideo, setHasVideo] = useState(false)
+  const [tab, setTab] = useState(0)
 
   useEffect(() => {
     if (!hasVideo) {
@@ -52,9 +76,9 @@ const Page: FC = () => {
         {hasVideo ? (
           <View>
             <Video
-              src={'https://media.w3.org/2010/05/sintel/trailer.mp4'}
-              title={'课程'}
-              poster={'http://placehold.it/750x422'}
+              src={data.curriculumVideo}
+              title={data.curriculumName}
+              poster={data.curriculumImageUrl}
             />
             {renderTabs()}
           </View>
@@ -67,50 +91,47 @@ const Page: FC = () => {
           </View>
         )}
 
-        <View className='page-space-around'>
-          {tab === 0 && (
-            <View className='subject-summary'>
-              <View className='header'>
-                <View className='title'>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Cumque, ipsa!
-                </View>
-                <View className='action text-second'>
-                  <View className='share'>
-                    <Image
-                      src={require('../../assets/course_detail_ico_share@2x.png')}
-                    />
-                    分享
+        {data && (
+          <View className='page-space-around'>
+            {tab === 0 && (
+              <View className='subject-summary'>
+                <View className='header'>
+                  <View className='title'>{data.curriculumName}</View>
+                  <View className='action text-second'>
+                    <View className='share'>
+                      <Image
+                        src={require('../../assets/course_detail_ico_share@2x.png')}
+                      />
+                      分享
+                    </View>
                   </View>
                 </View>
-              </View>
-              <View className='desc text-second'>
-                <View className='d'>
-                  <Image
-                    src={require('../../assets/course_ico_play_b@2x.png')}
-                  />
-                  10086
+                <View className='desc text-second'>
+                  <View className='d'>
+                    <Image
+                      src={require('../../assets/course_ico_play_b@2x.png')}
+                    />
+                    {data.curriculumVideoViews || 0}
+                  </View>
+                  <View className='d'>{data.curriculumJoinNum || 0}人配音</View>
+                  <View className='d'>
+                    <Image
+                      src={require('../../assets/course_ico_class@2x.png')}
+                    />
+                    {data.curriculumNum || 0}课
+                  </View>
                 </View>
-                <View className='d'>10人配音</View>
-                <View className='d'>
-                  <Image
-                    src={require('../../assets/course_ico_class@2x.png')}
-                  />
-                  10课
+                <View className='content'>
+                  <RichText nodes={`${data.curriculumIntroduce}`} />
                 </View>
               </View>
-              <View className='content'>
-                <RichText
-                  nodes={`<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, possimus!</p> <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, possimus!</p> <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, possimus!</p> <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis, possimus!</p>`}
-                />
-              </View>
-            </View>
-          )}
+            )}
 
-          {tab === 1 && <AudioList />}
+            {tab === 1 && <AudioList />}
 
-          {tab === 2 && <CommentList />}
-        </View>
+            {tab === 2 && <CommentList subjectId={subjectId} />}
+          </View>
+        )}
       </PageHeaderWrapper>
     </View>
   )

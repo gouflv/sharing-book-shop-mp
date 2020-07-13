@@ -1,5 +1,5 @@
 import './index.scss'
-import Taro, { FC } from '@tarojs/taro'
+import Taro, { FC, useContext, useEffect, useState } from '@tarojs/taro'
 import { Image, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
@@ -7,9 +7,30 @@ import { useHeaderSize } from '../../hooks/useHeaderSize'
 import { Banner } from './Banner'
 import { UserActiveModal } from '../../components/Modals/UserActiveModal'
 import { UserRuleModal } from '../../components/Modals/UserRuleModal'
+import { AppStore } from '../../store/AppStore'
+import { observer } from '@tarojs/mobx'
+import { hideLoading, showLoading } from '../../utils'
+import { POST } from '../../utils/ajax'
 
 const Page: FC = () => {
+  const { user, fetchUserInfo } = useContext(AppStore)
   const { statusHeight, headerHeight } = useHeaderSize()
+
+  useEffect(() => {
+    async function init() {
+      showLoading()
+      !user && (await fetchUserInfo())
+      await fetchCards()
+      hideLoading()
+    }
+    init()
+  }, [])
+
+  const [cardList, setCardList] = useState<any[]>([])
+  async function fetchCards() {
+    const data = POST('wxMember/getMemberCard')
+    setCardList(data)
+  }
 
   return (
     <View className='page-user'>
@@ -28,23 +49,30 @@ const Page: FC = () => {
 
         <View className='page-space-wing'>
           <View className='user-header'>
-            <View className='user-info'>
-              <Image className='avatar' src={'http://placehold.it/80x80'} />
-              <View className='content'>
-                <View className='title'>Lorem ipsum.</View>
-                <View className='desc'>
-                  138 0000 9999
-                  <View
-                    className='unbind-phone'
-                    onClick={() =>
-                      Taro.navigateTo({ url: '/pages/user-change-phone/index' })
-                    }
-                  >
-                    解绑
+            {user && (
+              <View className='user-info'>
+                <Image
+                  className='avatar'
+                  src={user.memberImage || 'http://placehold.it/80x80'}
+                />
+                <View className='content'>
+                  <View className='title'>{user.nickName}</View>
+                  <View className='desc'>
+                    {user.tel}
+                    <View
+                      className='unbind-phone'
+                      onClick={() =>
+                        Taro.navigateTo({
+                          url: '/pages/user-change-phone/index'
+                        })
+                      }
+                    >
+                      解绑
+                    </View>
                   </View>
                 </View>
               </View>
-            </View>
+            )}
             <View className='action'>收费规则</View>
           </View>
         </View>
@@ -159,4 +187,4 @@ const Page: FC = () => {
   )
 }
 
-export default Page
+export default observer(Page)

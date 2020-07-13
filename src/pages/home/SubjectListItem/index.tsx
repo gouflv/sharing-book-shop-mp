@@ -2,11 +2,16 @@ import './index.scss'
 import Taro, { FC } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 
-export const SubjectListItem: FC<{ data }> = ({ data }) => {
+export const SubjectListItem: FC<{ data }> = props => {
+  const data = props.data || {}
   return (
     <View
       className='subject-list-item'
-      onClick={() => Taro.navigateTo({ url: '/pages/subject-detail/index' })}
+      onClick={() =>
+        Taro.navigateTo({
+          url: `/pages/subject-detail/index?id=${data.curriculumId}`
+        })
+      }
     >
       <View className='d-flex main'>
         <View className='flex-fill d-flex'>
@@ -17,14 +22,23 @@ export const SubjectListItem: FC<{ data }> = ({ data }) => {
           />
           <View className='flex-fill'>
             <View className='title'>{data.curriculumName}</View>
-            <View className='desc'>{data.curriculumIntroduce || ''}</View>
+            <View className='desc'>{data.stars}</View>
             <View className='tag'>
               {data.ageLowerLimit}-{data.ageUpperLimit}岁
             </View>
           </View>
         </View>
         <View className='action'>
-          <View className='tag tag--primary'>{data.status}进行中</View>
+          {data.status === 1 && data.status === 2 && (
+            <View className='tag tag--primary'>
+              {
+                {
+                  '1': '进行中',
+                  '2': '已完成'
+                }[data.status]
+              }
+            </View>
+          )}
         </View>
       </View>
       <View className='d-flex footer'>

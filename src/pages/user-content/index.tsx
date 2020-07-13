@@ -1,12 +1,28 @@
 import './index.scss'
-import Taro, { FC, useState } from '@tarojs/taro'
+import Taro, { FC, useState, useEffect } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import classNames from 'classnames'
+import { POST } from '../../utils/ajax'
+import { hideLoading, showLoading } from '../../utils'
 
 const Page: FC = () => {
   const [tab, setTab] = useState(0)
+
+  const [list, setList] = useState<any[]>([])
+  async function fetch() {
+    showLoading()
+    const data = await POST('wxMember/getMemberCurriculum', {
+      data: { type: tab + 1 }
+    })
+    setList(data)
+    hideLoading()
+  }
+
+  useEffect(() => {
+    fetch()
+  }, [tab])
 
   return (
     <View className='page-user-content'>
@@ -32,23 +48,23 @@ const Page: FC = () => {
 
         <View className='page-space-around'>
           <View className='user-content-list'>
-            {Array.from({ length: 12 }).map((_, i) => (
+            {list.map((item, i) => (
               <View key={i} className='item'>
                 <Image
                   className='thumb'
-                  src={'http://placehold.it/230x140'}
+                  src={item.curriculumImageUrl || 'http://placehold.it/230x140'}
                   mode={'aspectFill'}
                 />
                 <View className='content'>
-                  <View className='title'>Lorem ipsum dolor sit.</View>
+                  <View className='title'>{item.curriculumName}</View>
                   <View className='desc'>
                     <View className='times'>
                       <Image
                         src={require('../../assets/course_ico_class@2x.png')}
                       />
-                      10课
+                      {item.curriculumNum}课
                     </View>
-                    <View>100人配音</View>
+                    <View>{item.curriculumJoinNum}人配音</View>
                   </View>
                 </View>
               </View>

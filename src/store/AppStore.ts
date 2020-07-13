@@ -1,8 +1,7 @@
 import Taro, { createContext } from '@tarojs/taro'
 import { action, observable } from 'mobx'
 import { defaultErrorHandler, POST } from '../utils/ajax'
-import { hideLoading, showLoading, showToast } from '../utils'
-import { Base64 } from 'js-base64'
+import { hideLoading, showLoading } from '../utils'
 
 class App {
   @observable platform: 'ios' | 'android' = 'android'
@@ -77,7 +76,7 @@ class App {
   @action.bound
   async fetchUserInfo() {
     const data = await POST('wxMember/getMemberInfo')
-    this.user = { ...data, nickName: Base64.decode(data.nickName) }
+    this.user = { ...data, nickName: decodeURIComponent(data.nickName) }
   }
 }
 

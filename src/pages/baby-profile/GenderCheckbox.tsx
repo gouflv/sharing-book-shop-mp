@@ -6,24 +6,34 @@ import classNames from 'classnames'
 export const GenderCheckbox: FC<{
   value: number
   onChange: (value: number) => void
-}> = ({ value, onChange }) => {
+  disabled?: boolean
+}> = props => {
+  const { value, onChange, disabled } = props
+
+  function onItemClick(val) {
+    if (disabled) {
+      return
+    }
+    onChange(val)
+  }
+
   return (
     <View className='checkbox-group'>
-      <View className='checkbox' onClick={() => onChange(0)}>
+      <View className='checkbox' onClick={() => onItemClick(1)}>
         <Image src={require('../../assets/vip_baby_boy@2x.png')} />
         <View
           className={classNames('checkbox__input', {
-            checked: value === 0
+            checked: value === 1
           })}
         >
           <View className='checkbox__input__inner' />
         </View>
       </View>
-      <View className='checkbox' onClick={() => onChange(1)}>
+      <View className='checkbox' onClick={() => onItemClick(2)}>
         <Image src={require('../../assets/vip_baby_girl@2x.png')} />
         <View
           className={classNames('checkbox__input', {
-            checked: value === 1
+            checked: value === 2
           })}
         >
           <View className='checkbox__input__inner' />

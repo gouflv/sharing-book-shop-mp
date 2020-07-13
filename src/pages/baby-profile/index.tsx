@@ -1,16 +1,59 @@
 import './index.scss'
-import Taro, { FC } from '@tarojs/taro'
+import Taro, { FC, useState, useEffect } from '@tarojs/taro'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { View, Image, Button, Input, Picker } from '@tarojs/components'
 import { GenderCheckbox } from './GenderCheckbox'
+import { hideLoading, showLoading, showToast } from '../../utils'
+import { defaultErrorHandler, POST } from '../../utils/ajax'
+
+interface FormData {
+  childName: string
+  childBirthday: string
+  childSex: 1 | 2
+  kindergarten: string
+  childClass: string
+  startSchoolDate: string
+}
 
 const Page: FC = () => {
-  function onBirthDayChange(value: string) {
-    console.log(value)
+  const [data, setData] = useState<FormData>()
+
+  useEffect(() => {
+    async function fetch() {
+      showLoading()
+      const data = await POST('wxMember/getChildMsg')
+      setData(data)
+      hideLoading()
+    }
+    fetch()
+  }, [])
+
+  const [isEdit, setEdit] = useState(false)
+
+  function setFormData(key: keyof FormData, value) {
+    setData(prevState => {
+      return { ...prevState, [key]: value } as FormData
+    })
   }
-  function onSchoolDayChange(value: string) {
-    console.log(value)
+
+  async function onSubmit() {
+    try {
+      showLoading()
+      await POST('wxMember/updateChildMsg', {
+        data
+      })
+      showToast({ title: '保存成功' })
+      setEdit(false)
+    } catch (e) {
+      defaultErrorHandler(e)
+    } finally {
+      hideLoading()
+    }
+  }
+
+  if (!data) {
+    return <View />
   }
 
   return (
@@ -31,9 +74,11 @@ const Page: FC = () => {
           <View className='box'>
             <View className='title'>
               我的宝宝
-              <View className='edit'>
-                <Image src={require('../../assets/vip_baby_edit@2x.png')} />
-              </View>
+              {!isEdit && (
+                <View className='edit' onClick={() => setEdit(true)}>
+                  <Image src={require('../../assets/vip_baby_edit@2x.png')} />
+                </View>
+              )}
             </View>
             <View className='form'>
               <View className='form-item'>
@@ -43,62 +88,91 @@ const Page: FC = () => {
                   />
                 </View>
                 <View className='value'>
-                  <Input placeholder={'请输入宝宝姓名'} />
+                  <Input
+                    value={data.childName}
+                    onInput={e => setFormData('childName', e.detail.value)}
+                    placeholder={'请输入宝宝姓名'}
+                    disabled={!isEdit}
+                  />
                 </View>
               </View>
               <View className='form-item'>
                 <View className='label'>性别</View>
                 <View className='value'>
-                  <GenderCheckbox value={1} onChange={() => {}} />
+                  <GenderCheckbox
+                    value={data.childSex}
+                    onChange={value => setFormData('childSex', value)}
+                    disabled={!isEdit}
+                  />
                 </View>
               </View>
               <Picker
                 mode={'date'}
-                value={'2020-06-01'}
-                onChange={e => onBirthDayChange(e.detail.value)}
+                value={data.childBirthday || ''}
+                onChange={e => setFormData('childBirthday', e.detail.value)}
                 start={'2000-01-01'}
                 end={'2030-12-31'}
+                disabled={!isEdit}
               >
                 <View className='form-item'>
                   <View className='label'>出生日期</View>
-                  <View className='value'>2020/6/1</View>
-                  <Image
-                    className='link'
-                    src={require('../../assets/vip_ico_arrow@2x.png')}
-                  />
+                  <View className='value'>{data.childBirthday || ''}</View>
+                  {isEdit && (
+                    <Image
+                      className='link'
+                      src={require('../../assets/vip_ico_arrow@2x.png')}
+                    />
+                  )}
                 </View>
               </Picker>
               <Picker
                 mode={'date'}
-                value={'2020-06-01'}
-                onChange={e => onSchoolDayChange(e.detail.value)}
+                value={data.startSchoolDate || ''}
+                onChange={e => setFormData('startSchoolDate', e.detail.value)}
                 start={'2000-01-01'}
                 end={'2030-12-31'}
                 fields={'month'}
+                disabled={!isEdit}
               >
                 <View className='form-item'>
                   <View className='label'>入学时间</View>
-                  <View className='value'>2020/6</View>
-                  <Image
-                    className='link'
-                    src={require('../../assets/vip_ico_arrow@2x.png')}
-                  />
+                  <View className='value'>{data.startSchoolDate || ''}</View>
+                  {isEdit && (
+                    <Image
+                      className='link'
+                      src={require('../../assets/vip_ico_arrow@2x.png')}
+                    />
+                  )}
                 </View>
               </Picker>
               <View className='form-item'>
                 <View className='label'>所属幼儿园</View>
                 <View className='value'>
-                  <Input placeholder={'请输入所属幼儿园'} />
+                  <Input
+                    value={data.kindergarten}
+                    onInput={e => setFormData('kindergarten', e.detail.value)}
+                    placeholder={'请输入所属幼儿园'}
+                    disabled={!isEdit}
+                  />
                 </View>
               </View>
               <View className='form-item'>
                 <View className='label'>班级</View>
                 <View className='value'>
-                  <Input placeholder={'请输入所在班级'} />
+                  <Input
+                    value={data.childClass}
+                    onInput={e => setFormData('childClass', e.detail.value)}
+                    placeholder={'请输入所在班级'}
+                    disabled={!isEdit}
+                  />
                 </View>
               </View>
 
-              <Button className='btn-primary'>保存</Button>
+              {isEdit && (
+                <Button className='btn-primary' onClick={onSubmit}>
+                  保存
+                </Button>
+              )}
             </View>
           </View>
         </View>
