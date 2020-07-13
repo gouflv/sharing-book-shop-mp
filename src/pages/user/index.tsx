@@ -28,7 +28,7 @@ const Page: FC = () => {
 
   const [cardList, setCardList] = useState<any[]>([])
   async function fetchCards() {
-    const data = POST('wxMember/getMemberCard')
+    const data = await POST('wxMember/getMemberCard')
     setCardList(data)
   }
 
