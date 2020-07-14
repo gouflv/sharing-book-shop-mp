@@ -21,14 +21,21 @@ export const Uploader: FC<{
 
     Taro.uploadFile({
       url: `${API_BASE}/common/upload`,
-      formData: {
+      header: {
         token: token
+      },
+      formData: {
+        type: 'WxUpload'
       },
       name: 'file',
       filePath: choose.tempFilePaths[0],
       success: res => {
-        const data: UploadFile = JSON.parse(res.data).data
-        props.onChange([...props.value, data])
+        try {
+          const url: string = JSON.parse(res.data).data
+          props.onChange([...props.value, { url }])
+        } catch (e) {
+          console.error(e)
+        }
       },
       fail: res => {
         showToast({ title: res.errMsg })
@@ -49,11 +56,11 @@ export const Uploader: FC<{
         <Image src={require('../../../assets/plus.png')} />
       </View>
 
-      {Array.from({ length: 3 }).map((_, i) => (
+      {props.value.map((file, i) => (
         <View key={i} className='item'>
           <Image
             className='img'
-            src={'http://placehold.it/150x150'}
+            src={file.url || 'http://placehold.it/150x150'}
             mode={'aspectFill'}
           />
           <Image

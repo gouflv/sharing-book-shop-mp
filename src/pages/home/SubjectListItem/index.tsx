@@ -1,6 +1,7 @@
 import './index.scss'
 import Taro, { FC } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
+import { Star } from '../../../components/Star'
 
 export const SubjectListItem: FC<{ data }> = props => {
   const data = props.data || {}
@@ -22,7 +23,9 @@ export const SubjectListItem: FC<{ data }> = props => {
           />
           <View className='flex-fill'>
             <View className='title'>{data.curriculumName}</View>
-            <View className='desc'>{data.stars}</View>
+            <View className='desc'>
+              <Star value={data.stars} />
+            </View>
             <View className='tag'>
               {data.ageLowerLimit}-{data.ageUpperLimit}岁
             </View>

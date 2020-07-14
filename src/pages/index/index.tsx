@@ -9,8 +9,8 @@ export default () => {
     // Taro.redirectTo({
     //   url: '/pages/subject-detail/index?id=202007071104045435'
     // })
-    // Taro.switchTab({ url: '/pages/home/index' })
-    Taro.switchTab({ url: '/pages/user/index' })
+    Taro.switchTab({ url: '/pages/home/index' })
+    // Taro.switchTab({ url: '/pages/user/index' })
     // Taro.switchTab({ url: '/pages/subject/index' })
   }, [])
 
