@@ -33,7 +33,7 @@ const Page: FC = () => {
   }, [])
 
   const [hasVideo, setHasVideo] = useState(false)
-  const [tab, setTab] = useState(0)
+  const [tab, setTab] = useState(1)
 
   useEffect(() => {
     if (!hasVideo) {
@@ -127,7 +127,7 @@ const Page: FC = () => {
               </View>
             )}
 
-            {tab === 1 && <AudioList />}
+            {tab === 1 && <AudioList subjectId={subjectId} />}
 
             {tab === 2 && <CommentList subjectId={subjectId} />}
           </View>

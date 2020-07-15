@@ -3,8 +3,31 @@ import Taro, { FC, useState, useRef, useEffect } from '@tarojs/taro'
 import { Button, View } from '@tarojs/components'
 import { AudioItem } from './Item'
 import EE from 'eventemitter3'
+import { POST } from '../../../utils/ajax'
+import { hideLoading, showLoading } from '../../../utils'
 
-export const AudioList: FC = () => {
+export interface Record {
+  resourcesId: string
+  resourcesUrl: string
+  memberRecordUrl: string
+  memberCurriculumRecordId: string
+}
+
+export const AudioList: FC<{ subjectId }> = props => {
+  const [list, setList] = useState<Record[]>([])
+  async function fetch() {
+    showLoading()
+    const data = await POST('curriculum/getCurriculumSegmentationVideo', {
+      data: { curriculumId: props.subjectId }
+    })
+    setList(data)
+    hideLoading()
+  }
+  useEffect(() => {
+    fetch()
+  }, [])
+
+  //#region currentRecord
   const [currentRecord, setCurrentRecord] = useState<number>()
 
   const eventBus = useRef(new EE())
@@ -24,6 +47,7 @@ export const AudioList: FC = () => {
   function onRecordStop() {
     setCurrentRecord(undefined)
   }
+  //#endregion
 
   return (
     <View>
