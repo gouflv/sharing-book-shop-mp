@@ -29,6 +29,7 @@ export const CommentList: FC<{ subjectId }> = props => {
 
   async function onSubmit() {
     if (!content.length) {
+      showToast({ title: '请填写内容' })
       return
     }
     showLoading({ title: '正在发表' })
