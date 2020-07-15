@@ -6,6 +6,7 @@ import { View, Image, Button, Input, Picker } from '@tarojs/components'
 import { GenderCheckbox } from './GenderCheckbox'
 import { hideLoading, showLoading, showToast } from '../../utils'
 import { defaultErrorHandler, POST } from '../../utils/ajax'
+import dayjs from 'dayjs'
 
 interface FormData {
   childName: string
@@ -17,13 +18,24 @@ interface FormData {
 }
 
 const Page: FC = () => {
-  const [data, setData] = useState<FormData>()
+  const [data, setData] = useState<FormData>({} as any)
 
   useEffect(() => {
     async function fetch() {
       showLoading()
-      const data = await POST('wxMember/getChildMsg')
-      setData(data)
+      const data: FormData = await POST('wxMember/getChildMsg')
+      setData({
+        childName: data.childName || '',
+        childSex: data.childSex || 0,
+        childBirthday: data.childBirthday
+          ? dayjs(data.childBirthday).format('YYYY-MM-DD')
+          : '',
+        startSchoolDate: data.startSchoolDate
+          ? dayjs(data.startSchoolDate).format('YYYY-MM')
+          : '',
+        kindergarten: data.kindergarten || '',
+        childClass: data.childClass || ''
+      })
       hideLoading()
     }
     fetch()
@@ -38,10 +50,18 @@ const Page: FC = () => {
   }
 
   async function onSubmit() {
+    if (!validate()) {
+      return
+    }
     try {
       showLoading()
       await POST('wxMember/updateChildMsg', {
-        data
+        data: {
+          ...data,
+          startSchoolDate: data.startSchoolDate
+            ? `${data.startSchoolDate}-01`
+            : ''
+        } as FormData
       })
       showToast({ title: '保存成功' })
       setEdit(false)
@@ -50,6 +70,26 @@ const Page: FC = () => {
     } finally {
       hideLoading()
     }
+  }
+
+  function validate() {
+    if (!data.childName) {
+      showToast({ title: '请输入宝宝姓名' })
+      return
+    }
+    if (!data.childSex) {
+      showToast({ title: '请输入性别' })
+      return
+    }
+    if (!data.childBirthday) {
+      showToast({ title: '请输入出生日期' })
+      return
+    }
+    if (!data.startSchoolDate) {
+      showToast({ title: '请输入入学时间' })
+      return
+    }
+    return true
   }
 
   if (!data) {
