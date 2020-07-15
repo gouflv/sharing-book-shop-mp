@@ -6,7 +6,7 @@ import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { useHeaderSize } from '../../hooks/useHeaderSize'
 import { Banner } from './Banner'
 import { UserActiveModal } from '../../components/Modals/UserActiveModal'
-import { UserRuleModal } from '../../components/Modals/UserRuleModal'
+import { UserRuleModal } from './UserRuleModal'
 import { AppStore } from '../../store/AppStore'
 import { observer } from '@tarojs/mobx'
 import { hideLoading, showLoading } from '../../utils'
@@ -31,6 +31,9 @@ const Page: FC = () => {
     const data = await POST('wxMember/getMemberCard')
     setCardList(data)
   }
+
+  // UserRuleModal
+  const [userRuleVisible, setUserRuleVisible] = useState(false)
 
   return (
     <View className='page-user'>
@@ -73,7 +76,9 @@ const Page: FC = () => {
                 </View>
               </View>
             )}
-            <View className='action'>收费规则</View>
+            <View className='action' onClick={() => setUserRuleVisible(true)}>
+              收费规则
+            </View>
           </View>
         </View>
 
@@ -181,7 +186,11 @@ const Page: FC = () => {
         </View>
       </PageHeaderWrapper>
 
-      <UserRuleModal />
+      <UserRuleModal
+        visible={userRuleVisible}
+        onClose={() => setUserRuleVisible(false)}
+      />
+
       <UserActiveModal />
     </View>
   )
