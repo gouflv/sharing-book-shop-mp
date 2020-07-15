@@ -16,7 +16,7 @@ const PageHeaderExt: FC<{
   useEffect(() => {
     setTimeout(() => {
       setImageVisible(true)
-    }, 100)
+    }, 0)
   }, [])
 
   return (

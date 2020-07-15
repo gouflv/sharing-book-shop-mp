@@ -7,9 +7,12 @@ export const useHeaderSize = () => {
   useEffect(() => {
     const res = Taro.getSystemInfoSync()
     setStatusHeight(res.statusBarHeight)
+    console.log('getSystemInfoSync', res)
+    console.log('statusBarHeight', res.statusBarHeight)
 
     const menuBtn = Taro.getMenuButtonBoundingClientRect()
     setHeaderHeight(menuBtn.height + 6 * 2)
+    console.log('menuBtn', menuBtn)
   }, [])
 
   return {

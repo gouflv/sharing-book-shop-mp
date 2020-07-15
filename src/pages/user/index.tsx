@@ -40,14 +40,14 @@ const Page: FC = () => {
       <PageHeaderWrapper
         title={'会员中心'}
         hideBackArrow
-        bg={require('../../assets/vip_top_bg.jpg')}
-        bgHeight={'650rpx'}
+        bg={require('../../assets/vip_top_bg_xl.jpg')}
+        bgHeight={'692rpx'}
       >
         <PageHeaderExt
           absolute
-          height={`${650 / 2 - statusHeight - headerHeight}px`}
-          bg={require('../../assets/vip_top_bg.jpg')}
-          bgHeight={'650rpx'}
+          height={`${692 / 2 - statusHeight - headerHeight}px`}
+          bg={require('../../assets/vip_top_bg_xl.jpg')}
+          bgHeight={'692rpx'}
         />
 
         <View className='page-space-wing'>

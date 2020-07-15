@@ -10,7 +10,7 @@ const PageHeaderWrapper: FC<PageHeaderProps> = props => {
     <View className={'page-header-wrapper'}>
       <PageHeader {...props} />
       <View
-        className={'page-header-content'}
+        className={'page-header-inner-content'}
         style={{
           marginTop: `${statusHeight + headerHeight}px`
         }}
