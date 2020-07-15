@@ -2,16 +2,21 @@ import './index.scss'
 import Taro, { FC } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import { Star } from '../../../components/Star'
+import { useAuthGuard } from '../../../hooks/useAuthGuard'
 
 export const SubjectListItem: FC<{ data }> = props => {
+  const { withAuth } = useAuthGuard()
+
   const data = props.data || {}
   return (
     <View
       className='subject-list-item'
       onClick={() =>
-        Taro.navigateTo({
-          url: `/pages/subject-detail/index?id=${data.curriculumId}`
-        })
+        withAuth(() =>
+          Taro.navigateTo({
+            url: `/pages/subject-detail/index?id=${data.curriculumId}`
+          })
+        )
       }
     >
       <View className='d-flex main'>

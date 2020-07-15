@@ -10,8 +10,12 @@ import { AppStore } from '../../store/AppStore'
 import { observer } from '@tarojs/mobx'
 import { POST } from '../../utils/ajax'
 import { hideLoading, showLoading } from '../../utils'
+import { useAuthGuard } from '../../hooks/useAuthGuard'
+import { APP_NAME } from '../../config'
 
 const Page: FC = () => {
+  const { withAuth } = useAuthGuard()
+
   const { setTabIndex } = useContext(AppStore)
   const { statusHeight, headerHeight } = useHeaderSize()
 
@@ -35,7 +39,7 @@ const Page: FC = () => {
 
   return (
     <View className={'page-home'}>
-      <PageHeaderWrapper title={'共读未来'} hideBackArrow>
+      <PageHeaderWrapper title={APP_NAME} hideBackArrow>
         <PageHeaderExt
           absolute
           height={`${305 / 2 - statusHeight - headerHeight}px`}
@@ -80,8 +84,10 @@ const Page: FC = () => {
               title='推荐视频'
               action={'全部课程'}
               onActionClick={() => {
-                Taro.switchTab({ url: '/pages/subject/index' })
-                setTabIndex(2)
+                withAuth(() => {
+                  Taro.switchTab({ url: '/pages/subject/index' })
+                  setTabIndex(2)
+                })
               }}
             >
               <View className={'subject-list'}>

@@ -4,6 +4,7 @@ import { CoverImage, CoverView, View } from '@tarojs/components'
 import classNames from 'classnames'
 import { observer } from '@tarojs/mobx'
 import { AppStore } from '../store/AppStore'
+import { useAuthGuard } from '../hooks/useAuthGuard'
 
 type TabBar = {
   text: string
@@ -51,11 +52,13 @@ const tabList: TabBar[] = [
 
 const Tabbar: FC = () => {
   const { tabBarIndex, setTabIndex } = useContext(AppStore)
+  const { withAuth } = useAuthGuard()
 
   function onClick(item: TabBar, index: number) {
-    // TODO auth
-    setTabIndex(index)
-    Taro.switchTab({ url: `/${item.pagePath}` })
+    withAuth(() => {
+      Taro.switchTab({ url: `/${item.pagePath}` })
+      setTabIndex(index)
+    })
   }
 
   return (

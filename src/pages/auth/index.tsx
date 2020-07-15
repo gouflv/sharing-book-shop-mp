@@ -1,19 +1,31 @@
 import './index.scss'
-import Taro, { FC, useContext, useState, useEffect } from '@tarojs/taro'
+import Taro, { FC, useContext, useEffect, useState } from '@tarojs/taro'
 import { Button, Image, Navigator, View } from '@tarojs/components'
 import { observer } from '@tarojs/mobx'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { AppStore } from '../../store/AppStore'
 import { hideLoading, showLoading, showToast } from '../../utils'
 import { defaultErrorHandler } from '../../utils/ajax'
+import { APP_NAME } from '../../config'
 
 const Page: FC = () => {
-  const { authLogin, authLoginWithPhone, fetchUserInfo } = useContext(AppStore)
+  const {
+    authLogin,
+    authLoginWithPhone,
+    fetchUserInfo,
+    authCallback
+  } = useContext(AppStore)
 
   const [mode, setMode] = useState<'useInfo' | 'phoneNumber'>('useInfo')
+  useEffect(() => {
+    if (authCallback && authCallback.authType) {
+      setMode(authCallback.authType)
+    }
+  }, [])
 
+  //#region form
   const [code, setCode] = useState('')
-  async function wxlogin() {
+  async function wxLogin() {
     showLoading()
     try {
       const { code, errMsg } = await Taro.login()
@@ -29,7 +41,7 @@ const Page: FC = () => {
     }
   }
   useEffect(() => {
-    wxlogin()
+    wxLogin()
   }, [])
 
   async function onGetUserInfo({ encryptedData, iv }) {
@@ -44,10 +56,14 @@ const Page: FC = () => {
 
     if (user && user.tel) {
       showToast({ title: '登录成功' })
-      Taro.navigateBack()
+      if (authCallback) {
+        authCallback.func()
+      } else {
+        Taro.reLaunch({ url: '/pages/home/index' })
+      }
     } else {
       setMode('phoneNumber')
-      wxlogin()
+      wxLogin()
     }
   }
 
@@ -56,9 +72,20 @@ const Page: FC = () => {
       return
     }
     await authLoginWithPhone({ encryptedData, iv, code })
+
+    showLoading()
+    await fetchUserInfo()
+    hideLoading()
+
     showToast({ title: '登录成功' })
-    Taro.navigateBack()
+
+    if (authCallback) {
+      authCallback.func()
+    } else {
+      Taro.reLaunch({ url: '/pages/home/index' })
+    }
   }
+  //#endregion
 
   return (
     <View className='page-auth'>
@@ -66,7 +93,7 @@ const Page: FC = () => {
         {mode === 'useInfo' && (
           <View className='content'>
             <Image src={'http://placehold.it/140x140'} />
-            <View className='title'>Lorem ipsum dolor sit.</View>
+            <View className='title'>{APP_NAME}</View>
             <View className='desc'>申请获取你的公开信息（昵称、头像等）</View>
             <Button
               className='btn-primary'
@@ -80,7 +107,7 @@ const Page: FC = () => {
         {mode === 'phoneNumber' && (
           <View className='content'>
             <Image src={'http://placehold.it/140x140'} />
-            <View className='title'>Lorem ipsum dolor sit.</View>
+            <View className='title'>{APP_NAME}</View>
             <View className='desc'>申请获取你的公开信息（昵称、头像等）</View>
             <Button
               className='btn-primary'

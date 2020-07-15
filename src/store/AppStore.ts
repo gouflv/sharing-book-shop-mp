@@ -3,13 +3,26 @@ import { action, observable } from 'mobx'
 import { defaultErrorHandler, POST } from '../utils/ajax'
 import { hideLoading, showLoading } from '../utils'
 
+interface AuthCallback {
+  authType: 'useInfo' | 'phoneNumber'
+  func: () => void
+}
+
+interface User {
+  nickName
+  memberImage
+  tel
+}
+
 class App {
   @observable platform: 'ios' | 'android' = 'android'
   @observable loading = true
   @observable tabBarIndex = 0
 
   @observable token = ''
-  @observable user: { nickName; memberImage; tel } | null = null
+  @observable user: User | null = null
+
+  @observable authCallback: AuthCallback | null = null
 
   constructor() {
     const res = Taro.getSystemInfoSync()
@@ -34,11 +47,6 @@ class App {
   async authLogin({ encryptedData, iv, code }) {
     showLoading()
     try {
-      // const { code, errMsg } = await Taro.login()
-      // if (!code) {
-      //   showToast({ title: errMsg })
-      //   return
-      // }
       const res = await POST('auth/wxApplet', {
         data: { encryptedData, iv, code }
       })
@@ -78,6 +86,17 @@ class App {
     const data = await POST('wxMember/getMemberInfo')
     this.user = { ...data, nickName: decodeURIComponent(data.nickName) }
     return this.user
+  }
+
+  async checkAuth(): Promise<User> {
+    return await POST('wxMember/getMemberInfo', {
+      preventAuthHandler: true
+    })
+  }
+
+  @action.bound
+  setAuthCallback(callback: AuthCallback | null) {
+    this.authCallback = callback
   }
 }
 

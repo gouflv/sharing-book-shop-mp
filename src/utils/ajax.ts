@@ -3,7 +3,9 @@ import { API_BASE } from '../config'
 import { showToast } from './index'
 import { app } from '../store/AppStore'
 
-interface AjaxOptions extends Partial<request.Option> {}
+interface AjaxOptions extends Partial<request.Option> {
+  preventAuthHandler?: boolean
+}
 
 interface AjaxError {
   handler: boolean
@@ -32,9 +34,11 @@ export const ajax = (url, options?: AjaxOptions) =>
       }
 
       if (data.code === 1001) {
-        reject({ ...data, message: data.msg, handler: true })
+        reject({ ...data, message: data.msg, handler: false })
         // app.tryFetchTokenByLocalOpenId()
-        Taro.redirectTo({ url: '/pages/auth/index' })
+        if (!options || !options.preventAuthHandler) {
+          Taro.navigateTo({ url: '/pages/auth/index' })
+        }
         return
       }
 
