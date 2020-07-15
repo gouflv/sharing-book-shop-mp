@@ -88,10 +88,15 @@ class App {
     return this.user
   }
 
-  async checkAuth(): Promise<User> {
-    return await POST('wxMember/getMemberInfo', {
-      preventAuthHandler: true
-    })
+  @action.bound
+  async checkAuth() {
+    if (!this.user) {
+      const data = await POST('wxMember/getMemberInfo', {
+        preventAuthHandler: true
+      })
+      this.user = { ...data, nickName: decodeURIComponent(data.nickName) }
+    }
+    return this.user
   }
 
   @action.bound
