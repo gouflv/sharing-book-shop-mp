@@ -19,7 +19,7 @@ const Page: FC = () => {
       const res1 = await POST('curriculum/getCurriculumLable')
       setTag(res1)
       if (res1 && res1.length) {
-        setActiveTag(res1[0].dictionariesId)
+        setActiveTag(res1[0].name)
       }
       hideLoading()
     }
@@ -48,10 +48,10 @@ const Page: FC = () => {
               <View
                 className={classNames({
                   'tab-item': 1,
-                  active: t.dictionariesId === activeTag
+                  active: t.name === activeTag
                 })}
                 key={i}
-                onClick={() => setActiveTag(t.dictionariesId)}
+                onClick={() => setActiveTag(t.name)}
               >
                 {t.name}
               </View>
