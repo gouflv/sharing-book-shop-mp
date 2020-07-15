@@ -46,8 +46,17 @@ export const Uploader: FC<{
     })
   }
 
-  function onRemoveFile(index: number) {
-    props.onChange(props.value.splice(index, 1))
+  async function onRemoveFile(index: number) {
+    await Taro.showModal({
+      title: '确认删除',
+      success: result => {
+        if (result.confirm) {
+          const val = [...props.value]
+          val.splice(index, 1)
+          props.onChange(val)
+        }
+      }
+    })
   }
 
   return (
@@ -56,20 +65,21 @@ export const Uploader: FC<{
         <Image src={require('../../../assets/plus.png')} />
       </View>
 
-      {props.value.map((file, i) => (
-        <View key={i} className='item'>
-          <Image
-            className='img'
-            src={file.url || 'http://placehold.it/150x150'}
-            mode={'aspectFill'}
-          />
-          <Image
-            className='close'
-            src={require('../../../assets/close.png')}
-            onClick={() => onRemoveFile(i)}
-          />
-        </View>
-      ))}
+      {props.value &&
+        props.value.map((file, i) => (
+          <View key={i} className='item'>
+            <Image
+              className='img'
+              src={file.url || 'http://placehold.it/150x150'}
+              mode={'aspectFill'}
+            />
+            <Image
+              className='close'
+              src={require('../../../assets/close.png')}
+              onClick={() => onRemoveFile(i)}
+            />
+          </View>
+        ))}
     </View>
   )
 }

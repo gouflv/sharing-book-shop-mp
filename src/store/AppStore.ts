@@ -77,6 +77,7 @@ class App {
   async fetchUserInfo() {
     const data = await POST('wxMember/getMemberInfo')
     this.user = { ...data, nickName: decodeURIComponent(data.nickName) }
+    return this.user
   }
 }
 

@@ -10,6 +10,10 @@
 .comment {
   margin-bottom: 20px;
   border-bottom: 1px solid $border-color;
+  &:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+  }
 
   .header {
     .thumb {

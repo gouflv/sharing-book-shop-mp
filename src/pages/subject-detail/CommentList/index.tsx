@@ -14,7 +14,11 @@ export const CommentList: FC<{ subjectId }> = props => {
         curriculumId: props.subjectId
       }
     })
-    setList(data || [])
+    setList(
+      (data || []).map(d => {
+        return { ...d, memberName: decodeURIComponent(d.memberName) }
+      })
+    )
     hideLoading()
   }
   useEffect(() => {
@@ -37,6 +41,7 @@ export const CommentList: FC<{ subjectId }> = props => {
         }
       })
       showToast({ title: '评论成功' })
+      setContent('')
       fetch()
     } catch (e) {
       defaultErrorHandler(e)
@@ -64,7 +69,9 @@ export const CommentList: FC<{ subjectId }> = props => {
                 />
                 <View className='content flex-fill'>
                   <View className='title'>{item.memberName}</View>
-                  <View className='desc text-second'>{item.createTime}</View>
+                  {item.createTime && (
+                    <View className='desc text-second'>{item.createTime}</View>
+                  )}
                 </View>
               </View>
               <View className='body text-second'>{item.content}</View>

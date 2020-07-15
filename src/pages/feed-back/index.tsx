@@ -33,12 +33,13 @@ const Page: FC = () => {
 
     try {
       showLoading()
+      const data = { lable: label, content } as any
+      if (images.length) {
+        data.images = images.map(img => img.url).join(',')
+      }
+
       await POST('wxMember/addComplaintsLable', {
-        data: {
-          label,
-          content,
-          image: images.map(img => img.url).join(',')
-        }
+        data
       })
       showToast({ title: '提交成功' })
       setTimeout(() => {

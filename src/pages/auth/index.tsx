@@ -8,12 +8,12 @@ import { hideLoading, showLoading, showToast } from '../../utils'
 import { defaultErrorHandler } from '../../utils/ajax'
 
 const Page: FC = () => {
-  const { authLogin, authLoginWithPhone } = useContext(AppStore)
+  const { authLogin, authLoginWithPhone, fetchUserInfo } = useContext(AppStore)
 
   const [mode, setMode] = useState<'useInfo' | 'phoneNumber'>('useInfo')
 
   const [code, setCode] = useState('')
-  async function login() {
+  async function wxlogin() {
     showLoading()
     try {
       const { code, errMsg } = await Taro.login()
@@ -29,7 +29,7 @@ const Page: FC = () => {
     }
   }
   useEffect(() => {
-    login()
+    wxlogin()
   }, [])
 
   async function onGetUserInfo({ encryptedData, iv }) {
@@ -37,8 +37,18 @@ const Page: FC = () => {
       return
     }
     await authLogin({ encryptedData, iv, code })
-    setMode('phoneNumber')
-    login()
+
+    showLoading()
+    const user = await fetchUserInfo()
+    hideLoading()
+
+    if (user && user.tel) {
+      showToast({ title: '登录成功' })
+      Taro.navigateBack()
+    } else {
+      setMode('phoneNumber')
+      wxlogin()
+    }
   }
 
   async function onGetPhoneNumber({ encryptedData, iv }) {
