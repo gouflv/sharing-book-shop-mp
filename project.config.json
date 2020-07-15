@@ -4,7 +4,7 @@
   "description": "共读未来",
   "appid": "wxe38aa67f42466698",
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": false,
     "postcss": false,
     "minified": false
