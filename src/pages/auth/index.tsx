@@ -59,7 +59,7 @@ const Page: FC = () => {
       if (authCallback) {
         authCallback.func()
       } else {
-        Taro.reLaunch({ url: '/pages/home/index' })
+        Taro.reLaunch({ url: '/pages/index/index' })
       }
     } else {
       setMode('phoneNumber')
@@ -80,9 +80,10 @@ const Page: FC = () => {
     showToast({ title: '登录成功' })
 
     if (authCallback) {
+      //TODO use redirectTo
       authCallback.func()
     } else {
-      Taro.reLaunch({ url: '/pages/home/index' })
+      Taro.reLaunch({ url: '/pages/index/index' })
     }
   }
   //#endregion

@@ -4,7 +4,7 @@ import { showToast } from './index'
 import { app } from '../store/AppStore'
 
 interface AjaxOptions extends Partial<request.Option> {
-  preventAuthHandler?: boolean
+  preventAuthErrorHandler?: boolean
 }
 
 interface AjaxError {
@@ -35,9 +35,10 @@ export const ajax = (url, options?: AjaxOptions) =>
 
       if (data.code === 1001) {
         reject({ ...data, message: data.msg, handler: false })
-        // app.tryFetchTokenByLocalOpenId()
-        if (!options || !options.preventAuthHandler) {
+        if (!options || !options.preventAuthErrorHandler) {
           Taro.navigateTo({ url: '/pages/auth/index' })
+        } else {
+          app.refreshTokenAndRelaunch()
         }
         return
       }

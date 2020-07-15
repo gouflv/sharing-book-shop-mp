@@ -51,6 +51,7 @@ class App {
         data: { encryptedData, iv, code }
       })
       this.setToken(res.token)
+      this.setOpenId(res.openId)
     } catch (e) {
       defaultErrorHandler(e)
       throw e
@@ -92,7 +93,7 @@ class App {
   async checkAuth() {
     if (!this.user) {
       const data = await POST('wxMember/getMemberInfo', {
-        preventAuthHandler: true
+        preventAuthErrorHandler: true
       })
       this.user = { ...data, nickName: decodeURIComponent(data.nickName) }
     }
@@ -102,6 +103,31 @@ class App {
   @action.bound
   setAuthCallback(callback: AuthCallback | null) {
     this.authCallback = callback
+  }
+
+  @action.bound
+  setOpenId(val: string) {
+    Taro.setStorageSync('open_id', val)
+  }
+
+  @action.bound
+  async refreshTokenAndRelaunch() {
+    const openId = Taro.getStorageSync('open_id')
+    if (!openId) {
+      Taro.reLaunch({ url: '/pages/index/index' })
+      return
+    }
+    showLoading()
+    try {
+      const res = await POST('auth/wxAppletByOpenId', {
+        data: { openId }
+      })
+      this.setToken(res.token)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      Taro.reLaunch({ url: '/pages/index/index' })
+    }
   }
 }
 

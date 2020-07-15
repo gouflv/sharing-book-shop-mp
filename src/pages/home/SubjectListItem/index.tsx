@@ -12,6 +12,7 @@ export const SubjectListItem: FC<{ data }> = props => {
     <View
       className='subject-list-item'
       onClick={() =>
+        //TODO test
         withAuth(() =>
           Taro.navigateTo({
             url: `/pages/subject-detail/index?id=${data.curriculumId}`
