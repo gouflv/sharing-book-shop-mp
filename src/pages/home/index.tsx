@@ -14,6 +14,7 @@ import { useAuthGuard } from '../../hooks/useAuthGuard'
 import { APP_NAME } from '../../config'
 
 const Page: FC = () => {
+  const { user } = useContext(AppStore)
   const { withAuth } = useAuthGuard()
 
   const { setTabIndex } = useContext(AppStore)
@@ -23,19 +24,29 @@ const Page: FC = () => {
   const [banners, setBanners] = useState([])
   const [subjectItems, setSubjectItems] = useState([])
 
-  async function fetch() {
+  async function fetchBanner() {
     showLoading()
-    const res1 = await POST('common/getBanner')
-    const res2 = await POST('curriculum/getIndexCurriculum')
-    setBanners(res1)
-    setSubjectItems(res2)
+    const res = await POST('common/getBanner', { withoutToken: !user })
+    setBanners(res)
+    hideLoading()
+  }
+  async function fetchList() {
+    showLoading()
+    const res = await POST('curriculum/getIndexCurriculum', {
+      withoutToken: !user
+    })
+    setSubjectItems(res)
     setLoading(false)
     hideLoading()
   }
 
   useEffect(() => {
-    fetch()
+    fetchBanner()
   }, [])
+
+  useEffect(() => {
+    fetchList()
+  }, [user])
 
   return (
     <View className={'page-home'}>
