@@ -8,7 +8,7 @@ import Taro, {
   useState,
   useContext
 } from '@tarojs/taro'
-import { Canvas, Image, View } from '@tarojs/components'
+import { Canvas, Image, View, Text } from '@tarojs/components'
 import { observer } from '@tarojs/mobx'
 import { AppStore } from '../../../store/AppStore'
 
@@ -20,6 +20,7 @@ const minValue = 0
 const maxValue = 100
 
 const RecordBtnComponent: FC<{
+  hasRecord: boolean
   value: number
   onClick: () => void
 }> = props => {
@@ -33,9 +34,7 @@ const RecordBtnComponent: FC<{
   }, [])
 
   useEffect(() => {
-    if (props.value % 2 === 0) {
-      setValue(props.value)
-    }
+    setValue(props.value)
   }, [props.value])
 
   useEffect(draw, [value])
@@ -103,7 +102,17 @@ const RecordBtnComponent: FC<{
   return (
     <View className='record-btn' onClick={props.onClick}>
       <Canvas canvasId={'canvas'} />
-      {imgPath && <Image src={imgPath} />}
+      <View className={'bar'} style={{ backgroundImage: `url(${imgPath})` }} />
+      <View className='record-btn__inner'>
+        {props.hasRecord ? (
+          <Text className={'text'}>重录</Text>
+        ) : (
+          <Image
+            className={'icon'}
+            src={require('../../../assets/course_detail_ico_record@2x.png')}
+          />
+        )}
+      </View>
     </View>
   )
 }

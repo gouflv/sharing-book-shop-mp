@@ -1,10 +1,11 @@
 import './index.scss'
-import Taro, { FC, useState, useRef, useEffect } from '@tarojs/taro'
-import { Button, View } from '@tarojs/components'
+import Taro, { FC, useEffect, useState } from '@tarojs/taro'
+import { Button, Swiper, SwiperItem, View } from '@tarojs/components'
 import { AudioItem } from './Item'
-import EE from 'eventemitter3'
 import { POST } from '../../../utils/ajax'
 import { hideLoading, showLoading } from '../../../utils'
+import { useRecord } from './useRecord'
+import { useHeaderSize } from '../../../hooks/useHeaderSize'
 
 export interface Record {
   resourcesId: string
@@ -13,7 +14,21 @@ export interface Record {
   memberCurriculumRecordId: string
 }
 
-export const AudioList: FC<{ subjectId }> = props => {
+export const AudioList: FC<{ subjectId; hasVideo }> = props => {
+  const { statusHeight, headerHeight } = useHeaderSize()
+  const [contentHeight, setContentHeight] = useState('80vh')
+  useEffect(() => {
+    console.log('props.hasVideo', props.hasVideo)
+    const videoHeight = props.hasVideo ? Taro.pxTransform(422) : '0px'
+    const tabHeight = Taro.pxTransform(90)
+    setContentHeight(
+      `calc(100vh - ${
+        statusHeight + headerHeight
+      }px - ${videoHeight} - ${tabHeight})`
+    )
+  }, [props.hasVideo, statusHeight, headerHeight])
+
+  // list
   const [list, setList] = useState<Record[]>([])
   async function fetch() {
     showLoading()
@@ -27,43 +42,38 @@ export const AudioList: FC<{ subjectId }> = props => {
     fetch()
   }, [])
 
-  //#region currentRecord
-  const [currentRecord, setCurrentRecord] = useState<number>()
-
-  const eventBus = useRef(new EE())
-  useEffect(() => {
-    return () => {
-      eventBus.current && eventBus.current.removeAllListeners()
-    }
-  }, [])
-
-  function onRecordStart(dataKey: number) {
-    if (dataKey !== currentRecord) {
-      eventBus.current.emit('stop', currentRecord)
-    }
-    setCurrentRecord(dataKey)
-  }
-
-  function onRecordStop() {
-    setCurrentRecord(undefined)
-  }
-  //#endregion
+  const {
+    currentRecord,
+    setCurrentRecord,
+    onRecordStart,
+    onRecordStop
+  } = useRecord()
 
   return (
-    <View>
-      {currentRecord}
-      <View className='audio-list'>
+    <View
+      className={'audio-list'}
+      style={{
+        height: contentHeight
+      }}
+    >
+      <Swiper
+        className='audio-list__swiper'
+        vertical={true}
+        nextMargin={props.hasVideo ? '130rpx' : '250rpx'}
+        onChange={e => setCurrentRecord(e.detail.current)}
+      >
         {Array.from({ length: 9 }).map((_, i) => (
-          <AudioItem
-            key={i}
-            dataKey={i}
-            data={{}}
-            onRecordStart={onRecordStart}
-            onRecordStop={onRecordStop}
-            eventBus={eventBus.current}
-          />
+          <SwiperItem>
+            <AudioItem
+              key={i}
+              dataKey={i}
+              data={{}}
+              onRecordStart={onRecordStart}
+              onRecordStop={onRecordStop}
+            />
+          </SwiperItem>
         ))}
-      </View>
+      </Swiper>
       <View className='action-bar'>
         <Button className='btn-primary'>配音完成</Button>
       </View>

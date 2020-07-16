@@ -1,29 +1,19 @@
 import './index.scss'
-import Taro, { FC, useState, useEffect } from '@tarojs/taro'
-import { Image, View } from '@tarojs/components'
+import Taro, { FC, useState } from '@tarojs/taro'
+import { Image, SwiperItem, View } from '@tarojs/components'
 import { RecordBtn } from './ReacordBtn'
 import { useInterval } from '../../../utils/useInterval'
-import EE from 'eventemitter3'
 
 interface AudioItemProps {
   dataKey: number
   data: any
-  onRecordStart: (dataKey: number) => void
-  onRecordStop: (dataKey: number) => void
-  eventBus: EE
+  onRecordStart: () => void
+  onRecordStop: () => void
 }
 
 export const AudioItem: FC<AudioItemProps> = props => {
-  const [time, setTime] = useState(10)
+  const [time, setTime] = useState(0)
   const [running, setRunning] = useState(false)
-
-  useEffect(() => {
-    props.eventBus.on('stop', dataKey => {
-      if (dataKey === props.dataKey) {
-        stop()
-      }
-    })
-  }, [])
 
   function onRecordClick() {
     if (running) {
@@ -34,12 +24,12 @@ export const AudioItem: FC<AudioItemProps> = props => {
   }
 
   function start() {
-    props.onRecordStart(props.dataKey)
+    props.onRecordStart()
     setRunning(true)
   }
 
   function stop() {
-    props.onRecordStop(props.dataKey)
+    props.onRecordStop()
     setRunning(false)
   }
 
@@ -59,7 +49,7 @@ export const AudioItem: FC<AudioItemProps> = props => {
   return (
     <View className='audio-item'>
       <View className='header'>
-        <View className='tag'>1/10</View>
+        <View className='tag'>{props.dataKey}/10</View>
       </View>
       <View className='content'>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -70,7 +60,7 @@ export const AudioItem: FC<AudioItemProps> = props => {
             src={require('../../../assets/course_detail_ico_start@2x.png')}
           />
         </View>
-        <RecordBtn value={time} onClick={onRecordClick} />
+        <RecordBtn hasRecord={false} value={time} onClick={onRecordClick} />
       </View>
       <Image
         className='mark'

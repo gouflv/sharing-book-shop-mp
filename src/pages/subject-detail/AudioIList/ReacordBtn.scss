@@ -12,17 +12,28 @@
     visibility: hidden;
   }
 
-  image {
+  .bar {
+    position: absolute;
     width: 72px;
     height: 72px;
   }
 
-  .icon {
-    position: absolute;
-    top: 21px;
-    left: 26px;
+  &__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
     z-index: 1;
-    width: 22px;
-    height: 30px;
+    .icon {
+      width: 20px;
+      height: 29px;
+    }
+    .text {
+      color: #fff;
+      font-size: 20px;
+    }
   }
+
 }

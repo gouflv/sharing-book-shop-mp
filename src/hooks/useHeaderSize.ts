@@ -1,7 +1,7 @@
 import Taro, { useEffect, useState } from '@tarojs/taro'
 
 export const useHeaderSize = () => {
-  const [statusHeight, setStatusHeight] = useState(44)
+  const [statusHeight, setStatusHeight] = useState(20)
   const [headerHeight, setHeaderHeight] = useState(44)
 
   useEffect(() => {

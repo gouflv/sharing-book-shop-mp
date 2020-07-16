@@ -22,7 +22,7 @@ const Page: FC = () => {
       }
     })
     setData(res)
-    setHasVideo(res.isVideo)
+    // setHasVideo(res.isVideo)
 
     hideLoading()
   }
@@ -32,7 +32,7 @@ const Page: FC = () => {
     fetch()
   }, [])
 
-  const [hasVideo, setHasVideo] = useState(false)
+  const [hasVideo, setHasVideo] = useState(true)
   const [tab, setTab] = useState(1)
 
   useEffect(() => {
@@ -127,7 +127,9 @@ const Page: FC = () => {
               </View>
             )}
 
-            {tab === 1 && <AudioList subjectId={subjectId} />}
+            {tab === 1 && (
+              <AudioList subjectId={subjectId} hasVideo={hasVideo} />
+            )}
 
             {tab === 2 && <CommentList subjectId={subjectId} />}
           </View>
