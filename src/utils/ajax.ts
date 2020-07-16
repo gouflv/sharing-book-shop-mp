@@ -5,6 +5,7 @@ import { app } from '../store/AppStore'
 
 interface AjaxOptions extends Partial<request.Option> {
   preventAuthErrorHandler?: boolean
+  withoutToken?: boolean
 }
 
 interface AjaxError {
@@ -18,7 +19,7 @@ export const ajax = (url, options?: AjaxOptions) =>
     const params: request.Option = {
       header: {
         'content-type': 'application/x-www-form-urlencoded',
-        token: app.token
+        token: options && options.withoutToken ? '' : app.token
       },
       url: `${API_BASE}/${url}`,
       ...options
@@ -35,6 +36,7 @@ export const ajax = (url, options?: AjaxOptions) =>
 
       if (data.code === 1001) {
         reject({ ...data, message: data.msg, handler: false })
+        //TODO test
         if (!options || !options.preventAuthErrorHandler) {
           Taro.navigateTo({ url: '/pages/auth/index' })
         } else {
