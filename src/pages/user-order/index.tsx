@@ -1,13 +1,28 @@
 import './index.scss'
-import Taro, { FC, useState } from '@tarojs/taro'
-import { View, Image, Picker, Text } from '@tarojs/components'
+import Taro, { FC, useEffect, useState } from '@tarojs/taro'
+import { Image, Picker, Text, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
-import classNames from 'classnames'
+import { POST } from '../../utils/ajax'
+import dayjs from 'dayjs'
 
 const Page: FC = () => {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM'))
+  const [items, setItems] = useState<any[]>([])
+
+  async function fetch() {
+    const data = await POST('wxMember/getMemberCard', {
+      data: { date: `${date}-01` }
+    })
+    setItems(data)
+  }
+
+  useEffect(() => {
+    fetch()
+  }, [date])
+
   function onDateChange(val: string) {
-    console.log(val)
+    setDate(val)
   }
 
   return (
@@ -18,7 +33,7 @@ const Page: FC = () => {
             <Picker
               mode={'date'}
               fields={'month'}
-              value={'2020-09-01'}
+              value={date}
               onChange={e => onDateChange(e.detail.value)}
             >
               <View className='label'>
@@ -26,7 +41,7 @@ const Page: FC = () => {
                   className={'time'}
                   src={require('../../assets/vip_borrow_ico_time@2x.png')}
                 />
-                2020-06
+                {date}
                 <Image
                   className='arrow'
                   src={require('../../assets/arrow.png')}

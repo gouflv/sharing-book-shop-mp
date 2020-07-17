@@ -1,10 +1,29 @@
 import './index.scss'
-import Taro, { FC } from '@tarojs/taro'
+import Taro, { FC, useEffect, useState } from '@tarojs/taro'
 import { Image, Picker, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
+import dayjs from 'dayjs'
+import { POST } from '../../utils/ajax'
 
 const Page: FC = () => {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM'))
+  const [items, setItems] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  async function fetch() {
+    setLoading(true)
+    const data = await POST('wxMember/getMemberCard', {
+      data: { date: `${date}-01` }
+    })
+    setItems(data)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    fetch()
+  }, [date])
+
   function onDateChange(val: string) {
     console.log(val)
   }
@@ -17,7 +36,7 @@ const Page: FC = () => {
             <Picker
               mode={'date'}
               fields={'month'}
-              value={'2020-09-01'}
+              value={date}
               onChange={e => onDateChange(e.detail.value)}
             >
               <View className='label'>
@@ -25,7 +44,7 @@ const Page: FC = () => {
                   className={'time'}
                   src={require('../../assets/vip_borrow_ico_time@2x.png')}
                 />
-                2020-06
+                {date}
                 <Image
                   className='arrow'
                   src={require('../../assets/arrow.png')}
@@ -38,17 +57,27 @@ const Page: FC = () => {
         <View style={{ height: '100rpx' }} />
 
         <View className='page-space-around'>
-          <View className='user-payment-list'>
-            {Array.from({ length: 3 }).map((_, i) => (
-              <View key={i} className='item'>
-                <View className='content'>
-                  <View className='title'>Lorem ipsum dolor sit amet.</View>
-                  <View className='desc text-second'>2020/6/8</View>
+          {!loading && !items.length && (
+            <View className='empty-list'>暂无记录</View>
+          )}
+
+          {!loading && items.length && (
+            <View className='user-payment-list'>
+              {items.map((item, i) => (
+                <View key={i} className='item'>
+                  <View className='content'>
+                    <View className='title'>
+                      购买{item.memberCode} (书位{item.payName})
+                    </View>
+                    <View className='desc text-second'>
+                      {item.purchaseDate}
+                    </View>
+                  </View>
+                  <View className='value'>¥{item.payMoney}</View>
                 </View>
-                <View className='value'>¥99</View>
-              </View>
-            ))}
-          </View>
+              ))}
+            </View>
+          )}
         </View>
       </PageHeaderWrapper>
     </View>

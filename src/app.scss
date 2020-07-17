@@ -262,3 +262,12 @@ image {
     }
   }
 }
+
+.empty-list {
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+  height: 50vh;
+  color: $text-gray;
+  font-size: $font-size-base;
+}

@@ -1,21 +1,44 @@
 import './index.scss'
-import Taro, { FC } from '@tarojs/taro'
+import Taro, { FC, useEffect, useState } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
+import { POST } from '../../utils/ajax'
 
 const Page: FC = () => {
+  const [items, setItems] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  async function fetch() {
+    setLoading(true)
+    const data = await POST('wxMember/getMemberMsg', {
+      data: { type: 0 }
+    })
+    setItems(data)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    fetch()
+  }, [])
+
   return (
     <View className={'page-message'}>
       <PageHeaderWrapper title={'我的消息'}>
-        <PageHeaderExt absolute height={'90rpx'} />
+        {!loading && items.length && (
+          <PageHeaderExt absolute height={'90rpx'} />
+        )}
       </PageHeaderWrapper>
 
       <View style={{ height: '20rpx' }} />
 
       <View className='page-space-wing'>
+        {!loading && !items.length && (
+          <View className='empty-list'>暂无消息</View>
+        )}
+
         <View className={'list'}>
-          {Array.from({ length: 10 }).map((_, i) => (
+          {items.map((_, i) => (
             <View key={i} className='message d-flex'>
               <View className='date flex-auto'>
                 <View>2020</View>
