@@ -84,6 +84,7 @@ const Page: FC = () => {
         {hasVideo ? (
           <View>
             <Video
+              className='player'
               src={data.curriculumVideo}
               title={data.curriculumName}
               poster={data.curriculumImageUrl}

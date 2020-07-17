@@ -28,7 +28,6 @@ const Page: FC = () => {
     showLoading()
     const res = await POST('common/getBanner', { withoutToken: !user })
     setBanners(res)
-    hideLoading()
   }
   async function fetchList() {
     showLoading()
@@ -37,7 +36,6 @@ const Page: FC = () => {
     })
     setSubjectItems(res)
     setLoading(false)
-    hideLoading()
   }
 
   useEffect(() => {
@@ -47,6 +45,12 @@ const Page: FC = () => {
   useEffect(() => {
     fetchList()
   }, [user])
+
+  useEffect(() => {
+    if (!loading) {
+      hideLoading()
+    }
+  }, [loading])
 
   return (
     <View className={'page-home'}>
