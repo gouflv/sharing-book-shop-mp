@@ -1,26 +1,22 @@
 import './index.scss'
-import Taro, { FC, useEffect, useState } from '@tarojs/taro'
+import Taro, { FC, useEffect } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
-import { POST } from '../../utils/ajax'
+import { useNotification } from './useNotification'
 
 const Page: FC = () => {
-  const [items, setItems] = useState<any[]>([])
-  const [loading, setLoading] = useState(true)
-
-  async function fetch() {
-    setLoading(true)
-    const data = await POST('wxMember/getMemberMsg', {
-      data: { type: 0 }
-    })
-    setItems(data)
-    setLoading(false)
-  }
+  const { items, loading, fetchList, markAllAsRead } = useNotification()
 
   useEffect(() => {
-    fetch()
+    fetchList()
   }, [])
+
+  useEffect(() => {
+    if (items.length) {
+      markAllAsRead(items.map(d => d.newsId))
+    }
+  }, [items])
 
   return (
     <View className={'page-message'}>
@@ -38,19 +34,15 @@ const Page: FC = () => {
         )}
 
         <View className={'list'}>
-          {items.map((_, i) => (
+          {items.map((item, i) => (
             <View key={i} className='message d-flex'>
               <View className='date flex-auto'>
                 <View>2020</View>
                 <View className='text-second'>06/01</View>
               </View>
               <View className='content flex-fill'>
-                <View className='title'>Lorem ipsum dolor sit.</View>
-                <View className='desc'>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste
-                  itaque modi mollitia officiis sunt? Consectetur eius impedit
-                  iure nostrum suscipit.
-                </View>
+                <View className='title'>系统通知</View>
+                <View className='desc'>{item.content}</View>
               </View>
             </View>
           ))}

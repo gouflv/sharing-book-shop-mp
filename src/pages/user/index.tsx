@@ -1,5 +1,11 @@
 import './index.scss'
-import Taro, { FC, useContext, useEffect, useState } from '@tarojs/taro'
+import Taro, {
+  FC,
+  useContext,
+  useEffect,
+  useState,
+  useDidShow
+} from '@tarojs/taro'
 import { Image, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
@@ -11,6 +17,7 @@ import { AppStore } from '../../store/AppStore'
 import { observer } from '@tarojs/mobx'
 import { hideLoading, showLoading } from '../../utils'
 import { POST } from '../../utils/ajax'
+import { useNotification } from '../user-message/useNotification'
 
 const Page: FC = () => {
   const { user, fetchUserInfo } = useContext(AppStore)
@@ -31,6 +38,16 @@ const Page: FC = () => {
     const data = await POST('wxMember/getMemberCard')
     setCardList(data)
   }
+
+  // notification
+  const { items, fetchList, fetchActiveRecord } = useNotification()
+  useEffect(() => {
+    setTimeout(() => {
+      fetchList()
+      const active = fetchActiveRecord()
+      console.log('active', active)
+    }, 500)
+  }, [])
 
   // UserRuleModal
   const [userRuleVisible, setUserRuleVisible] = useState(false)
@@ -145,7 +162,9 @@ const Page: FC = () => {
               />
               <View className='content'>
                 我的消息
-                <View className='badge'>1</View>
+                {items && items.length && (
+                  <View className='badge'>{items.length}</View>
+                )}
               </View>
               <Image
                 className='link'
