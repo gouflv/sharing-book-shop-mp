@@ -1,11 +1,11 @@
 import Taro, { useContext } from '@tarojs/taro'
-import { AppStore } from '../store/AppStore'
+import { AppStore, AuthCallback } from '../store/AppStore'
 import { hideLoading, showLoading } from '../utils'
 
 export const useAuthGuard = () => {
   const { checkAuth, setAuthCallback } = useContext(AppStore)
 
-  async function withAuth(callback: () => void) {
+  async function withAuth(callback: AuthCallback['func']) {
     try {
       showLoading()
       const user = await checkAuth()

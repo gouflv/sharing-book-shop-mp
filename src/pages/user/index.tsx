@@ -40,14 +40,14 @@ const Page: FC = () => {
       <PageHeaderWrapper
         title={'会员中心'}
         hideBackArrow
-        bg={require('../../assets/vip_top_bg_xl.jpg')}
-        bgHeight={'692rpx'}
+        bg={require('../../assets/vip_top_bg.jpg')}
+        bgHeight={'650rpx'}
       >
         <PageHeaderExt
           absolute
-          height={`${692 / 2 - statusHeight - headerHeight}px`}
-          bg={require('../../assets/vip_top_bg_xl.jpg')}
-          bgHeight={'692rpx'}
+          height={`${650 / 2 - statusHeight - headerHeight}px`}
+          bg={require('../../assets/vip_top_bg.jpg')}
+          bgHeight={'650rpx'}
         />
 
         <View className='page-space-wing'>
@@ -82,7 +82,7 @@ const Page: FC = () => {
           </View>
         </View>
 
-        <Banner />
+        <Banner cardList={cardList} />
 
         <View className='page-space-wing'>
           <View

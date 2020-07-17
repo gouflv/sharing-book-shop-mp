@@ -17,8 +17,10 @@ const Page: FC = () => {
   const [options, setOptions] = useState<{ name; code }[]>([])
   useEffect(() => {
     async function fetch() {
+      showLoading()
       const data = await POST('wxMember/getComplaintsLable')
       setOptions(data)
+      hideLoading()
     }
     fetch()
   }, [])

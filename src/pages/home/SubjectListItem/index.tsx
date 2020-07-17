@@ -13,11 +13,11 @@ export const SubjectListItem: FC<{ data }> = props => {
       className='subject-list-item'
       onClick={() =>
         //TODO test
-        withAuth(() =>
-          Taro.navigateTo({
+        withAuth(redirect => {
+          ;(redirect ? Taro.redirectTo : Taro.navigateTo)({
             url: `/pages/subject-detail/index?id=${data.curriculumId}`
           })
-        )
+        })
       }
     >
       <View className='d-flex main'>

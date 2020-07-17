@@ -60,6 +60,7 @@ export const AudioList: FC<{ subjectId; hasVideo }> = props => {
         className='audio-list__swiper'
         vertical={true}
         nextMargin={props.hasVideo ? '130rpx' : '250rpx'}
+        duration={250}
         onChange={e => setCurrentRecord(e.detail.current)}
       >
         {Array.from({ length: 9 }).map((_, i) => (

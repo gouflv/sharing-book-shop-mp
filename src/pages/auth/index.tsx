@@ -57,7 +57,7 @@ const Page: FC = () => {
     if (user && user.tel) {
       showToast({ title: '登录成功' })
       if (authCallback) {
-        authCallback.func()
+        authCallback.func({ redirect: true })
       } else {
         Taro.reLaunch({ url: '/pages/index/index' })
       }
@@ -80,8 +80,7 @@ const Page: FC = () => {
     showToast({ title: '登录成功' })
 
     if (authCallback) {
-      //TODO use redirectTo
-      authCallback.func()
+      authCallback.func({ redirect: true })
     } else {
       Taro.reLaunch({ url: '/pages/index/index' })
     }

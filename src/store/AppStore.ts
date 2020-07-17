@@ -3,9 +3,9 @@ import { action, observable } from 'mobx'
 import { defaultErrorHandler, POST } from '../utils/ajax'
 import { hideLoading, showLoading } from '../utils'
 
-interface AuthCallback {
+export interface AuthCallback {
   authType: 'useInfo' | 'phoneNumber'
-  func: () => void
+  func: (params?: { redirect: boolean }) => void
 }
 
 interface User {
