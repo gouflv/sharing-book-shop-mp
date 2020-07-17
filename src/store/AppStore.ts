@@ -112,6 +112,23 @@ class App {
   }
 
   @action.bound
+  async refreshToken() {
+    const openId = Taro.getStorageSync('open_id')
+    if (!openId) {
+      return
+    }
+    try {
+      const res = await POST('auth/wxAppletByOpenId', {
+        data: { openId }
+      })
+      this.setToken(res.token)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  // token无效处理
+  @action.bound
   async refreshTokenAndRelaunch() {
     const openId = Taro.getStorageSync('open_id')
     if (!openId) {
@@ -126,6 +143,7 @@ class App {
       this.setToken(res.token)
     } catch (e) {
       console.error(e)
+      this.setToken('')
     } finally {
       Taro.reLaunch({ url: '/pages/index/index' })
     }

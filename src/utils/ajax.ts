@@ -39,9 +39,7 @@ export const ajax = (url, options?: AjaxOptions) =>
 
       if (data.code === 1001) {
         reject({ ...data, message: data.msg, handler: false })
-        //TODO token无效处理
         if (!options || !options.preventAuthErrorHandler) {
-          // Taro.navigateTo({ url: '/pages/auth/index' })
           app.refreshTokenAndRelaunch()
         }
         return
