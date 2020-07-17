@@ -1,14 +1,18 @@
 import './index.scss'
 import Taro, { FC, useState } from '@tarojs/taro'
-import { Image, SwiperItem, View } from '@tarojs/components'
+import { Image, View } from '@tarojs/components'
 import { RecordBtn } from './ReacordBtn'
 import { useInterval } from '../../../utils/useInterval'
+import showModal = Taro.showModal
 
 interface AudioItemProps {
   dataKey: number
   data: any
+  recordData: { file: string } | null
   onRecordStart: () => void
   onRecordStop: () => void
+  onRemoveRecord: () => void
+  disabled: boolean
 }
 
 export const AudioItem: FC<AudioItemProps> = props => {
@@ -16,6 +20,20 @@ export const AudioItem: FC<AudioItemProps> = props => {
   const [running, setRunning] = useState(false)
 
   function onRecordClick() {
+    if (props.disabled) {
+      return
+    }
+
+    if (props.recordData) {
+      showModal({
+        title: '确认重录',
+        success: ({ confirm }) => {
+          confirm && props.onRemoveRecord()
+        }
+      })
+      return
+    }
+
     if (running) {
       stop()
     } else {
@@ -49,7 +67,7 @@ export const AudioItem: FC<AudioItemProps> = props => {
   return (
     <View className='audio-item'>
       <View className='header'>
-        <View className='tag'>{props.dataKey}/10</View>
+        <View className='tag'>{props.dataKey + 1}/10</View>
       </View>
       <View className='content'>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -60,7 +78,11 @@ export const AudioItem: FC<AudioItemProps> = props => {
             src={require('../../../assets/course_detail_ico_start@2x.png')}
           />
         </View>
-        <RecordBtn hasRecord={false} value={time} onClick={onRecordClick} />
+        <RecordBtn
+          hasRecord={!!props.recordData}
+          value={time}
+          onClick={onRecordClick}
+        />
       </View>
       <Image
         className='mark'

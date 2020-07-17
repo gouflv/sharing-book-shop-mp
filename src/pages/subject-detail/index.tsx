@@ -3,6 +3,7 @@ import Taro, {
   createVideoContext,
   FC,
   useEffect,
+  useLayoutEffect,
   useRef,
   useRouter,
   useScope,
@@ -17,6 +18,12 @@ import { CommentList } from './CommentList'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { POST } from '../../utils/ajax'
 import { hideLoading, showLoading, textToRichText } from '../../utils'
+
+export interface VideoStateForUpdate {
+  src: string
+  muted: boolean
+  autoplay: boolean
+}
 
 const Page: FC = () => {
   const router = useRouter()
@@ -37,6 +44,7 @@ const Page: FC = () => {
     setData(res)
     setHasVideo(res.isVideo === 1)
     setVideoSrcOrigin(res.curriculumVideo)
+    setVideoSrc(res.curriculumVideo)
     hideLoading()
     setLoading(false)
   }
@@ -75,38 +83,40 @@ const Page: FC = () => {
   const [videoSrcOrigin, setVideoSrcOrigin] = useState('')
   const [videoSrc, setVideoSrc] = useState('')
   const [muted, setMuted] = useState(false)
-  function onRecordStart(src: string) {
-    setVideoSrc(src)
+
+  function setVideoState(params: VideoStateForUpdate) {
+    console.log('setVideoState:', params)
+    setVideoSrc(params.src)
+    setMuted(params.muted)
     if (videoContext.current) {
-      setMuted(true)
-      videoContext.current.play()
+      videoContext.current.seek(0)
+      if (params.autoplay) {
+        videoContext.current.play()
+      }
     }
   }
-  function onRecordStop() {
+
+  function setVideoStop() {
     if (videoContext.current) {
       videoContext.current.stop()
       videoContext.current.seek(0)
     }
   }
-  function onPlayStart(src: string, muted = true) {
-    setVideoSrc(src)
-    if (videoContext.current) {
-      setMuted(muted)
-      videoContext.current.play()
-    }
-  }
-  function onPlayStop() {
-    onRecordStop()
-  }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (hasVideo) {
       videoContext.current = createVideoContext('player', scope)
     }
   }, [loading])
+  //#endregion
 
   useEffect(() => {
     if (tab === 'summary' || tab === 'comments') {
+      setVideoState({
+        src: videoSrcOrigin,
+        muted: false,
+        autoplay: false
+      })
       // setTimeout(() => {
       //   onPlayStart(videoSrcOrigin, false)
       // }, 500)
@@ -114,7 +124,6 @@ const Page: FC = () => {
       //
     }
   }, [tab])
-  //#endregion
 
   const renderTabs = () => {
     return (
@@ -212,10 +221,8 @@ const Page: FC = () => {
               <AudioList
                 subjectId={subjectId}
                 hasVideo={hasVideo}
-                onRecordStart={onRecordStart}
-                onRecordStop={onRecordStop}
-                onPlayStart={onPlayStart}
-                onPlayStop={onPlayStop}
+                onSetVideoState={setVideoState}
+                onSetVideoStop={setVideoStop}
               />
             )}
 

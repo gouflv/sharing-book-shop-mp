@@ -4,16 +4,14 @@ import { Button, Swiper, SwiperItem, View } from '@tarojs/components'
 import { AudioItem } from './AudioItem'
 import { POST } from '../../../utils/ajax'
 import { hideLoading, showLoading, showToast } from '../../../utils'
-import { useRecord } from './useRecord'
 import { useContentHeight } from './useContentHeight'
+import { VideoStateForUpdate } from '../index'
 
 interface AudioListProps {
   subjectId
   hasVideo: boolean
-  onRecordStart: (src: string, muted?: boolean) => void
-  onRecordStop: () => void
-  onPlayStart: (src: string, muted?: boolean) => void
-  onPlayStop: () => void
+  onSetVideoState: (params: VideoStateForUpdate) => void
+  onSetVideoStop: () => void
 }
 
 export interface Record {
@@ -44,25 +42,61 @@ export const AudioList: FC<AudioListProps> = props => {
   }, [])
   //#endregion
 
-  const [currentRecord, setCurrentRecord] = useState(0)
+  //#region record
+  const [currentItemIndex, setCurrentItemIndex] = useState(0)
   const [isRecording, setIsRecording] = useState(false)
+  const [recordData, setRecordData] = useState<({ file: string } | null)[]>([])
+  useEffect(() => {
+    console.log(recordData)
+  }, [recordData])
 
-  function onRecordStart() {
+  function onCurrentItemRecordStart() {
     if (isRecording) {
       showToast({ title: '正在录音' })
       return
     }
     setIsRecording(true)
+
+    // Video
+    props.onSetVideoState({
+      src: `list[${currentItemIndex}].video`,
+      muted: true,
+      autoplay: true
+    })
   }
 
-  function onRecordStop() {
+  function onCurrentItemRecordStop() {
+    setRecordData(prevState => {
+      const copy = [...prevState]
+      copy[currentItemIndex] = { file: `${currentItemIndex}` }
+      return copy
+    })
     setIsRecording(false)
+
+    // Video
+    props.onSetVideoStop()
   }
 
-  // if hasRecord[current]
-  //
-  // else
-  //  auto play audio
+  function onCurrentItemRemoveRecord() {
+    setRecordData(prevState => {
+      const copy = [...prevState]
+      copy[currentItemIndex] = null
+      return copy
+    })
+  }
+  //#endregion
+
+  useEffect(() => {
+    if (isRecording) {
+      return
+    }
+    // 有录音时不自动播放
+    props.onSetVideoState({
+      src: `list[${currentItemIndex}].video`,
+      muted: false,
+      autoplay: !recordData[currentItemIndex]
+    })
+  }, [currentItemIndex])
 
   return (
     <View
@@ -76,7 +110,7 @@ export const AudioList: FC<AudioListProps> = props => {
         vertical={true}
         nextMargin={props.hasVideo ? '130rpx' : '250rpx'}
         duration={250}
-        onChange={e => setCurrentRecord(e.detail.current)}
+        onChange={e => setCurrentItemIndex(e.detail.current)}
       >
         {Array.from({ length: 9 }).map((_, i) => (
           <SwiperItem>
@@ -84,8 +118,11 @@ export const AudioList: FC<AudioListProps> = props => {
               key={i}
               dataKey={i}
               data={{}}
-              onRecordStart={onRecordStart}
-              onRecordStop={onRecordStop}
+              recordData={recordData[i]}
+              onRecordStart={onCurrentItemRecordStart}
+              onRecordStop={onCurrentItemRecordStop}
+              onRemoveRecord={onCurrentItemRemoveRecord}
+              disabled={isRecording && i !== currentItemIndex}
             />
           </SwiperItem>
         ))}
