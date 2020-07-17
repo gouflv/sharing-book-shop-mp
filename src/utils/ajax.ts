@@ -50,7 +50,7 @@ export const ajax = (url, options?: AjaxOptions) =>
         return
       }
 
-      console.log('get data form api', data.data)
+      console.log('Api Response:', url, data.data)
       resolve(data.data || {})
     } catch (e) {
       showToast({ title: '网络开小差了' })

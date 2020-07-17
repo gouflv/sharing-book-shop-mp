@@ -1,11 +1,20 @@
 import './index.scss'
 import Taro, { FC, useEffect, useState } from '@tarojs/taro'
 import { Button, Swiper, SwiperItem, View } from '@tarojs/components'
-import { AudioItem } from './Item'
+import { AudioItem } from './AudioItem'
 import { POST } from '../../../utils/ajax'
-import { hideLoading, showLoading } from '../../../utils'
+import { hideLoading, showLoading, showToast } from '../../../utils'
 import { useRecord } from './useRecord'
-import { useHeaderSize } from '../../../hooks/useHeaderSize'
+import { useContentHeight } from './useContentHeight'
+
+interface AudioListProps {
+  subjectId
+  hasVideo: boolean
+  onRecordStart: (src: string, muted?: boolean) => void
+  onRecordStop: () => void
+  onPlayStart: (src: string, muted?: boolean) => void
+  onPlayStop: () => void
+}
 
 export interface Record {
   resourcesId: string
@@ -14,21 +23,13 @@ export interface Record {
   memberCurriculumRecordId: string
 }
 
-export const AudioList: FC<{ subjectId; hasVideo }> = props => {
-  const { statusHeight, headerHeight } = useHeaderSize()
-  const [contentHeight, setContentHeight] = useState('80vh')
+export const AudioList: FC<AudioListProps> = props => {
+  const { contentHeight, setHasVideo } = useContentHeight()
   useEffect(() => {
-    console.log('props.hasVideo', props.hasVideo)
-    const videoHeight = props.hasVideo ? Taro.pxTransform(422) : '0px'
-    const tabHeight = Taro.pxTransform(90)
-    setContentHeight(
-      `calc(100vh - ${
-        statusHeight + headerHeight
-      }px - ${videoHeight} - ${tabHeight})`
-    )
-  }, [props.hasVideo, statusHeight, headerHeight])
+    setHasVideo(props.hasVideo)
+  }, [props.hasVideo])
 
-  // list
+  //#region list
   const [list, setList] = useState<Record[]>([])
   async function fetch() {
     showLoading()
@@ -41,13 +42,27 @@ export const AudioList: FC<{ subjectId; hasVideo }> = props => {
   useEffect(() => {
     fetch()
   }, [])
+  //#endregion
 
-  const {
-    currentRecord,
-    setCurrentRecord,
-    onRecordStart,
-    onRecordStop
-  } = useRecord()
+  const [currentRecord, setCurrentRecord] = useState(0)
+  const [isRecording, setIsRecording] = useState(false)
+
+  function onRecordStart() {
+    if (isRecording) {
+      showToast({ title: '正在录音' })
+      return
+    }
+    setIsRecording(true)
+  }
+
+  function onRecordStop() {
+    setIsRecording(false)
+  }
+
+  // if hasRecord[current]
+  //
+  // else
+  //  auto play audio
 
   return (
     <View

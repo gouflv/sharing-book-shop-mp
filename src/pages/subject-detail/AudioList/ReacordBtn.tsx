@@ -2,14 +2,13 @@ import './ReacordBtn.scss'
 import Taro, {
   CanvasContext,
   FC,
+  useContext,
   useEffect,
   useRef,
   useScope,
-  useState,
-  useContext
+  useState
 } from '@tarojs/taro'
-import { Canvas, Image, View, Text } from '@tarojs/components'
-import { observer } from '@tarojs/mobx'
+import { Canvas, Image, Text, View } from '@tarojs/components'
 import { AppStore } from '../../../store/AppStore'
 
 const size = 36
@@ -19,7 +18,7 @@ const bgColor = '#d0e6ff'
 const minValue = 0
 const maxValue = 100
 
-const RecordBtnComponent: FC<{
+export const RecordBtn: FC<{
   hasRecord: boolean
   value: number
   onClick: () => void
@@ -34,6 +33,7 @@ const RecordBtnComponent: FC<{
   }, [])
 
   useEffect(() => {
+    // if (props.value % 2 === 0)
     setValue(props.value)
   }, [props.value])
 
@@ -116,5 +116,3 @@ const RecordBtnComponent: FC<{
     </View>
   )
 }
-
-export const RecordBtn = observer(RecordBtnComponent)

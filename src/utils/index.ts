@@ -23,3 +23,7 @@ export function showToast(props: Taro.showToast.Option) {
     })
   })
 }
+
+export function textToRichText(val: string = '') {
+  return `<p>${val.replace(/\r?\n/g, '<br /><br />')}</p>`
+}

@@ -1,20 +1,31 @@
 import './index.scss'
-import Taro, { FC, useEffect, useRouter, useState } from '@tarojs/taro'
+import Taro, {
+  createVideoContext,
+  FC,
+  useEffect,
+  useRef,
+  useRouter,
+  useScope,
+  useState,
+  VideoContext
+} from '@tarojs/taro'
 import { Image, RichText, Video, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import classNames from 'classnames'
-import { AudioList } from './AudioIList'
+import { AudioList } from './AudioList'
 import { CommentList } from './CommentList'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { POST } from '../../utils/ajax'
-import { hideLoading, showLoading } from '../../utils'
+import { hideLoading, showLoading, textToRichText } from '../../utils'
 
 const Page: FC = () => {
   const router = useRouter()
+  const scope = useScope()
   const [subjectId, setSubjectId] = useState('')
 
   //#region data
-  const [data, setData] = useState<any>()
+  const [data, setData] = useState<any>({})
+  const [loading, setLoading] = useState(true)
 
   async function fetch() {
     showLoading()
@@ -25,7 +36,9 @@ const Page: FC = () => {
     })
     setData(res)
     setHasVideo(res.isVideo === 1)
+    setVideoSrcOrigin(res.curriculumVideo)
     hideLoading()
+    setLoading(false)
   }
 
   function report() {
@@ -43,8 +56,7 @@ const Page: FC = () => {
   }, [])
   //#endregion
 
-  //#region state
-  const [hasVideo, setHasVideo] = useState(true)
+  //#region tab
   const [tab, setTab] = useState<'summary' | 'audioList' | 'comments'>(
     'audioList'
   )
@@ -52,6 +64,54 @@ const Page: FC = () => {
   useEffect(() => {
     if (!hasVideo) {
       Taro.pageScrollTo({ scrollTop: 0, duration: 0 })
+    }
+  }, [tab])
+  //#endregion
+
+  //#region video state
+  const videoContext = useRef<VideoContext>()
+
+  const [hasVideo, setHasVideo] = useState(true)
+  const [videoSrcOrigin, setVideoSrcOrigin] = useState('')
+  const [videoSrc, setVideoSrc] = useState('')
+  const [muted, setMuted] = useState(false)
+  function onRecordStart(src: string) {
+    setVideoSrc(src)
+    if (videoContext.current) {
+      setMuted(true)
+      videoContext.current.play()
+    }
+  }
+  function onRecordStop() {
+    if (videoContext.current) {
+      videoContext.current.stop()
+      videoContext.current.seek(0)
+    }
+  }
+  function onPlayStart(src: string, muted = true) {
+    setVideoSrc(src)
+    if (videoContext.current) {
+      setMuted(muted)
+      videoContext.current.play()
+    }
+  }
+  function onPlayStop() {
+    onRecordStop()
+  }
+
+  useEffect(() => {
+    if (hasVideo) {
+      videoContext.current = createVideoContext('player', scope)
+    }
+  }, [loading])
+
+  useEffect(() => {
+    if (tab === 'summary' || tab === 'comments') {
+      // setTimeout(() => {
+      //   onPlayStart(videoSrcOrigin, false)
+      // }, 500)
+    } else {
+      //
     }
   }, [tab])
   //#endregion
@@ -88,25 +148,31 @@ const Page: FC = () => {
   return (
     <View className='page-subject-detail'>
       <PageHeaderWrapper title={'课程'}>
-        {hasVideo ? (
+        {!loading && (
           <View>
-            <Video
-              className='player'
-              src={data.curriculumVideo}
-              title={data.curriculumName}
-            />
-            {renderTabs()}
-          </View>
-        ) : (
-          <View>
-            <PageHeaderExt fixed height={'90rpx'}>
-              {renderTabs()}
-            </PageHeaderExt>
-            <View style={{ height: '90rpx' }} />
+            {hasVideo ? (
+              <View>
+                <Video
+                  id='player'
+                  className='player'
+                  src={videoSrc}
+                  title={data.curriculumName}
+                  muted={muted}
+                />
+                {renderTabs()}
+              </View>
+            ) : (
+              <View>
+                <PageHeaderExt fixed height={'90rpx'}>
+                  {renderTabs()}
+                </PageHeaderExt>
+                <View style={{ height: '90rpx' }} />
+              </View>
+            )}
           </View>
         )}
 
-        {data && (
+        {!loading && (
           <View className='page-space-around'>
             {tab === 'summary' && (
               <View className='subject-summary'>
@@ -137,13 +203,20 @@ const Page: FC = () => {
                   </View>
                 </View>
                 <View className='content'>
-                  <RichText nodes={`${data.curriculumIntroduce}`} />
+                  <RichText nodes={textToRichText(data.curriculumIntroduce)} />
                 </View>
               </View>
             )}
 
             {tab === 'audioList' && (
-              <AudioList subjectId={subjectId} hasVideo={hasVideo} />
+              <AudioList
+                subjectId={subjectId}
+                hasVideo={hasVideo}
+                onRecordStart={onRecordStart}
+                onRecordStop={onRecordStop}
+                onPlayStart={onPlayStart}
+                onPlayStop={onPlayStop}
+              />
             )}
 
             {tab === 'comments' && <CommentList subjectId={subjectId} />}
