@@ -119,7 +119,8 @@ class App {
     }
     try {
       const res = await POST('auth/wxAppletByOpenId', {
-        data: { openId }
+        data: { openId },
+        withoutToken: true
       })
       this.setToken(res.token)
     } catch (e) {
@@ -138,7 +139,8 @@ class App {
     showLoading()
     try {
       const res = await POST('auth/wxAppletByOpenId', {
-        data: { openId }
+        data: { openId },
+        withoutToken: true
       })
       this.setToken(res.token)
     } catch (e) {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from '@tarojs/taro'
+import { useState } from '@tarojs/taro'
 import { POST } from '../../utils/ajax'
 
 export const useNotification = () => {

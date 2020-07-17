@@ -2,6 +2,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { Provider } from '@tarojs/mobx'
 import Index from './pages/index'
 import { APP_NAME } from './config'
+import { app } from './store/AppStore'
 
 import './app.scss'
 
@@ -64,7 +65,9 @@ class App extends Component {
 
   componentDidMount() {}
 
-  componentDidShow() {}
+  componentDidShow() {
+    app.refreshToken()
+  }
 
   componentDidHide() {}
 

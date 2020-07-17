@@ -41,13 +41,13 @@ const Page: FC = () => {
 
   // notification
   const { items, fetchList, fetchActiveRecord } = useNotification()
-  useEffect(() => {
+  useDidShow(() => {
     setTimeout(() => {
       fetchList()
       const active = fetchActiveRecord()
       console.log('active', active)
     }, 500)
-  }, [])
+  })
 
   // UserRuleModal
   const [userRuleVisible, setUserRuleVisible] = useState(false)
