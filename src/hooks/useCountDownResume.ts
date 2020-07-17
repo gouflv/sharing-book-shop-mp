@@ -17,15 +17,26 @@ export const useCountDownResume = (namespace: string) => {
   }
 
   function updateCountDownStamp() {
-    Taro.setStorageSync(`${CountDownStampKey}.${namespace}`, dayjs().format('YYYY-MM-DD HH:mm:ss'))
+    Taro.setStorageSync(
+      `${CountDownStampKey}.${namespace}`,
+      dayjs().format('YYYY-MM-DD HH:mm:ss')
+    )
   }
 
   function getTimeRemind() {
-    const prevCountDown = Taro.getStorageSync(`${CountDownValueKey}.${namespace}`)
-    const countDownStamp = Taro.getStorageSync(`${CountDownStampKey}.${namespace}`)
-    if (prevCountDown && countDownStamp &&
-      dayjs(countDownStamp).add(60 - 1, 'second').isAfter(dayjs()))
-    {
+    const prevCountDown = Taro.getStorageSync(
+      `${CountDownValueKey}.${namespace}`
+    )
+    const countDownStamp = Taro.getStorageSync(
+      `${CountDownStampKey}.${namespace}`
+    )
+    if (
+      prevCountDown &&
+      countDownStamp &&
+      dayjs(countDownStamp)
+        .add(60 - 1, 'second')
+        .isAfter(dayjs())
+    ) {
       //距离上次标记在60s之内，才计算剩余时间
       const timePass = dayjs().diff(dayjs(countDownStamp), 'second')
       const res = (60 - timePass) * 1000

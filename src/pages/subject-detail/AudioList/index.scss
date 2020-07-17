@@ -1,9 +1,10 @@
 @import "../../../app";
 
 .audio-list {
-  margin: -30px;
   display: flex;
   flex-direction: column;
+  margin: -30px;
+
   &__swiper {
     flex: auto;
     min-height: 50vh;

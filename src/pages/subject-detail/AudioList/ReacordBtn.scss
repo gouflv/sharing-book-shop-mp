@@ -20,20 +20,21 @@
 
   &__inner {
     position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 72px;
     height: 72px;
-    z-index: 1;
+
     .icon {
       width: 20px;
       height: 29px;
     }
+
     .text {
-      color: #fff;
       font-size: 20px;
+      color: #fff;
     }
   }
-
 }
