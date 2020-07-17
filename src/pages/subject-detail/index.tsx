@@ -22,14 +22,22 @@ const Page: FC = () => {
       }
     })
     setData(res)
-    // setHasVideo(res.isVideo)
-
+    setHasVideo(res.isVideo === 1)
     hideLoading()
+  }
+
+  function report() {
+    POST('curriculum/addCurriculumVideoViewsNum', {
+      data: {
+        curriculumId: router.params.id
+      }
+    })
   }
 
   useEffect(() => {
     setSubjectId(router.params.id)
     fetch()
+    report()
   }, [])
 
   const [hasVideo, setHasVideo] = useState(true)

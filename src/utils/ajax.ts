@@ -16,11 +16,14 @@ interface AjaxError {
 
 export const ajax = (url, options?: AjaxOptions) =>
   new Promise<any | AjaxError>(async (resolve, reject) => {
+    const header: any = {
+      'content-type': 'application/x-www-form-urlencoded'
+    }
+    if (!options || !options.withoutToken) {
+      header.token = app.token
+    }
     const params: request.Option = {
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        token: options && options.withoutToken ? '' : app.token
-      },
+      header,
       url: `${API_BASE}/${url}`,
       ...options
     }
@@ -36,10 +39,9 @@ export const ajax = (url, options?: AjaxOptions) =>
 
       if (data.code === 1001) {
         reject({ ...data, message: data.msg, handler: false })
-        //TODO test
+        //TODO token无效处理
         if (!options || !options.preventAuthErrorHandler) {
-          Taro.navigateTo({ url: '/pages/auth/index' })
-        } else {
+          // Taro.navigateTo({ url: '/pages/auth/index' })
           app.refreshTokenAndRelaunch()
         }
         return
@@ -50,6 +52,7 @@ export const ajax = (url, options?: AjaxOptions) =>
         return
       }
 
+      console.log('get data form api', data.data)
       resolve(data.data || {})
     } catch (e) {
       showToast({ title: '网络开小差了' })
