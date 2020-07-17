@@ -1,6 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { Provider } from '@tarojs/mobx'
 import Index from './pages/index'
+import { APP_NAME } from './config'
 
 import './app.scss'
 
@@ -34,7 +35,7 @@ class App extends Component {
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#1989ff',
-      navigationBarTitleText: '共享图书',
+      navigationBarTitleText: APP_NAME,
       navigationBarTextStyle: 'white',
       navigationStyle: 'custom'
     },

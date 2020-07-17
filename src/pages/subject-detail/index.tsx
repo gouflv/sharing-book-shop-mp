@@ -12,6 +12,8 @@ import { hideLoading, showLoading } from '../../utils'
 const Page: FC = () => {
   const router = useRouter()
   const [subjectId, setSubjectId] = useState('')
+
+  //#region data
   const [data, setData] = useState<any>()
 
   async function fetch() {
@@ -39,17 +41,22 @@ const Page: FC = () => {
     fetch()
     report()
   }, [])
+  //#endregion
 
+  //#region state
   const [hasVideo, setHasVideo] = useState(true)
-  const [tab, setTab] = useState(1)
+  const [tab, setTab] = useState<'summary' | 'audioList' | 'comments'>(
+    'audioList'
+  )
 
   useEffect(() => {
     if (!hasVideo) {
       Taro.pageScrollTo({ scrollTop: 0, duration: 0 })
     }
   }, [tab])
+  //#endregion
 
-  const renderTabs = ({ fixed }: { fixed?: boolean } = {}) => {
+  const renderTabs = () => {
     return (
       <View
         className={classNames('tabs', {
@@ -57,20 +64,20 @@ const Page: FC = () => {
         })}
       >
         <View
-          className={classNames('tab-item', { active: tab === 0 })}
-          onClick={() => setTab(0)}
+          className={classNames('tab-item', { active: tab === 'summary' })}
+          onClick={() => setTab('summary')}
         >
           简介
         </View>
         <View
-          className={classNames('tab-item', { active: tab === 1 })}
-          onClick={() => setTab(1)}
+          className={classNames('tab-item', { active: tab === 'audioList' })}
+          onClick={() => setTab('audioList')}
         >
           配音
         </View>
         <View
-          className={classNames('tab-item', { active: tab === 2 })}
-          onClick={() => setTab(2)}
+          className={classNames('tab-item', { active: tab === 'comments' })}
+          onClick={() => setTab('comments')}
         >
           评论
         </View>
@@ -87,7 +94,6 @@ const Page: FC = () => {
               className='player'
               src={data.curriculumVideo}
               title={data.curriculumName}
-              poster={data.curriculumImageUrl}
             />
             {renderTabs()}
           </View>
@@ -102,7 +108,7 @@ const Page: FC = () => {
 
         {data && (
           <View className='page-space-around'>
-            {tab === 0 && (
+            {tab === 'summary' && (
               <View className='subject-summary'>
                 <View className='header'>
                   <View className='title'>{data.curriculumName}</View>
@@ -136,11 +142,11 @@ const Page: FC = () => {
               </View>
             )}
 
-            {tab === 1 && (
+            {tab === 'audioList' && (
               <AudioList subjectId={subjectId} hasVideo={hasVideo} />
             )}
 
-            {tab === 2 && <CommentList subjectId={subjectId} />}
+            {tab === 'comments' && <CommentList subjectId={subjectId} />}
           </View>
         )}
       </PageHeaderWrapper>
