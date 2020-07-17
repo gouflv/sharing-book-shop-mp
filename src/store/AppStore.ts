@@ -28,6 +28,7 @@ class App {
     const res = Taro.getSystemInfoSync()
     this.platform = res.platform as any
     console.log('platform', res.platform)
+    console.log('storage', Taro.getStorageInfoSync())
 
     this.token = Taro.getStorageSync('token') || ''
   }

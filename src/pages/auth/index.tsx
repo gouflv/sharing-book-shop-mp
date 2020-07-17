@@ -13,7 +13,8 @@ const Page: FC = () => {
     authLogin,
     authLoginWithPhone,
     fetchUserInfo,
-    authCallback
+    authCallback,
+    setAuthCallback
   } = useContext(AppStore)
 
   const [mode, setMode] = useState<'useInfo' | 'phoneNumber'>('useInfo')
@@ -57,7 +58,7 @@ const Page: FC = () => {
     if (user && user.tel) {
       showToast({ title: '登录成功' })
       if (authCallback) {
-        authCallback.func({ redirect: true })
+        runAuthCallbackFun()
       } else {
         Taro.reLaunch({ url: '/pages/index/index' })
       }
@@ -80,9 +81,16 @@ const Page: FC = () => {
     showToast({ title: '登录成功' })
 
     if (authCallback) {
-      authCallback.func({ redirect: true })
+      runAuthCallbackFun()
     } else {
       Taro.reLaunch({ url: '/pages/index/index' })
+    }
+  }
+
+  function runAuthCallbackFun() {
+    if (authCallback) {
+      authCallback.func({ redirect: true })
+      setAuthCallback(null)
     }
   }
   //#endregion
