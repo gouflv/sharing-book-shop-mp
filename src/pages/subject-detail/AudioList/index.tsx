@@ -94,7 +94,7 @@ export const AudioList: FC<AudioListProps> = props => {
     props.onSetVideoState({
       src: `list[${currentItemIndex}].video`,
       muted: false,
-      autoplay: !recordData[currentItemIndex]
+      autoplay: false // !recordData[currentItemIndex]
     })
   }, [currentItemIndex])
 

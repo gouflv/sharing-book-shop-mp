@@ -1,15 +1,6 @@
 import './ReacordBtn.scss'
-import Taro, {
-  CanvasContext,
-  FC,
-  useContext,
-  useEffect,
-  useRef,
-  useScope,
-  useState
-} from '@tarojs/taro'
-import { Canvas, Image, Text, View } from '@tarojs/components'
-import { AppStore } from '../../../store/AppStore'
+import Taro, { FC, useEffect, useState } from '@tarojs/taro'
+import { Image, Text, View } from '@tarojs/components'
 
 const size = 36
 const lineColor = '#1989ff'
@@ -79,10 +70,12 @@ export const RecordBtn: FC<{
         </View>
 
         <View
-          className='inner'
+          className='mask'
           style={{
             width: `${size - lineWidth * 2}px`,
-            height: `${size - lineWidth * 2}px`
+            height: `${size - lineWidth * 2}px`,
+            top: `${lineWidth}px`,
+            left: `${lineWidth}px`
           }}
         />
       </View>
