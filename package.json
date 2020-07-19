@@ -36,6 +36,7 @@
     "dayjs": "^1.8.29",
     "eventemitter3": "^4.0.4",
     "js-base64": "^2.6.3",
+    "lodash.throttle": "^4.1.1",
     "mobx": "4.8.0",
     "nerv-devtools": "^1.5.5",
     "nervjs": "^1.5.5",

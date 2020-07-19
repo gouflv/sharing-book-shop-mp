@@ -22,6 +22,7 @@ export const useRecorder = () => {
       )
 
       recorder.current.onStop(({ tempFilePath }) => {
+        console.log('recorder stop')
         if (callbackFun.current) {
           callbackFun.current(tempFilePath)
           callbackFun.current = undefined
@@ -36,8 +37,9 @@ export const useRecorder = () => {
     }
     callbackFun.current = params.onFinish
     if (recorder.current) {
+      console.log('recorder: start', params.duration)
       recorder.current.start({
-        duration: params.duration || 10_000
+        duration: params.duration || 30_000
       })
     }
   }

@@ -33,3 +33,5 @@ declare const process: {
     [key: string]: any
   }
 }
+
+declare const __wxConfig: any

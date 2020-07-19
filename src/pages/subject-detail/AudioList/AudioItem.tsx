@@ -1,13 +1,14 @@
 import './index.scss'
-import Taro, { FC, useState } from '@tarojs/taro'
+import Taro, { FC, useState, showModal } from '@tarojs/taro'
 import { Image, View } from '@tarojs/components'
 import { RecordBtn } from './ReacordBtn'
 import { useInterval } from '../../../utils/useInterval'
-import showModal = Taro.showModal
+import { RecordPart } from './index'
 
 interface AudioItemProps {
   dataKey: number
-  data: any
+  data: RecordPart
+  count: number
   recordData: { file: string } | null
   isRecording: boolean
   isPlaying: boolean
@@ -59,11 +60,11 @@ export const AudioItem: FC<AudioItemProps> = props => {
   return (
     <View className='audio-item'>
       <View className='header'>
-        <View className='tag'>{props.dataKey + 1}/10</View>
+        <View className='tag'>
+          {props.dataKey + 1}/{props.count}
+        </View>
       </View>
-      <View className='content'>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      </View>
+      <View className='content'>{props.data.describes}</View>
       <View className='footer'>
         {!!props.recordData && (
           <View className='btn-play' onClick={props.onRecordPlay}>

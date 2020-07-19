@@ -9,19 +9,22 @@ import { VideoStateForUpdate } from '../index'
 import { useRecorder } from './useRecorder'
 import { useAudioPlayer } from './useAudioPlayer'
 import { commonUpload } from '../../../utils/upload'
+import { isDev } from '../../../config'
 
 interface AudioListProps {
   subjectId
   hasVideo: boolean
+  videoDuration: number
   onSetVideoState: (params: VideoStateForUpdate) => void
   onSetVideoStop: () => void
 }
 
-export interface Record {
+export interface RecordPart {
   resourcesId: string
   resourcesUrl: string
   memberRecordUrl: string
   memberCurriculumRecordId: string
+  describes: string
 }
 
 export const AudioList: FC<AudioListProps> = props => {
@@ -31,7 +34,7 @@ export const AudioList: FC<AudioListProps> = props => {
   }, [props.hasVideo])
 
   //#region List
-  const [list, setList] = useState<Record[]>([])
+  const [list, setList] = useState<RecordPart[]>([])
   async function fetch() {
     showLoading()
     const data = await POST('curriculum/getCurriculumSegmentationVideo', {
@@ -55,6 +58,7 @@ export const AudioList: FC<AudioListProps> = props => {
   const { startPlay, stopPlay } = useAudioPlayer()
 
   async function onRecorderFinish(file: string) {
+    setIsRecording(false)
     try {
       const url = await commonUpload(file)
       setRecordData(prevState => {
@@ -79,18 +83,20 @@ export const AudioList: FC<AudioListProps> = props => {
 
     setIsRecording(true)
 
-    // Recorder
-    startRecord({
-      duration: 4000,
-      onFinish: onRecorderFinish
-    })
-
     // Video
     props.onSetVideoState({
-      src: `list[${currentItemIndex}].video`,
+      src: list[currentItemIndex].resourcesUrl,
       muted: true,
       play: true
     })
+
+    // Recorder
+    setTimeout(() => {
+      startRecord({
+        duration: props.videoDuration,
+        onFinish: onRecorderFinish
+      })
+    }, 200)
   }
 
   function onCurrentItemRecordStop() {
@@ -123,18 +129,24 @@ export const AudioList: FC<AudioListProps> = props => {
     // Player
     if (recordData[currentItemIndex]) {
       // @ts-ignore
-      startPlay(recordData[currentItemIndex].file)
+      startPlay(recordData[currentItemIndex].file, () => {
+        setIsPlaying(false)
+
+        // Video
+        props.onSetVideoStop()
+      })
     }
 
     // Video
     props.onSetVideoState({
-      src: `list[${currentItemIndex}].video`,
+      src: list[currentItemIndex].resourcesUrl,
       muted: true,
       play: true
     })
   }
   //#endregion
 
+  // watch currentItemIndex
   useEffect(() => {
     if (isRecording) {
       return
@@ -146,12 +158,14 @@ export const AudioList: FC<AudioListProps> = props => {
     }
 
     // 有录音时不自动播放
-    props.onSetVideoState({
-      src: `list[${currentItemIndex}].video`,
-      muted: false,
-      play: false //TODO debug !recordData[currentItemIndex]
-    })
-  }, [currentItemIndex])
+    if (list.length) {
+      props.onSetVideoState({
+        src: list[currentItemIndex].resourcesUrl,
+        muted: false,
+        play: !recordData[currentItemIndex] && !isDev
+      })
+    }
+  }, [list, currentItemIndex])
 
   return (
     <View
@@ -164,19 +178,22 @@ export const AudioList: FC<AudioListProps> = props => {
         className='audio-list__swiper'
         vertical={true}
         nextMargin={props.hasVideo ? '130rpx' : '250rpx'}
-        duration={250}
+        duration={200}
         onChange={e => setCurrentItemIndex(e.detail.current)}
       >
-        {Array.from({ length: 9 }).map((_, i) => (
+        {list.map((item, i) => (
           <SwiperItem>
             <AudioItem
               key={i}
               dataKey={i}
-              data={{}}
+              data={item}
+              count={list.length}
               recordData={recordData[i]}
               isRecording={isRecording}
               isPlaying={isPlaying}
-              disabled={isRecording && i !== currentItemIndex}
+              disabled={
+                isRecording && i !== currentItemIndex && !props.videoDuration
+              }
               onRecordStart={onCurrentItemRecordStart}
               onRecordStop={onCurrentItemRecordStop}
               onRemoveRecord={onCurrentItemRemoveRecord}

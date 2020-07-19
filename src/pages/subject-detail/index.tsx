@@ -18,6 +18,7 @@ import { CommentList } from './CommentList'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { POST } from '../../utils/ajax'
 import { hideLoading, showLoading, textToRichText } from '../../utils'
+import _debounce from 'lodash.debounce'
 
 export interface VideoStateForUpdate {
   src: string
@@ -83,18 +84,21 @@ const Page: FC = () => {
   const [videoSrcOrigin, setVideoSrcOrigin] = useState('')
   const [videoSrc, setVideoSrc] = useState('')
   const [muted, setMuted] = useState(false)
+  const [videoDuration, setVideoDuration] = useState(0)
 
-  function setVideoState(params: VideoStateForUpdate) {
+  const setVideoState = _debounce((params: VideoStateForUpdate) => {
     console.log('setVideoState:', params)
     setVideoSrc(params.src)
     setMuted(params.muted)
     if (videoContext.current) {
       videoContext.current.seek(0)
       if (params.play) {
-        videoContext.current.play()
+        setTimeout(() => {
+          videoContext.current && videoContext.current.play()
+        }, 300)
       }
     }
-  }
+  }, 700)
 
   function setVideoStop() {
     if (videoContext.current) {
@@ -103,11 +107,19 @@ const Page: FC = () => {
     }
   }
 
+  function onLoadedMetaData(durationInSec: number) {
+    setVideoDuration(durationInSec * 1000)
+  }
+
+  useEffect(() => {
+    console.log('videoDuration', videoDuration)
+  }, [videoDuration])
+
   useLayoutEffect(() => {
-    if (hasVideo) {
+    if (!loading && hasVideo) {
       videoContext.current = createVideoContext('player', scope)
     }
-  }, [loading])
+  }, [loading, hasVideo])
   //#endregion
 
   useEffect(() => {
@@ -164,6 +176,7 @@ const Page: FC = () => {
                   src={videoSrc}
                   title={data.curriculumName}
                   muted={muted}
+                  onLoadedMetaData={e => onLoadedMetaData(e.detail.duration)}
                 />
                 {renderTabs()}
               </View>
@@ -218,6 +231,7 @@ const Page: FC = () => {
               <AudioList
                 subjectId={subjectId}
                 hasVideo={hasVideo}
+                videoDuration={videoDuration}
                 onSetVideoState={setVideoState}
                 onSetVideoStop={setVideoStop}
               />
