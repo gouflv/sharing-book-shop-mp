@@ -63,24 +63,38 @@ const Tabbar: FC = () => {
 
   return (
     <CoverView className='tabbar'>
-      {tabList.map((tab, i) => (
-        <CoverView
-          className={classNames('item', {
-            active: i === tabBarIndex
-          })}
-          key={i}
-          onClick={() => onClick(tab, i)}
-        >
-          <CoverImage
-            src={i === tabBarIndex ? tab.selectedIconPath : tab.iconPath}
+      <CoverView className='content'>
+        {tabList.map((tab, i) => (
+          <CoverView
+            className={classNames('item', {
+              active: i === tabBarIndex
+            })}
             style={{
-              width: `${tab.width}rpx`,
-              height: `${tab.height}rpx`
+              order: i > 1 ? 2 : 0
             }}
-          />
-          <CoverView className='text'>{tab.text}</CoverView>
-        </CoverView>
-      ))}
+            key={i}
+            onClick={() => onClick(tab, i)}
+          >
+            <CoverImage
+              src={i === tabBarIndex ? tab.selectedIconPath : tab.iconPath}
+              style={{
+                width: `${tab.width}rpx`,
+                height: `${tab.height}rpx`
+              }}
+            />
+            <CoverView className='text'>{tab.text}</CoverView>
+          </CoverView>
+        ))}
+
+        <CoverView className={'scan-item'} />
+      </CoverView>
+
+      <CoverView className={'scan'}>
+        <CoverImage
+          className='scan-btn'
+          src={require('../assets/home_ico_scan@2x.png')}
+        />
+      </CoverView>
     </CoverView>
   )
 }

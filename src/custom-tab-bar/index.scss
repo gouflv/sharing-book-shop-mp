@@ -3,13 +3,22 @@
 .tabbar {
   position: fixed;
   bottom: 0;
-  box-sizing: content-box;
+  height: 100px + 20px;
   display: flex;
   align-items: flex-end;
-  width: calc(100vw - 30px * 2);
-  padding: 12px 30px calc(12px + #{$safe-area-bottom});
   background-color: #fff;
-  border-top: 1px solid $border-color;
+  padding-bottom: $safe-area-bottom;
+  box-sizing: content-box;
+
+  .content {
+    display: flex;
+    align-items: flex-end;
+    width: 100vw;
+    height: 100px;
+    padding: 0 20px;
+    border-top: 1px solid $border-color;
+    background-color: #fff;
+  }
 
   .item {
     display: flex;
@@ -17,6 +26,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 12px 0;
     font-size: $font-size-small - 1;
     color: #999;
 
@@ -27,5 +37,26 @@
     cover-image {
       margin-bottom: 10px;
     }
+  }
+
+  .scan-item {
+    order: 1;
+    width: 84px;
+    height: 84px;
+  }
+
+  .scan {
+    position: absolute;
+    bottom: calc(36px + #{$safe-area-bottom});
+    left: 50%;
+    transform: translateX(-50%);
+    .scan-btn {
+      width: 84px;
+      height: 84px;
+      background-color: $blue;
+      border-radius: 100%;
+      z-index: 1;
+    }
+
   }
 }
