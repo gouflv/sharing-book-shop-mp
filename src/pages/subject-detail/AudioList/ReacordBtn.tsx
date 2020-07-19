@@ -17,7 +17,7 @@ export const RecordBtn: FC<{
   const [value, setValue] = useState(0)
 
   useEffect(() => {
-    setValue(Math.floor(props.value))
+    setValue(Math.max(0, Math.min(Math.floor(props.value), 100)))
   }, [props.value])
 
   return (
@@ -77,18 +77,18 @@ export const RecordBtn: FC<{
             top: `${lineWidth}px`,
             left: `${lineWidth}px`
           }}
-        />
-      </View>
-
-      <View className='record-btn__inner'>
-        {props.hasRecord ? (
-          <Text className={'text'}>重录</Text>
-        ) : (
-          <Image
-            className={'icon'}
-            src={require('../../../assets/course_detail_ico_record@2x.png')}
-          />
-        )}
+        >
+          <View className='inner'>
+            {props.hasRecord ? (
+              <Text className={'text'}>重录</Text>
+            ) : (
+              <Image
+                className={'icon'}
+                src={require('../../../assets/course_detail_ico_record@2x.png')}
+              />
+            )}
+          </View>
+        </View>
       </View>
     </View>
   )
