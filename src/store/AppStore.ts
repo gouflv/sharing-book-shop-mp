@@ -133,7 +133,7 @@ class App {
   async refreshTokenAndRelaunch() {
     const openId = Taro.getStorageSync('open_id')
     if (!openId) {
-      Taro.reLaunch({ url: '/pages/index/index' })
+      Taro.reLaunch({ url: '/pages/home/index' })
       return
     }
     showLoading()
@@ -148,7 +148,7 @@ class App {
       this.setToken('')
       this.setOpenId('')
     } finally {
-      Taro.reLaunch({ url: '/pages/index/index' })
+      Taro.reLaunch({ url: '/pages/home/index' })
     }
   }
 }
