@@ -1,21 +1,15 @@
 import './index.scss'
 import Taro, { FC, useState } from '@tarojs/taro'
-import { View, Button } from '@tarojs/components'
-import { CodeNumberInput } from '../../components/CodeInput'
+import { View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
+import { Step1 } from './Step1'
 
 const Page: FC = () => {
-  const [smsCode, setSmsCode] = useState('')
-
+  const [step, setStep] = useState<0 | 1>(0)
   return (
     <View className='page-user-change-phone'>
       <PageHeaderWrapper title={'手机号更换'}>
-        <View className='title'>已发送短信验证码至 138****9999</View>
-        <View className='countdown'>10s</View>
-
-        <CodeNumberInput onChange={val => setSmsCode(val)} />
-
-        <Button className='btn-primary'>下一步</Button>
+        <View>{step === 0 && <Step1 onSuccess={() => setStep(1)} />}</View>
       </PageHeaderWrapper>
     </View>
   )

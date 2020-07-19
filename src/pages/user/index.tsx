@@ -77,18 +77,16 @@ const Page: FC = () => {
                 />
                 <View className='content'>
                   <View className='title'>{user.nickName}</View>
-                  <View className='desc'>
+                  <View
+                    className='desc'
+                    onClick={() =>
+                      Taro.navigateTo({
+                        url: '/pages/user-change-phone/index'
+                      })
+                    }
+                  >
                     {user.tel}
-                    <View
-                      className='unbind-phone'
-                      onClick={() =>
-                        Taro.navigateTo({
-                          url: '/pages/user-change-phone/index'
-                        })
-                      }
-                    >
-                      解绑
-                    </View>
+                    <View className='unbind-phone'>解绑</View>
                   </View>
                 </View>
               </View>
