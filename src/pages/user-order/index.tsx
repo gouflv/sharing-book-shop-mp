@@ -9,12 +9,14 @@ import dayjs from 'dayjs'
 const Page: FC = () => {
   const [date, setDate] = useState(dayjs().format('YYYY-MM'))
   const [items, setItems] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
   async function fetch() {
-    const data = await POST('wxMember/getMemberCard', {
+    const data = await POST('wxMember/getDayOrder', {
       data: { date: `${date}-01` }
     })
     setItems(data)
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -55,10 +57,12 @@ const Page: FC = () => {
 
         <View className='page-space-around'>
           <View className='user-order-list'>
-            {Array.from({ length: 3 }).map((_, i) => (
+            {items.map((data, i) => (
               <View key={i} className='item'>
                 <View className='header'>
-                  <View className='title'>2020/6/1</View>
+                  <View className='title'>
+                    {dayjs(data.orderNo).format('YYYY/MM/DD')}
+                  </View>
                   <View
                     className='link primary'
                     onClick={() =>
@@ -71,29 +75,35 @@ const Page: FC = () => {
                 <View className='body'>
                   <View className='left'>
                     <View className='cell'>
-                      当日借阅中本数: <Text className='num'>8</Text>
+                      当日借阅中本数:{' '}
+                      <Text className='num'>{data.borrowingNum}</Text>
                     </View>
                     <View className='cell'>
-                      逾期本数: <Text className='num'>8</Text>
+                      逾期本数: <Text className='num'>0</Text>
                     </View>
                     <View className='cell'>
-                      本日应付费用: <Text className='num'>¥8</Text>
+                      本日应付费用: <Text className='num'>¥{data.havePay}</Text>
                     </View>
                   </View>
                   <View className='right'>
                     <View className='cell'>
-                      当日可借本数: <Text className='num'>8</Text>
+                      当日可借本数:{' '}
+                      <Text className='num'>{data.remainingNum}</Text>
                     </View>
                     <View className='cell'>
-                      超量本数: <Text className='num'>8</Text>
+                      超量本数: <Text className='num'>{data.shoudPay}</Text>
                     </View>
                     <View className='cell'>
-                      本日已付费用: <Text className='num'>¥8</Text>
+                      本日已付费用: <Text className='num'>¥{data.date}</Text>
                     </View>
                   </View>
                 </View>
               </View>
             ))}
+
+            {!loading && !items.length && (
+              <View className='empty-list'>暂无订单</View>
+            )}
           </View>
         </View>
       </PageHeaderWrapper>

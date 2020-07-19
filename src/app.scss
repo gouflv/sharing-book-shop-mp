@@ -267,8 +267,7 @@ image {
 .empty-list {
   display: flex;
   justify-content: center;
-  height: 50vh;
-  padding-top: 100px;
+  padding: 100px 0;
   font-size: $font-size-base;
   color: $text-gray;
 }
