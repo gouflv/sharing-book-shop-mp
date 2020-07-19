@@ -58,7 +58,6 @@ export const ajax = (url, options?: AjaxOptions) =>
     }
   })
 
-export const GET = async (url, options?: AjaxOptions) => ajax(url, options)
 export const POST = async (url, options?: AjaxOptions) =>
   ajax(url, { ...options, method: 'POST' })
 

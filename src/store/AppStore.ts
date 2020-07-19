@@ -146,6 +146,7 @@ class App {
     } catch (e) {
       console.error(e)
       this.setToken('')
+      this.setOpenId('')
     } finally {
       Taro.reLaunch({ url: '/pages/index/index' })
     }
