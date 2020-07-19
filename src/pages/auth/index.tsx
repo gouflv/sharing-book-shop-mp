@@ -53,7 +53,6 @@ const Page: FC = () => {
 
     showLoading()
     const user = await fetchUserInfo()
-    hideLoading()
 
     if (user && user.tel) {
       showToast({ title: '登录成功' })
@@ -64,8 +63,10 @@ const Page: FC = () => {
       }
     } else {
       setMode('phoneNumber')
-      wxLogin()
+      await wxLogin()
     }
+
+    hideLoading()
   }
 
   async function onGetPhoneNumber({ encryptedData, iv }) {
@@ -78,13 +79,16 @@ const Page: FC = () => {
     await fetchUserInfo()
     hideLoading()
 
-    showToast({ title: '登录成功' })
-
-    if (authCallback) {
-      runAuthCallbackFun()
-    } else {
-      Taro.reLaunch({ url: '/pages/index/index' })
-    }
+    showToast({
+      title: '绑定手机号成功',
+      success: () => {
+        if (authCallback) {
+          runAuthCallbackFun()
+        } else {
+          Taro.reLaunch({ url: '/pages/index/index' })
+        }
+      }
+    })
   }
 
   function runAuthCallbackFun() {

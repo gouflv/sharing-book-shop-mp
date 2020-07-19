@@ -17,7 +17,7 @@ export function showToast(props: Taro.showToast.Option) {
   setTimeout(() => {
     Taro.showToast({
       icon: 'none',
-      duration: 3000,
+      duration: 2000,
       mask: true,
       ...props
     })
