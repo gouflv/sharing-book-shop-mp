@@ -4,18 +4,27 @@
   position: relative;
   background-color: #fff;
 
-  canvas {
+  .progress {
     position: absolute;
-    left: -100vw;
     width: 72px;
     height: 72px;
-    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
   }
-
-  .bar {
+  .clip_left,
+  .clip_right {
     position: absolute;
-    width: 72px;
-    height: 72px;
+    top: 0;
+    left: 0;
+  }
+  .circle_left,
+  .circle_right {
+    position: absolute;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
   }
 
   &__inner {
@@ -26,6 +35,7 @@
     justify-content: center;
     width: 72px;
     height: 72px;
+    border-radius: 50%;
 
     .icon {
       width: 20px;

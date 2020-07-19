@@ -23,86 +23,70 @@ export const RecordBtn: FC<{
   value: number
   onClick: () => void
 }> = props => {
-  const { platform } = useContext(AppStore)
-  const [value, setValue] = useState(props.value)
-  const scope = useScope()
-  const ctxRef = useRef<CanvasContext>()
+  const [value, setValue] = useState(0)
 
   useEffect(() => {
-    ctxRef.current = Taro.createCanvasContext('canvas', scope)
-  }, [])
-
-  useEffect(() => {
-    // if (props.value % 2 === 0)
-    setValue(props.value)
+    setValue(Math.floor(props.value))
   }, [props.value])
-
-  useEffect(draw, [value])
-
-  //
-  // https://github.com/StruggleThunder/weapp-canvas-ring/blob/master/components/canvas-ring/canvas-ring.js
-  //
-  function draw() {
-    const ctx = ctxRef.current
-    if (!ctx) return
-    const percent = 360 * ((value - minValue) / (maxValue - minValue))
-
-    ctx.save()
-
-    // BG
-    ctx.translate(size / 2, size / 2)
-    ctx.beginPath()
-    ctx.setStrokeStyle(bgColor)
-    ctx.setLineWidth(lineWidth)
-    ctx.arc(
-      0,
-      0,
-      size / 2 - (platform === 'android' ? lineWidth + 2 : lineWidth),
-      0,
-      2 * Math.PI
-    )
-    ctx.stroke()
-
-    // BAR
-    ctx.beginPath()
-    ctx.setStrokeStyle(lineColor)
-    ctx.setLineWidth(lineWidth)
-    ctx.arc(
-      0,
-      0,
-      size / 2 - (platform === 'android' ? lineWidth + 2 : lineWidth),
-      -0.5 * Math.PI,
-      (percent * Math.PI) / 180 + -0.5 * Math.PI
-    )
-    ctx.stroke()
-
-    ctx.beginPath()
-    ctx.setFillStyle(lineColor)
-    ctx.arc(0, 0, (platform === 'android' ? 26 - 2 : 26) / 2, 0, 2 * Math.PI)
-    ctx.fill()
-
-    // ctx.restore()
-    // ctx.drawImage(
-    //   require('../../../assets/course_detail_ico_record@2x.png'),
-    //   25 / 2,
-    //   21 / 2,
-    //   22 / 2,
-    //   30 / 2
-    // )
-
-    ctx.draw(false, updateImage)
-  }
-
-  const [imgPath, setImgPath] = useState<string>()
-  async function updateImage() {
-    const res = await Taro.canvasToTempFilePath({ canvasId: 'canvas' }, scope)
-    setImgPath(res.tempFilePath)
-  }
 
   return (
     <View className='record-btn' onClick={props.onClick}>
-      <Canvas canvasId={'canvas'} />
-      <View className={'bar'} style={{ backgroundImage: `url(${imgPath})` }} />
+      <View
+        className={'progress'}
+        style={{
+          backgroundColor: lineColor,
+          width: `${size}px`,
+          height: `${size}px`
+        }}
+      >
+        <View
+          className='circle_left'
+          style={{
+            backgroundColor: bgColor,
+            width: `${size}px`,
+            height: `${size}px`,
+            transform: `rotate(${value > 50 ? (value - 50) * 3.6 : 0}deg)`,
+            clip: `rect(0, ${size / 2}px, auto, 0)`
+          }}
+        >
+          <View
+            className='clip_left'
+            style={{
+              width: `${size}px`,
+              height: `${size}px`,
+              clip: `rect(0, ${size / 2}px, auto, 0)`
+            }}
+          />
+        </View>
+        <View
+          className='circle_right'
+          style={{
+            backgroundColor: value > 50 ? lineColor : bgColor,
+            width: `${size}px`,
+            height: `${size}px`,
+            transform: `rotate(${value > 50 ? 0 : value * 3.6}deg)`,
+            clip: `rect(0, ${size / 2}px, auto, 0)`
+          }}
+        >
+          <View
+            className='clip_right'
+            style={{
+              width: `${size}px`,
+              height: `${size}px`,
+              clip: `rect(0, auto, auto, ${size / 2}px)`
+            }}
+          />
+        </View>
+
+        <View
+          className='inner'
+          style={{
+            width: `${size - lineWidth * 2}px`,
+            height: `${size - lineWidth * 2}px`
+          }}
+        />
+      </View>
+
       <View className='record-btn__inner'>
         {props.hasRecord ? (
           <Text className={'text'}>重录</Text>

@@ -117,9 +117,6 @@ const Page: FC = () => {
         muted: false,
         autoplay: false
       })
-      // setTimeout(() => {
-      //   onPlayStart(videoSrcOrigin, false)
-      // }, 500)
     } else {
       //
     }
