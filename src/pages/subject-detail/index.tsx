@@ -22,7 +22,7 @@ import { hideLoading, showLoading, textToRichText } from '../../utils'
 export interface VideoStateForUpdate {
   src: string
   muted: boolean
-  autoplay: boolean
+  play: boolean
 }
 
 const Page: FC = () => {
@@ -90,7 +90,7 @@ const Page: FC = () => {
     setMuted(params.muted)
     if (videoContext.current) {
       videoContext.current.seek(0)
-      if (params.autoplay) {
+      if (params.play) {
         videoContext.current.play()
       }
     }
@@ -115,7 +115,7 @@ const Page: FC = () => {
       setVideoState({
         src: videoSrcOrigin,
         muted: false,
-        autoplay: false
+        play: false
       })
     } else {
       //

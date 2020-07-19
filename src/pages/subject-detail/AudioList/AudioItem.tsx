@@ -9,15 +9,17 @@ interface AudioItemProps {
   dataKey: number
   data: any
   recordData: { file: string } | null
+  isRecording: boolean
+  isPlaying: boolean
+  disabled: boolean
   onRecordStart: () => void
   onRecordStop: () => void
   onRemoveRecord: () => void
-  disabled: boolean
+  onRecordPlay: () => void
 }
 
 export const AudioItem: FC<AudioItemProps> = props => {
-  const [time, setTime] = useState(0)
-  const [running, setRunning] = useState(false)
+  const [process, setProcess] = useState(0)
 
   function onRecordClick() {
     if (props.disabled) {
@@ -34,34 +36,24 @@ export const AudioItem: FC<AudioItemProps> = props => {
       return
     }
 
-    if (running) {
-      stop()
+    if (props.isRecording) {
+      props.onRecordStop()
     } else {
-      start()
+      props.onRecordStart()
     }
-  }
-
-  function start() {
-    props.onRecordStart()
-    setRunning(true)
-  }
-
-  function stop() {
-    props.onRecordStop()
-    setRunning(false)
   }
 
   useInterval(
     () => {
-      setTime(prev => {
+      setProcess(prev => {
         if (prev + 1 > 100) {
-          setRunning(false)
+          props.onRecordStop()
           return prev
         }
         return prev + 1
       })
     },
-    running ? 1000 : null
+    props.isRecording ? 1000 : null
   )
 
   return (
@@ -73,21 +65,31 @@ export const AudioItem: FC<AudioItemProps> = props => {
         Lorem ipsum dolor sit amet, consectetur adipisicing elit.
       </View>
       <View className='footer'>
-        <View className='btn-play'>
-          <Image
-            src={require('../../../assets/course_detail_ico_start@2x.png')}
-          />
-        </View>
+        {!!props.recordData && (
+          <View className='btn-play' onClick={props.onRecordPlay}>
+            {props.isPlaying ? (
+              <Image
+                src={require('../../../assets/course_detail_ico_pause@2x.png')}
+              />
+            ) : (
+              <Image
+                src={require('../../../assets/course_detail_ico_start@2x.png')}
+              />
+            )}
+          </View>
+        )}
         <RecordBtn
           hasRecord={!!props.recordData}
-          value={time}
+          value={process}
           onClick={onRecordClick}
         />
       </View>
-      <Image
-        className='mark'
-        src={require('../../../assets/course_detail_tip@2x.png')}
-      />
+      {props.recordData && (
+        <Image
+          className='mark'
+          src={require('../../../assets/course_detail_tip@2x.png')}
+        />
+      )}
     </View>
   )
 }

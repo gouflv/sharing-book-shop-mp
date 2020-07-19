@@ -6,6 +6,9 @@ import { POST } from '../../../utils/ajax'
 import { hideLoading, showLoading, showToast } from '../../../utils'
 import { useContentHeight } from './useContentHeight'
 import { VideoStateForUpdate } from '../index'
+import { useRecorder } from './useRecorder'
+import { useAudioPlayer } from './useAudioPlayer'
+import { commonUpload } from '../../../utils/upload'
 
 interface AudioListProps {
   subjectId
@@ -27,7 +30,7 @@ export const AudioList: FC<AudioListProps> = props => {
     setHasVideo(props.hasVideo)
   }, [props.hasVideo])
 
-  //#region list
+  //#region List
   const [list, setList] = useState<Record[]>([])
   async function fetch() {
     showLoading()
@@ -42,10 +45,28 @@ export const AudioList: FC<AudioListProps> = props => {
   }, [])
   //#endregion
 
-  //#region record
+  //#region Record
+  const [recordData, setRecordData] = useState<({ file: string } | null)[]>([])
   const [currentItemIndex, setCurrentItemIndex] = useState(0)
   const [isRecording, setIsRecording] = useState(false)
-  const [recordData, setRecordData] = useState<({ file: string } | null)[]>([])
+  const [isPlaying, setIsPlaying] = useState(false)
+
+  const { startRecord, stopRecord } = useRecorder()
+  const { startPlay, stopPlay } = useAudioPlayer()
+
+  async function onRecorderFinish(file: string) {
+    try {
+      const url = await commonUpload(file)
+      setRecordData(prevState => {
+        const copy = [...prevState]
+        copy[currentItemIndex] = { file: url }
+        return copy
+      })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   useEffect(() => {
     console.log(recordData)
   }, [recordData])
@@ -55,23 +76,28 @@ export const AudioList: FC<AudioListProps> = props => {
       showToast({ title: '正在录音' })
       return
     }
+
     setIsRecording(true)
+
+    // Recorder
+    startRecord({
+      duration: 4000,
+      onFinish: onRecorderFinish
+    })
 
     // Video
     props.onSetVideoState({
       src: `list[${currentItemIndex}].video`,
       muted: true,
-      autoplay: true
+      play: true
     })
   }
 
   function onCurrentItemRecordStop() {
-    setRecordData(prevState => {
-      const copy = [...prevState]
-      copy[currentItemIndex] = { file: `${currentItemIndex}` }
-      return copy
-    })
     setIsRecording(false)
+
+    // Recorder
+    stopRecord()
 
     // Video
     props.onSetVideoStop()
@@ -84,17 +110,46 @@ export const AudioList: FC<AudioListProps> = props => {
       return copy
     })
   }
+
+  function onCurrentItemRecordPlay() {
+    if (isPlaying) {
+      setIsPlaying(false)
+      stopPlay()
+      return
+    }
+
+    setIsPlaying(true)
+
+    // Player
+    if (recordData[currentItemIndex]) {
+      // @ts-ignore
+      startPlay(recordData[currentItemIndex].file)
+    }
+
+    // Video
+    props.onSetVideoState({
+      src: `list[${currentItemIndex}].video`,
+      muted: true,
+      play: true
+    })
+  }
   //#endregion
 
   useEffect(() => {
     if (isRecording) {
       return
     }
+
+    if (isPlaying) {
+      setIsPlaying(false)
+      stopPlay()
+    }
+
     // 有录音时不自动播放
     props.onSetVideoState({
       src: `list[${currentItemIndex}].video`,
       muted: false,
-      autoplay: false // !recordData[currentItemIndex]
+      play: false //TODO debug !recordData[currentItemIndex]
     })
   }, [currentItemIndex])
 
@@ -119,10 +174,13 @@ export const AudioList: FC<AudioListProps> = props => {
               dataKey={i}
               data={{}}
               recordData={recordData[i]}
+              isRecording={isRecording}
+              isPlaying={isPlaying}
+              disabled={isRecording && i !== currentItemIndex}
               onRecordStart={onCurrentItemRecordStart}
               onRecordStop={onCurrentItemRecordStop}
               onRemoveRecord={onCurrentItemRemoveRecord}
-              disabled={isRecording && i !== currentItemIndex}
+              onRecordPlay={onCurrentItemRecordPlay}
             />
           </SwiperItem>
         ))}
