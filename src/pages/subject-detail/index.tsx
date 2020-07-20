@@ -10,7 +10,14 @@ import Taro, {
   useState,
   VideoContext
 } from '@tarojs/taro'
-import { Image, RichText, Video, View } from '@tarojs/components'
+import {
+  Image,
+  RichText,
+  Video,
+  View,
+  CoverView,
+  CoverImage
+} from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import classNames from 'classnames'
 import { AudioList } from './AudioList'
@@ -20,6 +27,8 @@ import { POST } from '../../utils/ajax'
 import { hideLoading, showLoading, textToRichText } from '../../utils'
 import _debounce from 'lodash.debounce'
 import { isDev } from '../../config'
+import { VideoDescBtn } from './VideoDesc/Btn'
+import { VideoDescModal } from './VideoDesc/Modal'
 
 export interface VideoStateForUpdate {
   src: string
@@ -121,6 +130,18 @@ const Page: FC = () => {
       videoContext.current = createVideoContext('player', scope)
     }
   }, [loading, hasVideo])
+
+  //#endregion
+
+  //#region videoBtn and Dialog
+  const [isFullscreen, setIsFullscreen] = useState(false)
+  function onFullscreenChange(isFull: boolean) {
+    setIsFullscreen(isFull)
+  }
+  const [descModalContent, setDescModalContent] = useState(
+    '喜欢臭臭的东西，像是脏兮兮的臭水池和垃圾箱。直到有一天，碧奇阿姨来了，比尔的臭臭的爱好开始'
+  )
+  const [descModalVisible, setDescModalVisible] = useState(false)
   //#endregion
 
   useEffect(() => {
@@ -174,14 +195,30 @@ const Page: FC = () => {
           <View>
             {hasVideo ? (
               <View>
-                <Video
-                  id='player'
-                  className='player'
-                  src={videoSrc}
-                  title={data.curriculumName}
-                  muted={muted}
-                  onLoadedMetaData={e => onLoadedMetaData(e.detail.duration)}
-                />
+                <View className='player-container'>
+                  <Video
+                    id='player'
+                    className='player'
+                    src={videoSrc}
+                    title={data.curriculumName}
+                    muted={muted}
+                    onLoadedMetaData={e => onLoadedMetaData(e.detail.duration)}
+                    onFullscreenChange={e =>
+                      onFullscreenChange(e.detail.fullScreen as boolean)
+                    }
+                  />
+                  <VideoDescBtn
+                    isFullscreen={isFullscreen}
+                    onClick={() => setDescModalVisible(prevState => !prevState)}
+                  />
+                  {descModalVisible && (
+                    <VideoDescModal
+                      isFullscreen={isFullscreen}
+                      content={descModalContent}
+                      onClose={() => setDescModalVisible(false)}
+                    />
+                  )}
+                </View>
                 {renderTabs()}
               </View>
             ) : (
@@ -194,7 +231,6 @@ const Page: FC = () => {
             )}
           </View>
         )}
-
         {!loading && (
           <View className='page-space-around'>
             {tab === 'summary' && (

@@ -1,0 +1,65 @@
+@import "../../../theme/var";
+
+.player-desc-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  z-index: 10;
+
+  &--fixed {
+    position: fixed;
+  }
+
+  .btn {
+    margin-top: 30px;
+    margin-left: 32px / 2;
+    width: 48px;
+    height: 48px;
+    border-radius: 100%;
+    background-color: rgba(#000, 0.2);
+  }
+}
+
+.video-desc-modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(#000, 0.5);
+
+  .body {
+    width: 400px;
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    .header {
+      width: 400px;
+      height: 118px;
+    }
+    .content {
+      min-height: 120px;
+      padding: 24px 20px 20px;
+      text-align: center;
+      background-color: #fff;
+      white-space: pre-line;
+    }
+  }
+
+  &--fixed {
+    position: fixed;
+    .body {
+      width: 500px;
+      .header {
+        width: 500px;
+        height: 120px;
+      }
+    }
+  }
+}

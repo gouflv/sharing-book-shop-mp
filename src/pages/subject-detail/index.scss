@@ -1,10 +1,15 @@
 @import "../../theme/var";
 
 .page-subject-detail {
-  .player {
-    width: 100%;
+  .player-container {
+    position: relative;
     height: 422px;
-    border-bottom: 1px solid $border-color;
+
+    .player {
+      width: 100%;
+      height: 422px;
+      border-bottom: 1px solid $border-color;
+    }
   }
 
   .subject-summary {
