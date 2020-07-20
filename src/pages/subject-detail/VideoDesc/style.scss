@@ -48,7 +48,7 @@
       padding: 24px 20px 20px;
       text-align: center;
       background-color: #fff;
-      white-space: pre-line;
+      line-height: 1.4;
     }
   }
 
@@ -59,6 +59,9 @@
       .header {
         width: 500px;
         height: 120px;
+      }
+      .content {
+        white-space: pre-line;
       }
     }
   }

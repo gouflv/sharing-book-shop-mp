@@ -206,18 +206,21 @@ const Page: FC = () => {
                     onFullscreenChange={e =>
                       onFullscreenChange(e.detail.fullScreen as boolean)
                     }
-                  />
-                  <VideoDescBtn
-                    isFullscreen={isFullscreen}
-                    onClick={() => setDescModalVisible(prevState => !prevState)}
-                  />
-                  {descModalVisible && (
-                    <VideoDescModal
+                  >
+                    <VideoDescBtn
                       isFullscreen={isFullscreen}
-                      content={descModalContent}
-                      onClose={() => setDescModalVisible(false)}
+                      onClick={() =>
+                        setDescModalVisible(prevState => !prevState)
+                      }
                     />
-                  )}
+                    {descModalVisible && (
+                      <VideoDescModal
+                        isFullscreen={isFullscreen}
+                        content={descModalContent}
+                        onClose={() => setDescModalVisible(false)}
+                      />
+                    )}
+                  </Video>
                 </View>
                 {renderTabs()}
               </View>
