@@ -1,0 +1,48 @@
+@import "../../../theme/var";
+
+.record-btn {
+  position: relative;
+  width: 72px;
+  height: 72px;
+
+  .progress {
+    background-color: #d0e6ff;
+    border-radius: 50%;
+    transform: rotate(45deg);
+    -webkit-mask: radial-gradient(transparent 60%, #000 60%);
+
+    .line {
+      width: 100%;
+      height: 100%;
+      background-color: $blue;
+      border-radius: 50%;
+    }
+  }
+
+  .inner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 52px;
+    height: 52px;
+    margin: auto;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: $blue;
+
+    .icon {
+      width: 20px;
+      height: 29px;
+    }
+
+    .text {
+      font-size: 20px;
+      color: #fff;
+    }
+  }
+}

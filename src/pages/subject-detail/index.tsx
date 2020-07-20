@@ -32,6 +32,7 @@ import { VideoDescModal } from './VideoDesc/Modal'
 
 export interface VideoStateForUpdate {
   src: string
+  desc: string
   muted: boolean
   play: boolean
 }
@@ -54,6 +55,7 @@ const Page: FC = () => {
     })
     setData(res)
     setHasVideo(res.isVideo === 1)
+    setShowAudioList(res.isVoice === 1)
     setVideoSrcOrigin(res.curriculumVideo)
     setVideoSrc(res.curriculumVideo)
     hideLoading()
@@ -77,8 +79,9 @@ const Page: FC = () => {
 
   //#region tab
   const [tab, setTab] = useState<'summary' | 'audioList' | 'comments'>(
-    'summary'
+    'audioList'
   )
+  const [showAudioList, setShowAudioList] = useState(true)
 
   useEffect(() => {
     if (!hasVideo) {
@@ -100,6 +103,8 @@ const Page: FC = () => {
     console.log('setVideoState:', params)
     setVideoSrc(params.src)
     setMuted(params.muted)
+    setDescModalContent(params.desc)
+
     if (videoContext.current) {
       videoContext.current.seek(0)
       if (params.play) {
@@ -151,6 +156,7 @@ const Page: FC = () => {
     if (tab === 'summary') {
       setVideoState({
         src: videoSrcOrigin,
+        desc: '',
         muted: false,
         play: !isDev
       })
@@ -172,12 +178,14 @@ const Page: FC = () => {
         >
           简介
         </View>
-        <View
-          className={classNames('tab-item', { active: tab === 'audioList' })}
-          onClick={() => setTab('audioList')}
-        >
-          配音
-        </View>
+        {showAudioList && (
+          <View
+            className={classNames('tab-item', { active: tab === 'audioList' })}
+            onClick={() => setTab('audioList')}
+          >
+            配音
+          </View>
+        )}
         <View
           className={classNames('tab-item', { active: tab === 'comments' })}
           onClick={() => setTab('comments')}

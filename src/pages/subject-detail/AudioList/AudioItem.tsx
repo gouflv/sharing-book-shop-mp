@@ -1,7 +1,7 @@
 import './index.scss'
 import Taro, { FC, useState, showModal } from '@tarojs/taro'
 import { Image, View } from '@tarojs/components'
-import { RecordBtn } from './ReacordBtn'
+import { RecordBtn } from './RecordBtn'
 import { useInterval } from '../../../utils/useInterval'
 import { RecordPart } from './index'
 
