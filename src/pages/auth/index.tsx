@@ -56,11 +56,7 @@ const Page: FC = () => {
 
     if (user && user.tel) {
       showToast({ title: '登录成功', icon: 'success' })
-      if (authCallback) {
-        runAuthCallbackFun()
-      } else {
-        Taro.reLaunch({ url: '/pages/index/index' })
-      }
+      onAuthSuccess()
     } else {
       setMode('phoneNumber')
       await wxLogin()
@@ -81,18 +77,16 @@ const Page: FC = () => {
 
     showToast({ title: '绑定成功', icon: 'success' })
     setTimeout(() => {
-      if (authCallback) {
-        runAuthCallbackFun()
-      } else {
-        Taro.reLaunch({ url: '/pages/index/index' })
-      }
+      onAuthSuccess()
     }, 2000)
   }
 
-  function runAuthCallbackFun() {
+  function onAuthSuccess() {
     if (authCallback) {
       authCallback.func({ redirect: true })
       setAuthCallback(null)
+    } else {
+      Taro.reLaunch({ url: '/pages/index/index' })
     }
   }
   //#endregion

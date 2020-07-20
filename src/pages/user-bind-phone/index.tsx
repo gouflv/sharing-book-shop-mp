@@ -1,12 +1,16 @@
 import './index.scss'
-import Taro, { FC, useState, useDidShow } from '@tarojs/taro'
-import { View, Input, Button, Text } from '@tarojs/components'
+import Taro, { FC, useContext, useDidShow, useState } from '@tarojs/taro'
+import { Button, Input, Text, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { useCountDownResume } from '../../hooks/useCountDownResume'
 import { hideLoading, showLoading, showToast } from '../../utils'
 import { defaultErrorHandler, POST } from '../../utils/ajax'
+import { AppStore } from '../../store/AppStore'
+import { observer } from '@tarojs/mobx'
 
 const Page: FC = () => {
+  const { authCallback, setAuthCallback, fetchUserInfo } = useContext(AppStore)
+
   const [hasSend, setHasSend] = useState(false)
   const {
     timeLeft,
@@ -80,15 +84,25 @@ const Page: FC = () => {
           code: smsCode.substr(0, 6)
         }
       })
-      // TODO await refreshToken()
-      // await fetchUserInfo()
-      showToast({ title: '绑定成功' })
-      Taro.switchTab({ url: '/pages/home/index' })
+      await fetchUserInfo()
+      showToast({ title: '绑定成功', icon: 'success' })
+      setTimeout(() => {
+        onAuthSuccess()
+      }, 2000)
     } catch (e) {
       showToast({ title: e.message })
       setSmsCode('')
     } finally {
       hideLoading()
+    }
+  }
+
+  function onAuthSuccess() {
+    if (authCallback) {
+      authCallback.func({ redirect: true })
+      setAuthCallback(null)
+    } else {
+      Taro.reLaunch({ url: '/pages/index/index' })
     }
   }
 
@@ -133,4 +147,4 @@ const Page: FC = () => {
   )
 }
 
-export default Page
+export default observer(Page)
