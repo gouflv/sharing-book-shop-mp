@@ -10,7 +10,10 @@ export interface ShelfBookItem {
   booksType
 }
 
-export const ShelfBookItem: FC<{ data: ShelfBookItem }> = ({ data }) => {
+export const ShelfBookItem: FC<{ data: ShelfBookItem; eqName? }> = ({
+  data,
+  eqName
+}) => {
   async function onClick() {}
 
   return (
@@ -25,6 +28,7 @@ export const ShelfBookItem: FC<{ data: ShelfBookItem }> = ({ data }) => {
           <View className='title flex-fill'>{data.booksName}</View>
           <View className='tag flex-auto'>机柜</View>
         </View>
+        <View className='desc'>{eqName}</View>
         <View className='desc'>书籍分类: {data.booksType}</View>
       </View>
     </View>

@@ -11,7 +11,7 @@ const Page: FC = () => {
   const { params } = useRouter()
   const fromWeChatScan = params.from === 'weChatScan'
 
-  const [meta, setMeta] = useState<{ type: 1 | 2; eqCode }>()
+  const [meta, setMeta] = useState<{ type: 1 | 2; eqCode; eqName }>()
   const [list, setList] = useState<ShelfBookItem[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -87,7 +87,11 @@ const Page: FC = () => {
           <View>
             <View className={'list'}>
               {list.map((item, i) => (
-                <ShelfBookItem key={i} data={item} />
+                <ShelfBookItem
+                  key={i}
+                  data={item}
+                  eqName={meta && meta.eqName}
+                />
               ))}
             </View>
 
