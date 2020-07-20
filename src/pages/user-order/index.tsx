@@ -79,7 +79,7 @@ const Page: FC = () => {
                       <Text className='num'>{data.borrowingNum}</Text>
                     </View>
                     <View className='cell'>
-                      逾期本数: <Text className='num'>0</Text>
+                      逾期本数: <Text className='num'>unknown</Text>
                     </View>
                     <View className='cell'>
                       本日应付费用: <Text className='num'>¥{data.havePay}</Text>

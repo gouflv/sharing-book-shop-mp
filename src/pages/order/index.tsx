@@ -67,11 +67,11 @@ const Page: FC = () => {
                 </View>
                 <View className='item'>
                   超出本数:
-                  <Text className='num'>-</Text>
+                  <Text className='num'>unknown</Text>
                 </View>
                 <View className='item'>
                   逾期本数:
-                  <Text className='num'>-</Text>
+                  <Text className='num'>unknown</Text>
                 </View>
                 <View className='item'>
                   昨日欠费:
