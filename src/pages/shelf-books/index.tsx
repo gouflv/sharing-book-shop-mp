@@ -52,11 +52,7 @@ const Page: FC = () => {
         icon: 'success'
       })
       setTimeout(() => {
-        Taro.reLaunch({ url: '/pages/home/index' })
-        // if (fromWeChatScan) {
-        // } else {
-        //   Taro.navigateBack()
-        // }
+        Taro.reLaunch({ url: '/pages/order/index' })
       }, 2000)
     } catch (e) {
       defaultErrorHandler(e)
