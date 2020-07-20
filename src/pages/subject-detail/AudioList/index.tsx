@@ -162,7 +162,7 @@ export const AudioList: FC<AudioListProps> = props => {
       props.onSetVideoState({
         src: list[currentItemIndex].resourcesUrl,
         muted: false,
-        play: !recordData[currentItemIndex] && !isDev
+        play: false //!recordData[currentItemIndex]
       })
     }
   }, [list, currentItemIndex])

@@ -20,19 +20,18 @@ export interface OrderBookItem {
 
 export const OrderItem: FC<{ data: OrderBookItem }> = ({ data }) => {
   async function onClick() {
-    const id = await fetchSubject()
-    Taro.navigateTo({
-      url: `/pages/subject-detail/index?id=${id}`
-    })
-  }
-
-  async function fetchSubject() {
     try {
       showLoading()
       const res = await POST('curriculum/getCurriculumByIsbn', {
         data: { isbn: data.isbn }
       })
-      return res.curriculumId
+      if (res && res.curriculumId) {
+        Taro.navigateTo({
+          url: `/pages/subject-detail/index?id=${res.curriculumId}`
+        })
+      } else {
+        showToast({ title: '暂无课程' })
+      }
     } catch (e) {
       console.error(e)
       showToast({ title: '暂无课程' })

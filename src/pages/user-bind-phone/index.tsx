@@ -1,5 +1,11 @@
 import './index.scss'
-import Taro, { FC, useContext, useDidShow, useState } from '@tarojs/taro'
+import Taro, {
+  FC,
+  useContext,
+  useDidShow,
+  useRouter,
+  useState
+} from '@tarojs/taro'
 import { Button, Input, Text, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { useCountDownResume } from '../../hooks/useCountDownResume'
@@ -9,7 +15,8 @@ import { AppStore } from '../../store/AppStore'
 import { observer } from '@tarojs/mobx'
 
 const Page: FC = () => {
-  const { authCallback, setAuthCallback, fetchUserInfo } = useContext(AppStore)
+  const router = useRouter()
+  const { authCallback, setAuthCallback } = useContext(AppStore)
 
   const [hasSend, setHasSend] = useState(false)
   const {
@@ -84,10 +91,13 @@ const Page: FC = () => {
           code: smsCode.substr(0, 6)
         }
       })
-      await fetchUserInfo()
       showToast({ title: '绑定成功', icon: 'success' })
       setTimeout(() => {
-        onAuthSuccess()
+        if (router.params.change) {
+          Taro.navigateBack()
+        } else {
+          onAuthSuccess()
+        }
       }, 2000)
     } catch (e) {
       showToast({ title: e.message })

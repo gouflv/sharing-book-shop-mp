@@ -75,7 +75,7 @@ const Page: FC = () => {
                     className='desc'
                     onClick={() =>
                       Taro.navigateTo({
-                        url: '/pages/user-change-phone/index'
+                        url: '/pages/user-bind-phone/index?change=1'
                       })
                     }
                   >

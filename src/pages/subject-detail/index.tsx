@@ -19,6 +19,7 @@ import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { POST } from '../../utils/ajax'
 import { hideLoading, showLoading, textToRichText } from '../../utils'
 import _debounce from 'lodash.debounce'
+import { isDev } from '../../config'
 
 export interface VideoStateForUpdate {
   src: string
@@ -67,7 +68,7 @@ const Page: FC = () => {
 
   //#region tab
   const [tab, setTab] = useState<'summary' | 'audioList' | 'comments'>(
-    'audioList'
+    'summary'
   )
 
   useEffect(() => {
@@ -123,16 +124,19 @@ const Page: FC = () => {
   //#endregion
 
   useEffect(() => {
-    if (tab === 'summary' || tab === 'comments') {
+    if (loading) {
+      return
+    }
+    if (tab === 'summary') {
       setVideoState({
         src: videoSrcOrigin,
         muted: false,
-        play: false
+        play: !isDev
       })
     } else {
       //
     }
-  }, [tab])
+  }, [loading, tab])
 
   const renderTabs = () => {
     return (
