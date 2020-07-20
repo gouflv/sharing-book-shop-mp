@@ -21,10 +21,17 @@ interface AudioListProps {
 
 export interface RecordPart {
   resourcesId: string
-  resourcesUrl: string
-  memberRecordUrl: string
+  //视频分段资源
+  videoResourcesUrl: string
+  //音频分段资源
+  voiceResourcesUrl: string
+
   memberCurriculumRecordId: string
+  memberRecordUrl: string
+
   describes: string
+  //伴读
+  videoDescribes: string
 }
 
 export const AudioList: FC<AudioListProps> = props => {
@@ -84,11 +91,16 @@ export const AudioList: FC<AudioListProps> = props => {
     setIsRecording(true)
 
     // Video
-    props.onSetVideoState({
-      src: list[currentItemIndex].resourcesUrl,
-      muted: true,
-      play: true
-    })
+    if (props.hasVideo) {
+      props.onSetVideoState({
+        src: list[currentItemIndex].videoResourcesUrl,
+        desc: list[currentItemIndex].videoDescribes,
+        muted: true,
+        play: true
+      })
+    } else {
+      stopPlay()
+    }
 
     // Recorder
     setTimeout(() => {
@@ -138,11 +150,14 @@ export const AudioList: FC<AudioListProps> = props => {
     }
 
     // Video
-    props.onSetVideoState({
-      src: list[currentItemIndex].resourcesUrl,
-      muted: true,
-      play: true
-    })
+    if (props.hasVideo) {
+      props.onSetVideoState({
+        src: list[currentItemIndex].videoResourcesUrl,
+        desc: list[currentItemIndex].videoDescribes,
+        muted: true,
+        play: true
+      })
+    }
   }
   //#endregion
 
@@ -159,11 +174,16 @@ export const AudioList: FC<AudioListProps> = props => {
 
     // 有录音时不自动播放
     if (list.length) {
-      props.onSetVideoState({
-        src: list[currentItemIndex].resourcesUrl,
-        muted: false,
-        play: false //!recordData[currentItemIndex]
-      })
+      if (props.hasVideo) {
+        props.onSetVideoState({
+          src: list[currentItemIndex].videoResourcesUrl,
+          desc: list[currentItemIndex].videoDescribes,
+          muted: false,
+          play: false //!recordData[currentItemIndex]
+        })
+      } else {
+        startPlay(list[currentItemIndex].voiceResourcesUrl, () => {}, true)
+      }
     }
   }, [list, currentItemIndex])
 
@@ -202,9 +222,12 @@ export const AudioList: FC<AudioListProps> = props => {
           </SwiperItem>
         ))}
       </Swiper>
-      <View className='action-bar'>
-        <Button className='btn-primary'>配音完成</Button>
-      </View>
+
+      {recordData.length && (
+        <View className='action-bar'>
+          <Button className='btn-primary'>配音完成</Button>
+        </View>
+      )}
     </View>
   )
 }

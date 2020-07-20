@@ -8,14 +8,20 @@ import Taro, {
 export const useAudioPlayer = () => {
   const player = useRef<InnerAudioContext>()
   const callbackFun = useRef<() => void>()
+  const [loop, setLoop] = useState(false)
 
   useEffect(() => {
     player.current = Taro.createInnerAudioContext()
 
     if (player.current) {
-      //无法触发
       player.current.onStop(() => {
         console.log('player stop')
+        if (callbackFun.current) {
+          callbackFun.current()
+        }
+      })
+      player.current.onPause(() => {
+        console.log('player pause')
         if (callbackFun.current) {
           callbackFun.current()
         }
@@ -29,13 +35,16 @@ export const useAudioPlayer = () => {
     }
   }, [])
 
-  function startPlay(src: string, onFinish: () => void) {
+  function startPlay(src: string, onFinish: () => void, loop = false) {
     callbackFun.current = onFinish
+    setLoop(loop)
     if (player.current) {
       player.current.src = src
       player.current.seek(0)
-      _tryGetDuration()
       player.current.play()
+      if (!loop) {
+        _tryGetDuration()
+      }
     }
   }
 
