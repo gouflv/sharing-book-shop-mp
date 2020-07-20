@@ -17,7 +17,11 @@ export const OrderItem: FC<{ data: any }> = ({ data }) => {
       <View className='content flex-fill'>
         <View className='d-flex align-start'>
           <View className='title flex-fill'>{data.booksName}</View>
-          <View className='tag flex-auto'>机柜</View>
+          {!!data.eqName ? (
+            <View className='tag flex-auto'>机柜</View>
+          ) : (
+            <View className='tag tag--orange flex-auto'>图书馆</View>
+          )}
         </View>
         <View className='desc'>设备名称: {data.eqName}</View>
         <View className='desc'>

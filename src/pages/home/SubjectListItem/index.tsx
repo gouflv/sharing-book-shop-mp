@@ -3,6 +3,7 @@ import Taro, { FC } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import { Star } from '../../../components/Star'
 import { useAuthGuard } from '../../../hooks/useAuthGuard'
+import classNames from 'classnames'
 
 export const SubjectListItem: FC<{ data }> = props => {
   const { withAuth } = useAuthGuard()
@@ -30,6 +31,7 @@ export const SubjectListItem: FC<{ data }> = props => {
           <View className='flex-fill'>
             <View className='title'>{data.curriculumName}</View>
             <View className='desc'>
+              <View className='label'>课程评价</View>
               <Star value={data.stars} />
             </View>
             <View className='tag'>
@@ -39,7 +41,12 @@ export const SubjectListItem: FC<{ data }> = props => {
         </View>
         <View className='action'>
           {data.status === 1 && data.status === 2 && (
-            <View className='tag tag--primary'>
+            <View
+              className={classNames('tag', {
+                'tag--primary': data.status === 1,
+                'tag--gray': data.status === 2
+              })}
+            >
               {
                 {
                   '1': '进行中',

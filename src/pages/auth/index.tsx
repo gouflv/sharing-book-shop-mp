@@ -80,7 +80,7 @@ const Page: FC = () => {
     hideLoading()
 
     showToast({
-      title: '绑定手机号成功',
+      title: '绑定成功',
       success: () => {
         if (authCallback) {
           runAuthCallbackFun()

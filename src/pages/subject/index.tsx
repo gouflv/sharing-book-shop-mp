@@ -16,7 +16,7 @@ const Page: FC = () => {
   useEffect(() => {
     async function fetch() {
       showLoading()
-      const res1 = await POST('curriculum/getCurriculumLable')
+      const res1 = await POST('curriculum/getCurriculumLabel')
       setTag(res1)
       if (res1 && res1.length) {
         setActiveTag(res1[0].name)
@@ -28,8 +28,8 @@ const Page: FC = () => {
 
   async function fetchList() {
     showLoading()
-    const res = await POST('curriculum/getCurriculumByLable', {
-      data: { lable: activeTag }
+    const res = await POST('curriculum/getCurriculumByLabel', {
+      data: { label: activeTag }
     })
     setList(res)
     hideLoading()

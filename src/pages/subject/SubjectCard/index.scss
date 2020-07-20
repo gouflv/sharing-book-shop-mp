@@ -55,5 +55,12 @@
 
   .footer {
     font-size: $font-size-small;
+
+    .icon-time {
+      margin-right: 12px;
+      margin-bottom: 1px;
+      width: 28px;
+      height: 28px;
+    }
   }
 }

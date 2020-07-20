@@ -35,6 +35,10 @@ image {
   align-items: flex-start;
 }
 
+.align-center {
+  align-items: center;
+}
+
 .primary {
   color: $blue;
 }
@@ -86,6 +90,14 @@ image {
   &--primary {
     color: #fff;
     background-color: $blue;
+  }
+  &--gray {
+    color: #fff;
+    background-color: $gray;
+  }
+  &--orange {
+    color: $orange;
+    background-color: $orange;
   }
 }
 
@@ -266,8 +278,12 @@ image {
 
 .empty-list {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   padding: 100px 0;
   font-size: $font-size-base;
   color: $text-gray;
+  image {
+    margin-bottom: 20px;
+  }
 }

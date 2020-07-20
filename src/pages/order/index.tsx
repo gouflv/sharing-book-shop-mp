@@ -46,7 +46,7 @@ const Page: FC = () => {
       </PageHeaderWrapper>
 
       <View className='page-space-wing'>
-        {summary && (
+        {!!summary && (
           <View className='summary'>
             <View className='state'>
               <Image src={require('../../assets/borrow_ico_crown@2x.png')} />
@@ -64,6 +64,14 @@ const Page: FC = () => {
                 <View className='item'>
                   借阅中:
                   <Text className='num'>{summary.borrowingNum}</Text>
+                </View>
+                <View className='item'>
+                  超出本数:
+                  <Text className='num'>-</Text>
+                </View>
+                <View className='item'>
+                  逾期本数:
+                  <Text className='num'>-</Text>
                 </View>
                 <View className='item'>
                   昨日欠费:
@@ -90,21 +98,31 @@ const Page: FC = () => {
                 支付
               </Button>
             </View>
-            <Image
-              className='mark'
-              src={require('../../assets/order_mark0.png')}
-            />
+            {summary.isHaveCard == 2 && (
+              <Image
+                className='mark'
+                src={require('../../assets/order_mark0.png')}
+              />
+            )}
           </View>
         )}
 
-        <View className={'list'}>
-          {list.map((item, i) => (
-            <OrderItem key={i} data={item} />
-          ))}
-          {!loading && !list.length && (
-            <View className={'empty-list'}>暂无借阅订单</View>
-          )}
-        </View>
+        {!loading && !list.length && (
+          <View className={'empty-list'}>
+            <Image
+              src={require('../../assets/borrow_defoult_pic@2x.jpg')}
+              style={{ width: '328rpx', height: '216rpx' }}
+            />
+            暂无订单，快去借书吧~
+          </View>
+        )}
+        {list.length && (
+          <View className={'list'}>
+            {list.map((item, i) => (
+              <OrderItem key={i} data={item} />
+            ))}
+          </View>
+        )}
       </View>
     </View>
   )

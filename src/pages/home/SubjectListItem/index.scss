@@ -22,8 +22,14 @@
   }
 
   .desc {
-    margin-bottom: 6px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
     font-size: $font-size-small;
+    color: #555;
+    .label {
+      margin-right: 8px;
+    }
   }
 
   .footer {

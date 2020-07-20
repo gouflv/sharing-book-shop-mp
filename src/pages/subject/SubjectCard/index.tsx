@@ -39,7 +39,13 @@ export const SubjectCard: FC<{ data }> = props => {
         <View className='flex-fill text-second'>
           {data.curriculumJoinNum || 0}人配音
         </View>
-        <View className='text-second'>{data.curriculumNum || 0}课</View>
+        <View className='text-second d-flex align-center'>
+          <Image
+            className='icon-time'
+            src={require('../../../assets/course_ico_class@2x.png')}
+          />
+          {data.curriculumNum || 0}课
+        </View>
       </View>
     </View>
   )
