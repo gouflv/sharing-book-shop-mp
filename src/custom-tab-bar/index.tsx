@@ -1,10 +1,11 @@
 import './index.scss'
 import Taro, { FC, useContext } from '@tarojs/taro'
-import { CoverImage, CoverView, View } from '@tarojs/components'
+import { CoverImage, CoverView } from '@tarojs/components'
 import classNames from 'classnames'
 import { observer } from '@tarojs/mobx'
 import { AppStore } from '../store/AppStore'
 import { useAuthGuard } from '../hooks/useAuthGuard'
+import { showToast } from '../utils'
 
 type TabBar = {
   text: string
@@ -61,6 +62,36 @@ const Tabbar: FC = () => {
     })
   }
 
+  function onScanClick() {
+    Taro.scanCode({
+      onlyFromCamera: true,
+      scanType: ['qrCode'],
+      success: result => _onScanCode(getParamsOfScan(result.path))
+    })
+  }
+
+  function getParamsOfScan(codePath: string) {
+    if (!codePath) {
+      return
+    }
+    const sp = codePath.split('?id=')
+    if (sp.length === 2) {
+      return sp[1]
+    }
+  }
+
+  function _onScanCode(id?: string) {
+    if (!id) {
+      showToast({ title: '可能是无效的小程序码' })
+      return
+    }
+    withAuth(() => {
+      Taro.redirectTo({
+        url: `/pages/shelf-books/index?id=${id}&from=tabBarScan`
+      })
+    })
+  }
+
   return (
     <CoverView className='tabbar'>
       <CoverView className='content'>
@@ -93,6 +124,7 @@ const Tabbar: FC = () => {
         <CoverImage
           className='scan-btn'
           src={require('../assets/home_ico_scan@2x.png')}
+          onClick={onScanClick}
         />
       </CoverView>
     </CoverView>

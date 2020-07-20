@@ -1,0 +1,20 @@
+@import "../../theme/var";
+
+.page-shelf-books {
+
+  .page-space-wing {
+    padding-top: 10px;
+  }
+
+  .list {
+    margin-bottom: 40px;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    background-color: #fff;
+    overflow: hidden;
+  }
+
+  .footer {
+    margin-bottom: calc(140px + #{$safe-area-bottom});
+  }
+}

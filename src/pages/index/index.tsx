@@ -1,8 +1,25 @@
-import Taro, { useEffect } from '@tarojs/taro'
+import Taro, { useEffect, useRouter } from '@tarojs/taro'
 import { View } from '@tarojs/components'
+import { useAuthGuard } from '../../hooks/useAuthGuard'
 
 export default () => {
+  const { withAuth } = useAuthGuard()
+
   useEffect(() => {
+    const { scene, query } = Taro.getApp().$router.params
+    console.debug('wx scene', scene, query)
+    if (scene === 1047 && query.id) {
+      withAuth(() => {
+        Taro.redirectTo({
+          url: `/pages/shelf-books/index?id=${query.id}&from=weChatScan`
+        })
+      })
+    } else {
+      redirect()
+    }
+  }, [])
+
+  function redirect() {
     // Taro.redirectTo({ url: '/pages/buy-card/index' })
     // Taro.redirectTo({ url: '/pages/auth/index?hideBack=1' })
     // Taro.redirectTo({ url: '/pages/user-bind-phone/index' })
@@ -18,7 +35,7 @@ export default () => {
     // Taro.switchTab({ url: '/pages/user/index' })
     // Taro.switchTab({ url: '/pages/subject/index' })
     // Taro.switchTab({ url: '/pages/order/index' })
-  }, [])
+  }
 
   return <View />
 }
