@@ -55,7 +55,7 @@ const Page: FC = () => {
     const user = await fetchUserInfo()
 
     if (user && user.tel) {
-      showToast({ title: '登录成功' })
+      showToast({ title: '登录成功', icon: 'success' })
       if (authCallback) {
         runAuthCallbackFun()
       } else {
@@ -79,16 +79,14 @@ const Page: FC = () => {
     await fetchUserInfo()
     hideLoading()
 
-    showToast({
-      title: '绑定成功',
-      success: () => {
-        if (authCallback) {
-          runAuthCallbackFun()
-        } else {
-          Taro.reLaunch({ url: '/pages/index/index' })
-        }
+    showToast({ title: '绑定成功', icon: 'success' })
+    setTimeout(() => {
+      if (authCallback) {
+        runAuthCallbackFun()
+      } else {
+        Taro.reLaunch({ url: '/pages/index/index' })
       }
-    })
+    }, 2000)
   }
 
   function runAuthCallbackFun() {

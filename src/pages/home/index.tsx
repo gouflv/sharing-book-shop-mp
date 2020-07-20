@@ -21,8 +21,8 @@ const Page: FC = () => {
   const { statusHeight, headerHeight } = useHeaderSize()
 
   const [loading, setLoading] = useState(true)
-  const [banners, setBanners] = useState([])
-  const [subjectItems, setSubjectItems] = useState([])
+  const [banners, setBanners] = useState<any[]>([])
+  const [subjectItems, setSubjectItems] = useState<any[]>([])
 
   async function fetchBanner() {
     showLoading()
@@ -72,27 +72,18 @@ const Page: FC = () => {
               circular
               autoplay
             >
-              <SwiperItem>
-                <Image
-                  mode={'aspectFill'}
-                  src={'http://placehold.it/690x220?text=690x220@1'}
-                  className={'banner-item'}
-                />
-              </SwiperItem>
-              <SwiperItem>
-                <Image
-                  mode={'aspectFill'}
-                  src={'http://placehold.it/690x220?text=690x220@2'}
-                  className={'banner-item'}
-                />
-              </SwiperItem>
-              <SwiperItem>
-                <Image
-                  mode={'aspectFill'}
-                  src={'http://placehold.it/690x220?text=690x220@3'}
-                  className={'banner-item'}
-                />
-              </SwiperItem>
+              {banners.map((b, i) => (
+                <SwiperItem key={i}>
+                  <Image
+                    mode={'aspectFill'}
+                    src={
+                      b.resourcesUrl ||
+                      'http://placehold.it/690x220?text=690x220@1'
+                    }
+                    className={'banner-item'}
+                  />
+                </SwiperItem>
+              ))}
             </Swiper>
 
             <Panel

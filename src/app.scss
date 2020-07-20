@@ -94,10 +94,11 @@ image {
   &--gray {
     color: #fff;
     background-color: $gray;
+    border-color: $gray;
   }
   &--orange {
     color: $orange;
-    background-color: $orange;
+    border-color: $orange;
   }
 }
 

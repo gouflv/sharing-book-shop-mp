@@ -46,7 +46,7 @@ const Page: FC = () => {
       showToast({ title: '提交成功' })
       setTimeout(() => {
         Taro.navigateBack()
-      }, 1500)
+      }, 2000)
     } catch (e) {
       defaultErrorHandler(e)
     } finally {
