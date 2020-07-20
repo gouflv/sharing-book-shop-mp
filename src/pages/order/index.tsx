@@ -1,9 +1,9 @@
 import './index.scss'
-import Taro, { FC, useState, useDidShow } from '@tarojs/taro'
-import { View, Image, Text, Button } from '@tarojs/components'
+import Taro, { FC, useDidShow, useState } from '@tarojs/taro'
+import { Button, Image, Text, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
-import { OrderItem } from './OrderItem'
+import { OrderBookItem, OrderItem } from './OrderItem'
 import dayjs from 'dayjs'
 import { defaultErrorHandler, POST } from '../../utils/ajax'
 import { hideLoading, showLoading } from '../../utils'
@@ -19,7 +19,7 @@ const Page: FC = () => {
     }
   }
 
-  const [list, setList] = useState<any[]>([])
+  const [list, setList] = useState<OrderBookItem[]>([])
   const [loading, setLoading] = useState(true)
   async function fetchList() {
     try {

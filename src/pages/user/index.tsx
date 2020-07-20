@@ -1,11 +1,5 @@
 import './index.scss'
-import Taro, {
-  FC,
-  useContext,
-  useEffect,
-  useState,
-  useDidShow
-} from '@tarojs/taro'
+import Taro, { FC, useContext, useDidShow, useState } from '@tarojs/taro'
 import { Image, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
@@ -23,7 +17,7 @@ const Page: FC = () => {
   const { user, fetchUserInfo } = useContext(AppStore)
   const { statusHeight, headerHeight } = useHeaderSize()
 
-  useEffect(() => {
+  useDidShow(() => {
     async function init() {
       showLoading()
       !user && (await fetchUserInfo())
@@ -31,7 +25,7 @@ const Page: FC = () => {
       hideLoading()
     }
     init()
-  }, [])
+  })
 
   const [cardList, setCardList] = useState<any[]>([])
   async function fetchCards() {

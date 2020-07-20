@@ -5,7 +5,20 @@ import dayjs from 'dayjs'
 import { POST } from '../../../utils/ajax'
 import { hideLoading, showLoading, showToast } from '../../../utils'
 
-export const OrderItem: FC<{ data: any }> = ({ data }) => {
+export interface OrderBookItem {
+  orderNo
+  // 0:借阅中 1:已逾期 2:已购买 3:已归还未结算 4:已归还已结算
+  subStatus: 0 | 1 | 2 | 3 | 4
+  eqName
+  createTime
+  returnTime
+  booksName
+  booksImg
+  labelName
+  isbn
+}
+
+export const OrderItem: FC<{ data: OrderBookItem }> = ({ data }) => {
   async function onClick() {
     const id = await fetchSubject()
     Taro.navigateTo({
@@ -54,10 +67,12 @@ export const OrderItem: FC<{ data: any }> = ({ data }) => {
         </View>
         <View className='desc'>书籍分类: {data.labelName}</View>
       </View>
-      <Image
-        className='mark1'
-        src={require('../../../assets/order_mark.png')}
-      />
+      {data.subStatus === 1 && (
+        <Image
+          className='mark1'
+          src={require('../../../assets/order_mark.png')}
+        />
+      )}
     </View>
   )
 }
