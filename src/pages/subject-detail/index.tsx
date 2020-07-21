@@ -29,12 +29,14 @@ import _debounce from 'lodash.debounce'
 import { isDev } from '../../config'
 import { VideoDescBtn } from './VideoDesc/Btn'
 import { VideoDescModal } from './VideoDesc/Modal'
+import { useAudioPlayer } from './AudioList/useAudioPlayer'
 
 export interface VideoStateForUpdate {
   src: string
   desc: string
   muted: boolean
   play: boolean
+  audio: string
 }
 
 const Page: FC = () => {
@@ -57,7 +59,9 @@ const Page: FC = () => {
     setHasVideo(res.isVideo === 1)
     setShowAudioList(res.isVoice === 1)
     setVideoSrcOrigin(res.curriculumVideo)
-    setVideoSrc(res.curriculumVideo)
+    if (tab === 'summary') {
+      setVideoSrc(res.curriculumVideo)
+    }
     hideLoading()
     setLoading(false)
   }
@@ -79,7 +83,7 @@ const Page: FC = () => {
 
   //#region tab
   const [tab, setTab] = useState<'summary' | 'audioList' | 'comments'>(
-    'audioList'
+    'summary'
   )
   const [showAudioList, setShowAudioList] = useState(true)
 
@@ -92,6 +96,7 @@ const Page: FC = () => {
 
   //#region video state
   const videoContext = useRef<VideoContext>()
+  const { startPlay, stopPlay } = useAudioPlayer()
 
   const [hasVideo, setHasVideo] = useState(true)
   const [videoSrcOrigin, setVideoSrcOrigin] = useState('')
@@ -101,19 +106,33 @@ const Page: FC = () => {
 
   const setVideoState = _debounce((params: VideoStateForUpdate) => {
     console.log('setVideoState:', params)
-    setVideoSrc(params.src)
-    setMuted(params.muted)
-    setDescModalContent(params.desc)
+    if (hasVideo) {
+      if (params.src !== videoSrc) {
+        setVideoDuration(0)
+      }
+      setVideoSrc(params.src)
+      setMuted(params.muted)
+      setDescModalContent(params.desc)
 
-    if (videoContext.current) {
-      videoContext.current.seek(0)
-      if (params.play) {
-        setTimeout(() => {
-          videoContext.current && videoContext.current.play()
-        }, 300)
+      if (videoContext.current) {
+        videoContext.current.seek(0)
+        if (params.play) {
+          setTimeout(() => {
+            videoContext.current && videoContext.current.play()
+          }, 100)
+        }
+      }
+    } else {
+      if (!params.muted) {
+        startPlay({
+          src: params.audio,
+          loop: true,
+          onGetDuration: duration => setVideoDuration(duration),
+          onFinish: () => {}
+        })
       }
     }
-  }, 700)
+  }, 800)
 
   function setVideoStop() {
     if (videoContext.current) {
@@ -124,11 +143,8 @@ const Page: FC = () => {
 
   function onLoadedMetaData(durationInSec: number) {
     setVideoDuration(durationInSec * 1000)
+    console.log('videoDuration', durationInSec * 1000)
   }
-
-  useEffect(() => {
-    console.log('videoDuration', videoDuration)
-  }, [videoDuration])
 
   useLayoutEffect(() => {
     if (!loading && hasVideo) {
@@ -143,9 +159,7 @@ const Page: FC = () => {
   function onFullscreenChange(isFull: boolean) {
     setIsFullscreen(isFull)
   }
-  const [descModalContent, setDescModalContent] = useState(
-    '喜欢臭臭的东西，像是脏兮兮的臭水池和垃圾箱。直到有一天，碧奇阿姨来了，比尔的臭臭的爱好开始'
-  )
+  const [descModalContent, setDescModalContent] = useState('')
   const [descModalVisible, setDescModalVisible] = useState(false)
   //#endregion
 
@@ -158,7 +172,8 @@ const Page: FC = () => {
         src: videoSrcOrigin,
         desc: '',
         muted: false,
-        play: !isDev
+        play: !isDev,
+        audio: ''
       })
     } else {
       //
@@ -215,12 +230,14 @@ const Page: FC = () => {
                       onFullscreenChange(e.detail.fullScreen as boolean)
                     }
                   >
-                    <VideoDescBtn
-                      isFullscreen={isFullscreen}
-                      onClick={() =>
-                        setDescModalVisible(prevState => !prevState)
-                      }
-                    />
+                    {descModalContent && (
+                      <VideoDescBtn
+                        isFullscreen={isFullscreen}
+                        onClick={() =>
+                          setDescModalVisible(prevState => !prevState)
+                        }
+                      />
+                    )}
                     {descModalVisible && (
                       <VideoDescModal
                         isFullscreen={isFullscreen}

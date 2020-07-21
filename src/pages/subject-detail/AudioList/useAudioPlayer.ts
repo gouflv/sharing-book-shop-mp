@@ -10,24 +10,15 @@ export const useAudioPlayer = () => {
   const callbackFun = useRef<() => void>()
   const [loop, setLoop] = useState(false)
 
+  function execCallback() {
+    if (callbackFun.current) {
+      callbackFun.current()
+      callbackFun.current = undefined
+    }
+  }
+
   useEffect(() => {
     player.current = Taro.createInnerAudioContext()
-
-    if (player.current) {
-      player.current.onStop(() => {
-        console.log('player stop')
-        if (callbackFun.current) {
-          callbackFun.current()
-        }
-      })
-      player.current.onPause(() => {
-        console.log('player pause')
-        if (callbackFun.current) {
-          callbackFun.current()
-        }
-      })
-    }
-
     return () => {
       if (player.current) {
         player.current.destroy()
@@ -35,44 +26,57 @@ export const useAudioPlayer = () => {
     }
   }, [])
 
-  function startPlay(src: string, onFinish: () => void, loop = false) {
-    callbackFun.current = onFinish
-    setLoop(loop)
-    if (player.current) {
-      player.current.src = src
-      player.current.seek(0)
-      player.current.play()
-      if (!loop) {
-        _tryGetDuration()
-      }
-    }
-  }
-
-  function _tryGetDuration() {
-    if (!player.current) {
+  function startPlay(params: {
+    src: string
+    loop?: boolean
+    onGetDuration?: (duration: number) => void
+    onFinish: () => void
+  }) {
+    if (!params.src) {
       return
     }
-    let time = 0
-    function loop() {
-      if (player.current && player.current.duration) {
-        console.log('durationInSec', player.current.duration)
-        _startPlayTimer(player.current.duration)
-        return
-      } else {
-        time += 1
-        time < 10 && setTimeout(loop, 100)
+    callbackFun.current = params.onFinish
+    setLoop(loop)
+    if (player.current) {
+      player.current.src = params.src
+      player.current.seek(0)
+      player.current.loop =
+        typeof params.loop === 'undefined' ? false : params.loop
+      player.current.play()
+
+      player.current.offEnded()
+      player.current.onEnded(() => execCallback())
+
+      if (params.onGetDuration) {
+        getDuration().then(value => {
+          params.onGetDuration && params.onGetDuration(value)
+        })
       }
     }
-    loop()
   }
 
-  function _startPlayTimer(durationInSec) {
-    setTimeout(() => {
-      console.log('player stop')
-      if (callbackFun.current) {
-        callbackFun.current()
+  function getDuration() {
+    return new Promise<number>((resolve, reject) => {
+      if (!player.current) {
+        reject()
+        return
       }
-    }, durationInSec * 1000)
+      let tryCount = 0
+      function run() {
+        if (player.current && player.current.duration) {
+          console.log('player getDuration', player.current.duration)
+          resolve(player.current.duration)
+        } else {
+          if (tryCount < 20) {
+            setTimeout(run, 100)
+          } else {
+            reject('player getDuration failed')
+          }
+          tryCount += 1
+        }
+      }
+      run()
+    })
   }
 
   function stopPlay() {

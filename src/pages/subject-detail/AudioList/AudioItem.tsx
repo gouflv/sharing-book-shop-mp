@@ -1,9 +1,9 @@
 import './index.scss'
-import Taro, { FC, useState, showModal } from '@tarojs/taro'
+import Taro, { FC, showModal, useEffect, useRef, useState } from '@tarojs/taro'
 import { Image, View } from '@tarojs/components'
 import { RecordBtn } from './RecordBtn'
-import { useInterval } from '../../../utils/useInterval'
 import { RecordPart } from './index'
+import { isDev } from '../../../config'
 
 interface AudioItemProps {
   dataKey: number
@@ -13,6 +13,7 @@ interface AudioItemProps {
   isRecording: boolean
   isPlaying: boolean
   disabled: boolean
+  duration: number
   onRecordStart: () => void
   onRecordStop: () => void
   onRemoveRecord: () => void
@@ -20,7 +21,32 @@ interface AudioItemProps {
 }
 
 export const AudioItem: FC<AudioItemProps> = props => {
-  const [process, setProcess] = useState(0)
+  const [recordTime, setRecordTime] = useState(0)
+
+  const timer = useRef<any>(0)
+  useEffect(() => {
+    function stop() {
+      clearInterval(timer.current)
+    }
+    function runner() {
+      if (recordTime + 1 > props.duration / 1000) {
+        stop()
+        props.onRecordStop()
+      } else {
+        setRecordTime(prevState => prevState + 1)
+      }
+    }
+
+    if (props.isRecording && props.duration) {
+      timer.current = setInterval(() => {
+        runner()
+      }, 1000)
+    } else {
+      stop()
+    }
+
+    return () => stop()
+  }, [props.isRecording, props.duration])
 
   function onRecordClick() {
     if (props.disabled) {
@@ -40,22 +66,10 @@ export const AudioItem: FC<AudioItemProps> = props => {
     if (props.isRecording) {
       props.onRecordStop()
     } else {
+      setRecordTime(0)
       props.onRecordStart()
     }
   }
-
-  useInterval(
-    () => {
-      setProcess(prev => {
-        if (prev + 1 > 100) {
-          props.onRecordStop()
-          return prev
-        }
-        return prev + 1
-      })
-    },
-    props.isRecording ? 1000 : null
-  )
 
   return (
     <View className='audio-item'>
@@ -66,6 +80,11 @@ export const AudioItem: FC<AudioItemProps> = props => {
       </View>
       <View className='content'>{props.data.describes}</View>
       <View className='footer'>
+        {isDev && (
+          <View>
+            {recordTime}/{props.duration / 1000}
+          </View>
+        )}
         {!!props.recordData && (
           <View className='btn-play' onClick={props.onRecordPlay}>
             {props.isPlaying ? (
@@ -81,7 +100,9 @@ export const AudioItem: FC<AudioItemProps> = props => {
         )}
         <RecordBtn
           hasRecord={!!props.recordData}
-          value={process}
+          value={
+            props.duration ? (recordTime / (props.duration / 1000)) * 100 : 0
+          }
           onClick={onRecordClick}
         />
       </View>

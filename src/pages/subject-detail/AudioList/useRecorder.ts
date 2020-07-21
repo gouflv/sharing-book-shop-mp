@@ -15,7 +15,10 @@ export const useRecorder = () => {
   useEffect(() => {
     recorder.current = Taro.getRecorderManager()
     if (recorder.current) {
-      recorder.current.onStart(() => setIsStart(true))
+      recorder.current.onStart(() => {
+        console.log('recorder start')
+        setIsStart(true)
+      })
 
       recorder.current.onPause(
         () => recorder.current && recorder.current.stop()
@@ -23,6 +26,7 @@ export const useRecorder = () => {
 
       recorder.current.onStop(({ tempFilePath }) => {
         console.log('recorder stop')
+        setIsStart(false)
         if (callbackFun.current) {
           callbackFun.current(tempFilePath)
           callbackFun.current = undefined
@@ -45,6 +49,7 @@ export const useRecorder = () => {
   }
 
   function stopRecord() {
+    setIsStart(false)
     recorder.current && recorder.current.stop()
   }
 
