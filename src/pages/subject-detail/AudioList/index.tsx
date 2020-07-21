@@ -191,6 +191,33 @@ export const AudioList: FC<AudioListProps> = props => {
     }
   }, [list, currentItemIndex])
 
+  // submit
+  async function submit() {
+    type resType = { resourcesId; recordUrl }
+    const resourceData = recordData.reduce<resType[]>((res, rc, index) => {
+      if (rc) {
+        res.push({ recordUrl: rc.file, resourcesId: list[index].resourcesId })
+      }
+      return res
+    }, [])
+    try {
+      showLoading()
+      await POST('curriculum/addCurriculumRecord', {
+        data: {
+          jsonString: JSON.stringify({
+            curriculumId: props.subjectId,
+            data: resourceData
+          })
+        }
+      })
+      showToast({ title: '保存成功' })
+    } catch (e) {
+      defaultErrorHandler(e)
+    } finally {
+      hideLoading()
+    }
+  }
+
   return (
     <View
       className={'audio-list'}
@@ -230,7 +257,9 @@ export const AudioList: FC<AudioListProps> = props => {
 
       {recordData.length && (
         <View className='action-bar'>
-          <Button className='btn-primary'>配音完成</Button>
+          <Button className='btn-primary' onClick={submit}>
+            配音完成
+          </Button>
         </View>
       )}
     </View>
