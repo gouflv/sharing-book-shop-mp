@@ -24,7 +24,12 @@ import { AudioList } from './AudioList'
 import { CommentList } from './CommentList'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { POST } from '../../utils/ajax'
-import { hideLoading, showLoading, textToRichText } from '../../utils'
+import {
+  addResTimestamp,
+  hideLoading,
+  showLoading,
+  textToRichText
+} from '../../utils'
 import _debounce from 'lodash.debounce'
 import { isDev } from '../../config'
 import { VideoDescBtn } from './VideoDesc/Btn'
@@ -60,7 +65,7 @@ const Page: FC = () => {
     setShowAudioList(res.isVoice === 1)
     setVideoSrcOrigin(res.curriculumVideo)
     if (tab === 'summary') {
-      setVideoSrc(res.curriculumVideo)
+      setVideoSrc(addResTimestamp(res.curriculumVideo))
     }
     hideLoading()
     setLoading(false)
@@ -110,7 +115,7 @@ const Page: FC = () => {
       if (params.src !== videoSrc) {
         setVideoDuration(0)
       }
-      setVideoSrc(params.src)
+      setVideoSrc(addResTimestamp(params.src))
       setMuted(params.muted)
       setDescModalContent(params.desc)
 
@@ -128,7 +133,7 @@ const Page: FC = () => {
       //TODO test
       if (!params.muted) {
         startPlay({
-          src: params.audio,
+          src: addResTimestamp(params.audio),
           loop: true,
           onGetDuration: duration => setVideoDuration(duration),
           onFinish: () => {}

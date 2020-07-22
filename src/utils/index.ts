@@ -1,4 +1,5 @@
 import Taro from '@tarojs/taro'
+import dayjs from 'dayjs'
 
 export function showLoading(props?: Partial<Taro.showLoading.Option>) {
   Taro.showLoading({
@@ -26,4 +27,8 @@ export function showToast(props: Taro.showToast.Option) {
 
 export function textToRichText(val: string = '') {
   return `<p>${val.replace(/\r?\n/g, '<br /><br />')}</p>`
+}
+
+export function addResTimestamp(url: string = '') {
+  return `${url.trim()}?t=${dayjs().format('YYYY_MM_DD_HH')}`
 }
