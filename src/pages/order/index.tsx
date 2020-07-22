@@ -42,50 +42,48 @@ const Page: FC = () => {
   return (
     <View className={'page-order'}>
       <PageHeaderWrapper title={'借阅中'} hideBackArrow>
-        <PageHeaderExt absolute height={'90rpx'} />
+        <PageHeaderExt fixed height={'90rpx'} />
       </PageHeaderWrapper>
 
       <View className='page-space-wing'>
         {!!summary && (
           <View className='summary'>
-            <View className='state'>
-              <Image src={require('../../assets/borrow_ico_crown@2x.png')} />
-            </View>
-            <View className='content'>
-              <View className='title'>
-                当前会员收益
-                <Text className='date'>{dayjs().format('YYYY/MM/DD')}</Text>
+            <View className='body'>
+              <View className='state'>
+                <Image src={require('../../assets/borrow_ico_crown@2x.png')} />
               </View>
-              <View className='summary-list'>
-                <View className='item'>
-                  可借本数:
-                  <Text className='num'>{summary.remainingNum}</Text>
+              <View className='content'>
+                <View className='title'>
+                  当前会员收益
+                  <Text className='date'>{dayjs().format('YYYY/MM/DD')}</Text>
                 </View>
-                <View className='item'>
-                  借阅中:
-                  <Text className='num'>{summary.borrowingNum}</Text>
-                </View>
-                <View className='item'>
-                  超出本数:
-                  <Text className='num'>unknown</Text>
-                </View>
-                <View className='item'>
-                  逾期本数:
-                  <Text className='num'>unknown</Text>
-                </View>
-                <View className='item'>
-                  昨日欠费:
-                  <Text className='num danger'>¥{summary.owe}</Text>
-                </View>
-                <View className='item'>
-                  累计欠费:
-                  <Text className='num danger'>¥{summary.totalOwe}</Text>
+                <View className='summary-list'>
+                  <View className='item'>
+                    可借本数:
+                    <Text className='num'>{summary.remainingNum}</Text>
+                  </View>
+                  <View className='item'>
+                    借阅中:
+                    <Text className='num'>{summary.borrowingNum}</Text>
+                  </View>
+                  <View className='item'>
+                    超权益:
+                    <Text className='num danger'>{summary.beyondNum}</Text>
+                  </View>
+                  <View className='item'>
+                    昨日欠费:
+                    <Text className='num danger'>¥{summary.owe}</Text>
+                  </View>
+                  <View className='item'>
+                    累计欠费:
+                    <Text className='num danger'>¥{summary.totalOwe}</Text>
+                  </View>
                 </View>
               </View>
             </View>
-            <View className='action'>
+            <View className='footer'>
               <View
-                className='primary'
+                className='link primary'
                 onClick={() => {
                   Taro.navigateTo({
                     url: '/pages/user-order/index'

@@ -68,7 +68,13 @@ const Page: FC = () => {
     <View className={'page-shelf-books'}>
       <PageHeaderWrapper
         title={meta.type === 1 ? '借书单' : '还书单'}
-        hideBackArrow={fromWeChatScan}
+        onBack={() => {
+          if (fromWeChatScan) {
+            Taro.reLaunch({ url: '/pages/home/index' })
+          } else {
+            Taro.navigateBack()
+          }
+        }}
       >
         <PageHeaderExt absolute height={'90rpx'} />
       </PageHeaderWrapper>

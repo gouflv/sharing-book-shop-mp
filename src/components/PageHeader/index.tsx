@@ -8,17 +8,22 @@ export type PageHeaderProps = {
   hideBackArrow?: boolean
   bg?: string
   bgHeight?: string
+  onBack?: () => void
 }
 
 const PageHeader: FC<PageHeaderProps> = props => {
-  const { title, hideBackArrow } = props
+  const { title, hideBackArrow, onBack } = props
   const { statusHeight, headerHeight } = useHeaderSize()
 
-  function onBack() {
+  function onBackClick() {
     if (hideBackArrow) {
       return
     }
-    Taro.navigateBack()
+    if (onBack) {
+      onBack()
+    } else {
+      Taro.navigateBack()
+    }
   }
 
   return (
@@ -32,7 +37,7 @@ const PageHeader: FC<PageHeaderProps> = props => {
       <View
         className='content'
         style={{ height: `${headerHeight}px` }}
-        onClick={onBack}
+        onClick={onBackClick}
       >
         {!hideBackArrow && (
           <View className={'left'}>
