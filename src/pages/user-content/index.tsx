@@ -11,13 +11,16 @@ const Page: FC = () => {
   const [tab, setTab] = useState(0)
 
   const [list, setList] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
   async function fetch() {
     showLoading()
+    setLoading(true)
     const data = await POST('wxMember/getMemberCurriculum', {
       data: { type: tab + 1 }
     })
     setList(data)
     hideLoading()
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -69,6 +72,9 @@ const Page: FC = () => {
                 </View>
               </View>
             ))}
+            {!loading && !list.length && (
+              <View className='empty-list'>暂无作品</View>
+            )}
           </View>
         </View>
       </PageHeaderWrapper>
