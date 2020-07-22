@@ -38,7 +38,7 @@ const Page: FC = () => {
       await POST('wxMember/buyConfigCard', {
         data: { cardId: card.memLeId }
       })
-      showToast({ title: '激活成功', icon: 'success' })
+      showToast({ title: '购买成功', icon: 'success' })
       fetchCards()
     } catch (e) {
       defaultErrorHandler(e)
