@@ -6,7 +6,7 @@ import { defaultErrorHandler } from './ajax'
 
 export async function commonUpload(file: string) {
   return new Promise<string>((resolve, reject) => {
-    showLoading()
+    showLoading({ title: '正在处理' })
     Taro.uploadFile({
       url: `${API_BASE}/common/upload`,
       header: {
@@ -20,6 +20,7 @@ export async function commonUpload(file: string) {
       success: res => {
         try {
           const url: string = JSON.parse(res.data).data
+          console.log('[CommonUpload] result', url)
           resolve(url)
         } catch (e) {
           defaultErrorHandler(e)

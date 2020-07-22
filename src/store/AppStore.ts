@@ -15,7 +15,6 @@ interface User {
 }
 
 class App {
-  @observable platform: 'ios' | 'android' = 'android'
   @observable loading = true
   @observable tabBarIndex = 0
 
@@ -25,11 +24,7 @@ class App {
   @observable authCallback: AuthCallback | null = null
 
   constructor() {
-    const res = Taro.getSystemInfoSync()
-    this.platform = res.platform as any
-    console.log('platform', res.platform)
     console.log('storage', Taro.getStorageInfoSync())
-
     this.token = Taro.getStorageSync('token') || ''
   }
 

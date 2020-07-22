@@ -1,6 +1,9 @@
 @import "../../theme/var";
 
 .page-user {
+  max-width: 100vw;
+  overflow-x: hidden;
+
   .user-header {
     position: relative;
     display: flex;

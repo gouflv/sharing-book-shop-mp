@@ -64,7 +64,7 @@ export const AudioList: FC<AudioListProps> = props => {
   const { startPlay, stopPlay } = useAudioPlayer()
 
   useEffect(() => {
-    console.log(recordData)
+    console.debug('[AudioList] recordData', recordData)
   }, [recordData])
 
   useEffect(() => {
@@ -138,6 +138,10 @@ export const AudioList: FC<AudioListProps> = props => {
     if (isPlaying) {
       setIsPlaying(false)
       stopPlay()
+
+      // Video
+      props.onSetVideoStop()
+
       return
     }
 
@@ -210,7 +214,7 @@ export const AudioList: FC<AudioListProps> = props => {
           })
         }
       })
-      showToast({ title: '保存成功' })
+      showToast({ title: '保存成功', icon: 'success' })
     } catch (e) {
       defaultErrorHandler(e)
     } finally {

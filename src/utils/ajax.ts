@@ -27,6 +27,7 @@ export const ajax = (url, options?: AjaxOptions) =>
       url: `${API_BASE}/${url}`,
       ...options
     }
+    console.log('[API] request', url, params)
     try {
       const res = await Taro.request(params)
       const { data, statusCode } = res
@@ -50,7 +51,7 @@ export const ajax = (url, options?: AjaxOptions) =>
         return
       }
 
-      console.log('Api Response:', url, data.data)
+      console.log('[API] response:', url, data.data)
       resolve(data.data || {})
     } catch (e) {
       showToast({ title: '网络开小差了' })

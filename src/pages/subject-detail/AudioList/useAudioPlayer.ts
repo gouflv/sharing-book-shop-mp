@@ -8,7 +8,6 @@ import Taro, {
 export const useAudioPlayer = () => {
   const player = useRef<InnerAudioContext>()
   const callbackFun = useRef<() => void>()
-  const [loop, setLoop] = useState(false)
 
   function execCallback() {
     if (callbackFun.current) {
@@ -32,26 +31,30 @@ export const useAudioPlayer = () => {
     onGetDuration?: (duration: number) => void
     onFinish: () => void
   }) {
+    console.log('[Player] startPlay', params)
+
     if (!params.src) {
       return
     }
     callbackFun.current = params.onFinish
-    setLoop(loop)
     if (player.current) {
       player.current.src = params.src
       player.current.seek(0)
       player.current.loop =
         typeof params.loop === 'undefined' ? false : params.loop
-      player.current.play()
 
       player.current.offEnded()
-      player.current.onEnded(() => execCallback())
+      player.current.onEnded(() => {
+        console.log('[Player] onEnd', execCallback())
+      })
 
       if (params.onGetDuration) {
         getDuration().then(value => {
           params.onGetDuration && params.onGetDuration(value)
         })
       }
+
+      player.current.play()
     }
   }
 
@@ -63,14 +66,15 @@ export const useAudioPlayer = () => {
       }
       let tryCount = 0
       function run() {
+        console.log('[Player] run', player.current && player.current.duration)
         if (player.current && player.current.duration) {
-          console.log('player getDuration', player.current.duration)
+          console.log('[Player] getDuration', player.current.duration)
           resolve(player.current.duration)
         } else {
           if (tryCount < 20) {
             setTimeout(run, 100)
           } else {
-            reject('player getDuration failed')
+            reject('[Player] getDuration failed')
           }
           tryCount += 1
         }

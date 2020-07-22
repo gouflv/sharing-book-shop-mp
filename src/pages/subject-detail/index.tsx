@@ -105,7 +105,7 @@ const Page: FC = () => {
   const [videoDuration, setVideoDuration] = useState(0)
 
   const setVideoState = _debounce((params: VideoStateForUpdate) => {
-    console.log('setVideoState:', params)
+    console.log('[SetVideoState]', params)
     if (hasVideo) {
       if (params.src !== videoSrc) {
         setVideoDuration(0)
@@ -120,9 +120,12 @@ const Page: FC = () => {
           setTimeout(() => {
             videoContext.current && videoContext.current.play()
           }, 100)
+        } else {
+          videoContext.current.stop()
         }
       }
     } else {
+      //TODO test
       if (!params.muted) {
         startPlay({
           src: params.audio,
@@ -143,7 +146,7 @@ const Page: FC = () => {
 
   function onLoadedMetaData(durationInSec: number) {
     setVideoDuration(durationInSec * 1000)
-    console.log('videoDuration', durationInSec * 1000)
+    console.log('[onLoadedMetaData]: videoDuration', durationInSec * 1000)
   }
 
   useLayoutEffect(() => {
