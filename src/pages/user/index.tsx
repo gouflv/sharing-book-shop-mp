@@ -4,13 +4,13 @@ import { Image, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { useHeaderSize } from '../../hooks/useHeaderSize'
-import { Banner } from './Banner'
+import { Banner, Card } from './Banner'
 import { UserActiveModal } from '../../components/Modals/UserActiveModal'
 import { UserRuleModal } from './UserRuleModal'
 import { AppStore } from '../../store/AppStore'
 import { observer } from '@tarojs/mobx'
-import { hideLoading, showLoading } from '../../utils'
-import { POST } from '../../utils/ajax'
+import { hideLoading, showLoading, showToast } from '../../utils'
+import { defaultErrorHandler, POST } from '../../utils/ajax'
 import { useNotification } from '../user-message/useNotification'
 
 const Page: FC = () => {
@@ -27,10 +27,38 @@ const Page: FC = () => {
     init()
   })
 
-  const [cardList, setCardList] = useState<any[]>([])
+  const [cardList, setCardList] = useState<any[]>()
   async function fetchCards() {
     const data = await POST('wxMember/getMemberCard')
     setCardList(data)
+  }
+  async function onBuyCard(card: Card) {
+    try {
+      showLoading()
+      await POST('wxMember/buyConfigCard', {
+        data: { cardId: card.memLeId }
+      })
+      showToast({ title: '激活成功', icon: 'success' })
+      fetchCards()
+    } catch (e) {
+      defaultErrorHandler(e)
+    } finally {
+      hideLoading()
+    }
+  }
+  async function onActiveCard(card: Card) {
+    try {
+      showLoading()
+      await POST('wxMember/activeMemberCard', {
+        data: { memLeId: card.memLeId }
+      })
+      showToast({ title: '激活成功', icon: 'success' })
+      fetchCards()
+    } catch (e) {
+      defaultErrorHandler(e)
+    } finally {
+      hideLoading()
+    }
   }
 
   // notification
@@ -91,7 +119,11 @@ const Page: FC = () => {
           </View>
         </View>
 
-        <Banner cardList={cardList} />
+        <Banner
+          cardList={cardList}
+          onBuyCard={onBuyCard}
+          onActiveCard={onActiveCard}
+        />
 
         <View className='page-space-wing'>
           <View

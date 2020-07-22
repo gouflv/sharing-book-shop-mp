@@ -23,7 +23,14 @@ const Page: FC = () => {
         </PageHeaderExt>
 
         <View className='page-space-around'>
-          <View className='title primary'>恭喜您! 购买成功</View>
+          <View
+            className='title primary'
+            onClick={() => {
+              Taro.redirectTo({ url: '/pages/user-order/index' })
+            }}
+          >
+            恭喜您! 购买成功
+          </View>
           <View className='action'>
             <Button
               className='btn-primary btn-primary--plain'
