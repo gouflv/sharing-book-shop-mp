@@ -43,7 +43,7 @@ const Page: FC = () => {
       await POST('wxMember/addComplaintsLable', {
         data
       })
-      showToast({ title: '提交成功' })
+      showToast({ title: '提交成功', icon: 'success' })
       setTimeout(() => {
         Taro.navigateBack()
       }, 2000)
