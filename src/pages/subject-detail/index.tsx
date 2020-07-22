@@ -65,7 +65,7 @@ const Page: FC = () => {
     setShowAudioList(res.isVoice === 1)
     setVideoSrcOrigin(res.curriculumVideo)
     if (tab === 'summary') {
-      setVideoSrc(addResTimestamp(res.curriculumVideo))
+      setVideoSrc(res.curriculumVideo)
     }
     hideLoading()
     setLoading(false)
@@ -114,8 +114,8 @@ const Page: FC = () => {
     if (hasVideo) {
       if (params.src !== videoSrc) {
         setVideoDuration(0)
+        setVideoSrc(params.src)
       }
-      setVideoSrc(addResTimestamp(params.src))
       setMuted(params.muted)
       setDescModalContent(params.desc)
 
@@ -230,7 +230,7 @@ const Page: FC = () => {
                   <Video
                     id='player'
                     className='player'
-                    src={videoSrc}
+                    src={addResTimestamp(videoSrc)}
                     title={data.curriculumName}
                     muted={muted}
                     onLoadedMetaData={e => onLoadedMetaData(e.detail.duration)}
