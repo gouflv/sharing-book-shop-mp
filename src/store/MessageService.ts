@@ -1,21 +1,15 @@
 import { action, observable } from 'mobx'
 import { createContext } from '@tarojs/taro'
+import { MessageProps } from '../components/Message'
 
-export interface MessageProps {
-  title?: string
-  content: string
-}
-export interface MessageOptions extends MessageProps {
-  onCancel: () => void
-  onConfirm: () => void
-}
+type MessageOptions = Pick<MessageProps, 'title' | 'content'>
 
 class Message {
   @observable visible = false
-  @observable options: MessageOptions = {} as any
+  @observable options: MessageProps = {} as any
 
   @action.bound
-  async showConfirm(props: MessageProps) {
+  async showConfirm(props: MessageOptions) {
     return new Promise((resolve, reject) => {
       this.options = {
         onCancel: () => {
