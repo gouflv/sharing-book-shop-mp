@@ -1,4 +1,5 @@
 @import "../../theme/var";
+@import "./CardItem";
 
 .page-user {
   max-width: 100vw;
@@ -140,112 +141,6 @@
 
     &.in-active {
       transform: scale(0.96, 0.9);
-    }
-  }
-
-  .vip-card {
-    position: relative;
-    display: flex;
-    height: 310px;
-    padding: 40px 36px 36px;
-    color: #62472d;
-    background: linear-gradient(90deg, rgba(245, 225, 197, 1) 0%, rgba(241, 211, 151, 1) 100%);
-    border-radius: $border-radius * 2;
-    box-shadow: 0 4px 10px rgba(#000, 0.1);
-
-    .crown {
-      position: absolute;
-      right: 30px;
-      bottom: 30px;
-      width: 208px;
-      height: 220px;
-    }
-
-    .mark {
-      position: absolute;
-      top: -9px;
-      left: -6px;
-      width: 118px;
-      height: 48px;
-    }
-
-    .label {
-      position: absolute;
-      top: 26px;
-      right: 26px;
-      color: #fff;
-      text-shadow: 0 0 4px rgba(#000, 0.1);
-    }
-
-    .content {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-
-      .title {
-        margin-bottom: auto;
-      }
-
-      .desc {
-        margin-top: 4px;
-        font-size: $font-size-small;
-        vertical-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-
-        .date {
-          margin-bottom: 8px;
-        }
-        .price {
-          font-size: 40px;
-        }
-
-        .btn-active {
-          min-width: 140px;
-          height: 44px;
-          line-height: 44px;
-          border-radius: 44px;
-          background: linear-gradient(90deg, #d9a381 0%, #f1dfcd 100%);
-          box-shadow: 0 4px 8px rgba(#000, 0.1);
-          text-align: center;
-          color: #62472d;
-
-          &--blue {
-            background: linear-gradient(90deg, $blue 0%, lighten($blue, 10%) 100%);
-            color: #fff;
-          }
-        }
-      }
-    }
-
-
-    &--dark {
-      background: linear-gradient(90deg, #393939 0%, #595959 100%);
-
-      .crown {
-        opacity: 0.2;
-      }
-
-      .content {
-        color: #fff;
-      }
-    }
-
-    &--pink {
-      background: transparent;
-
-      .bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 600px;
-        height: 310px;
-      }
-
-      .content {
-        color: #fff;
-      }
     }
   }
 
