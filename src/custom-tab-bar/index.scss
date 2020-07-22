@@ -3,11 +3,11 @@
 .tabbar {
   position: fixed;
   bottom: 0;
-  height: 100px + 20px;
+  box-sizing: content-box;
   display: flex;
   align-items: flex-end;
+  height: 100px + 20px;
   padding-bottom: $safe-area-bottom;
-  box-sizing: content-box;
 
   .content {
     display: flex;
@@ -15,8 +15,8 @@
     width: 100vw;
     height: 100px;
     padding: 0 20px;
-    border-top: 1px solid $border-color;
     background-color: #fff;
+    border-top: 1px solid $border-color;
   }
 
   .item {
@@ -49,13 +49,13 @@
     bottom: calc(36px + #{$safe-area-bottom});
     left: 50%;
     transform: translateX(-50%);
+
     .scan-btn {
+      z-index: 1;
       width: 84px;
       height: 84px;
       background-color: $blue;
       border-radius: 100%;
-      z-index: 1;
     }
-
   }
 }

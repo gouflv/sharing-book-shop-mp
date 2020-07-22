@@ -22,11 +22,12 @@
   }
 
   .desc {
-    margin-bottom: 10px;
     display: flex;
     align-items: center;
+    margin-bottom: 10px;
     font-size: $font-size-small;
     color: #555;
+
     .label {
       margin-right: 8px;
     }

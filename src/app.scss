@@ -90,11 +90,13 @@ image {
     color: #fff;
     background-color: $blue;
   }
+
   &--gray {
     color: #fff;
     background-color: $gray;
     border-color: $gray;
   }
+
   &--orange {
     color: $orange;
     border-color: $orange;
@@ -283,6 +285,7 @@ image {
   padding: 100px 0;
   font-size: $font-size-base;
   color: $text-gray;
+
   image {
     margin-bottom: 20px;
   }

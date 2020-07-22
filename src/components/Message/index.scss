@@ -3,6 +3,7 @@
 .message-modal {
   &__container {
     padding: 60px 50px;
+
     .main {
       display: flex;
       align-items: center;
@@ -12,25 +13,28 @@
       .title {}
       .content {}
     }
+
     .footer {
       display: flex;
       justify-content: space-around;
+
       button {
         min-width: 170px;
-        line-height: 2;
         font-size: $font-size-large;
+        line-height: 2;
         color: #333;
         text-align: center;
+        background: $border-color;
         border: none;
         border-radius: 40px;
-        background: $border-color;
+
         &::after {
           display: none;
         }
 
         &.btn-primary {
-          background-color: $blue;
           color: #fff;
+          background-color: $blue;
         }
       }
     }
