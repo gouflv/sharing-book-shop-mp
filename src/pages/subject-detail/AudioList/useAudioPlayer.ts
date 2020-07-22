@@ -45,7 +45,8 @@ export const useAudioPlayer = () => {
 
       player.current.offEnded()
       player.current.onEnded(() => {
-        console.log('[Player] onEnd', execCallback())
+        console.log('[Player] onEnd')
+        execCallback()
       })
 
       if (params.onGetDuration) {

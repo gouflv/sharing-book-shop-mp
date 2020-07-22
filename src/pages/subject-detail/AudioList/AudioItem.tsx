@@ -57,7 +57,10 @@ export const AudioItem: FC<AudioItemProps> = props => {
       showModal({
         title: '确认重录',
         success: ({ confirm }) => {
-          confirm && props.onRemoveRecord()
+          if (confirm) {
+            setRecordTime(0)
+            props.onRemoveRecord()
+          }
         }
       })
       return
