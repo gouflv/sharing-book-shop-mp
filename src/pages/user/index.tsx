@@ -5,7 +5,6 @@ import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { useHeaderSize } from '../../hooks/useHeaderSize'
 import { Banner } from './Banner'
-import { UserActiveModal } from '../../components/Modals/UserActiveModal'
 import { UserRuleModal } from './UserRuleModal'
 import { AppStore } from '../../store/AppStore'
 import { observer } from '@tarojs/mobx'
@@ -15,10 +14,12 @@ import { useNotification } from '../user-message/useNotification'
 import { Card } from './CardItem'
 import BasicPageView from '../../components/BasicPageWrapper'
 import { MessageService } from '../../store/MessageService'
+import { NotificationService } from '../../store/NotificationService'
 
 const Page: FC = () => {
   const { user, fetchUserInfo } = useContext(AppStore)
   const { showConfirm } = useContext(MessageService)
+  const { checkNotify } = useContext(NotificationService)
   const { statusHeight, headerHeight } = useHeaderSize()
 
   useDidShow(() => {
@@ -72,6 +73,11 @@ const Page: FC = () => {
   useDidShow(() => {
     setTimeout(() => {
       fetchList()
+    }, 500)
+  })
+  useDidShow(() => {
+    setTimeout(() => {
+      checkNotify()
     }, 500)
   })
 

@@ -1,8 +1,9 @@
 import { useState } from '@tarojs/taro'
 import { POST } from '../../utils/ajax'
+import { UserNotification } from './index'
 
 export const useNotification = () => {
-  const [items, setItems] = useState<any[]>([])
+  const [items, setItems] = useState<UserNotification[]>([])
   const [loading, setLoading] = useState(true)
 
   async function fetchList() {
@@ -12,13 +13,6 @@ export const useNotification = () => {
     })
     setItems(data)
     setLoading(false)
-  }
-
-  async function fetchActiveRecord() {
-    const data = await POST('wxMember/getMemberMsg', {
-      data: { type: 6 }
-    })
-    return data.length ? data[0] : null
   }
 
   async function markAllAsRead(ids: string[] = []) {
@@ -33,7 +27,6 @@ export const useNotification = () => {
     items,
     loading,
     fetchList,
-    fetchActiveRecord,
     markAllAsRead
   }
 }

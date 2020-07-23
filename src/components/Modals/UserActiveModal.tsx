@@ -2,12 +2,16 @@ import '../../app.scss'
 import Taro, { FC } from '@tarojs/taro'
 import { Image, View } from '@tarojs/components'
 import { AtModal } from 'taro-ui'
+import { UserNotification } from '../../pages/user-message'
 
-export const UserActiveModal: FC = () => {
+export const UserActiveModal: FC<{
+  data: UserNotification
+  onClose: () => void
+}> = ({ data, onClose }) => {
   return (
     <AtModal
       className='user-active-modal'
-      isOpened={false}
+      isOpened={true}
       closeOnClickOverlay={false}
     >
       <Image
@@ -15,9 +19,9 @@ export const UserActiveModal: FC = () => {
         src={require('../../assets/vip_popup_act@2x.png')}
       />
       <View className='user-active-modal__content'>
-        您收到了一张预售卡，该预售卡在2020/6/5至2020/6/30期间限时发售，借阅书位1，借阅时间90天，购买后可自行选择是否立即激活。
+        {!!data && data.content}
       </View>
-      <View className='user-active-modal__close'>
+      <View className='user-active-modal__close' onClick={onClose}>
         <Image src={require('../../assets/vip_active_ext_close.png')} />
       </View>
     </AtModal>

@@ -5,6 +5,12 @@ import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { useNotification } from './useNotification'
 
+export interface UserNotification {
+  newsId
+  isRead: 1 | 2 | boolean
+  content
+}
+
 const Page: FC = () => {
   const { items, loading, fetchList, markAllAsRead } = useNotification()
 

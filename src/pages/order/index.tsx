@@ -7,6 +7,7 @@ import { OrderBookItem, OrderItem } from './OrderItem'
 import dayjs from 'dayjs'
 import { defaultErrorHandler, POST } from '../../utils/ajax'
 import { hideLoading, showLoading } from '../../utils'
+import BasicPageWrapper from '../../components/BasicPageWrapper'
 
 const Page: FC = () => {
   const [summary, setSummary] = useState<any>()
@@ -40,89 +41,93 @@ const Page: FC = () => {
   })
 
   return (
-    <View className={'page-order'}>
-      <PageHeaderWrapper title={'借阅中'} hideBackArrow>
-        <PageHeaderExt fixed height={'90rpx'} />
-      </PageHeaderWrapper>
+    <BasicPageWrapper>
+      <View className={'page-order'}>
+        <PageHeaderWrapper title={'借阅中'} hideBackArrow>
+          <PageHeaderExt fixed height={'90rpx'} />
+        </PageHeaderWrapper>
 
-      <View className='page-space-wing'>
-        {!!summary && (
-          <View className='summary'>
-            <View className='body'>
-              <View className='state'>
-                <Image src={require('../../assets/borrow_ico_crown@2x.png')} />
-              </View>
-              <View className='content'>
-                <View className='title'>
-                  当前会员收益
-                  <Text className='date'>{dayjs().format('YYYY/MM/DD')}</Text>
+        <View className='page-space-wing'>
+          {!!summary && (
+            <View className='summary'>
+              <View className='body'>
+                <View className='state'>
+                  <Image
+                    src={require('../../assets/borrow_ico_crown@2x.png')}
+                  />
                 </View>
-                <View className='summary-list'>
-                  <View className='item'>
-                    可借本数:
-                    <Text className='num'>{summary.remainingNum}</Text>
+                <View className='content'>
+                  <View className='title'>
+                    当前会员收益
+                    <Text className='date'>{dayjs().format('YYYY/MM/DD')}</Text>
                   </View>
-                  <View className='item'>
-                    借阅中:
-                    <Text className='num'>{summary.borrowingNum}</Text>
-                  </View>
-                  <View className='item'>
-                    超权益:
-                    <Text className='num danger'>{summary.beyondNum}</Text>
-                  </View>
-                  <View className='item'>
-                    昨日欠费:
-                    <Text className='num danger'>¥{summary.owe}</Text>
-                  </View>
-                  <View className='item'>
-                    累计欠费:
-                    <Text className='num danger'>¥{summary.totalOwe}</Text>
+                  <View className='summary-list'>
+                    <View className='item'>
+                      可借本数:
+                      <Text className='num'>{summary.remainingNum}</Text>
+                    </View>
+                    <View className='item'>
+                      借阅中:
+                      <Text className='num'>{summary.borrowingNum}</Text>
+                    </View>
+                    <View className='item'>
+                      超权益:
+                      <Text className='num danger'>{summary.beyondNum}</Text>
+                    </View>
+                    <View className='item'>
+                      昨日欠费:
+                      <Text className='num danger'>¥{summary.owe}</Text>
+                    </View>
+                    <View className='item'>
+                      累计欠费:
+                      <Text className='num danger'>¥{summary.totalOwe}</Text>
+                    </View>
                   </View>
                 </View>
               </View>
-            </View>
-            <View className='footer'>
-              <View
-                className='link primary'
-                onClick={() => {
-                  Taro.navigateTo({
-                    url: '/pages/user-order/index'
-                  })
-                }}
-              >
-                查看详情
+              <View className='footer'>
+                <View
+                  className='link primary'
+                  onClick={() => {
+                    Taro.navigateTo({
+                      url: '/pages/user-order/index'
+                    })
+                  }}
+                >
+                  查看详情
+                </View>
+                <Button className='btn-primary' size={'mini'}>
+                  支付
+                </Button>
               </View>
-              <Button className='btn-primary' size={'mini'}>
-                支付
-              </Button>
+              {summary.isHaveCard == 2 && (
+                <Image
+                  className='mark'
+                  src={require('../../assets/order_mark0.png')}
+                />
+              )}
             </View>
-            {summary.isHaveCard == 2 && (
+          )}
+
+          {!loading && !list.length && (
+            <View className={'empty-list'}>
               <Image
-                className='mark'
-                src={require('../../assets/order_mark0.png')}
+                src={require('../../assets/borrow_defoult_pic@2x.jpg')}
+                style={{ width: '328rpx', height: '216rpx' }}
               />
-            )}
-          </View>
-        )}
-
-        {!loading && !list.length && (
-          <View className={'empty-list'}>
-            <Image
-              src={require('../../assets/borrow_defoult_pic@2x.jpg')}
-              style={{ width: '328rpx', height: '216rpx' }}
-            />
-            暂无订单，快去借书吧~
-          </View>
-        )}
-        {list.length && (
-          <View className={'list'}>
-            {list.map((item, i) => (
-              <OrderItem key={i} data={item} />
-            ))}
-          </View>
-        )}
+              暂无订单，快去借书吧~
+            </View>
+          )}
+          {list.length && (
+            <View className={'list'}>
+              {list.map((item, i) => (
+                <OrderItem key={i} data={item} />
+              ))}
+            </View>
+          )}
+        </View>
       </View>
-    </View>
+    </BasicPageWrapper>
   )
 }
 
