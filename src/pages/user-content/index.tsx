@@ -52,7 +52,15 @@ const Page: FC = () => {
         <View className='page-space-around'>
           <View className='user-content-list'>
             {list.map((item, i) => (
-              <View key={i} className='item'>
+              <View
+                key={i}
+                className='item'
+                onClick={() => {
+                  Taro.navigateTo({
+                    url: `/pages/subject-detail/index?id=${item.curriculumId}`
+                  })
+                }}
+              >
                 <Image
                   className='thumb'
                   src={item.curriculumImageUrl || 'http://placehold.it/230x140'}
