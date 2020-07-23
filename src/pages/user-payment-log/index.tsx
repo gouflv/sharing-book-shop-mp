@@ -14,7 +14,7 @@ const Page: FC = () => {
   async function fetch() {
     setLoading(true)
     const data = await POST('wxMember/getPayRecord', {
-      data: { date: `${date}` }
+      data: { date }
     })
     setItems(data)
     setLoading(false)
@@ -25,7 +25,7 @@ const Page: FC = () => {
   }, [date])
 
   function onDateChange(val: string) {
-    console.log(val)
+    setDate(val)
   }
 
   return (

@@ -27,17 +27,24 @@
 
     .body {
       display: flex;
+      align-items: center;
       padding: 20px 36px;
 
       .left,
       .right {
         flex: 0 0 50%;
+        line-height: 1.6;
+      }
+
+      .left {
+        border-right: 1px solid $border-color;
+        color: #333;
       }
 
       .right {
         padding-left: 80px;
-        border-left: 1px solid $border-color;
       }
+
     }
   }
 }

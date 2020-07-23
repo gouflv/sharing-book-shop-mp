@@ -1,10 +1,24 @@
-import Taro, { FC } from '@tarojs/taro'
+import Taro, { FC, useEffect, useState, useRouter } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { OrderItem } from './OrderItem'
+import { POST } from '../../utils/ajax'
 
 const Page: FC = () => {
+  const routers = useRouter()
+  const [list, setList] = useState([])
+
+  useEffect(() => {
+    async function f() {
+      const data = await POST('wxMember/getDayOrderDetail', {
+        data: { memberBorrowingDaySummaryId: routers.params.id }
+      })
+      setList(data)
+    }
+    f()
+  }, [])
+
   return (
     <View className={'page-order-detail'}>
       <PageHeaderWrapper title={'本日详情'}>
@@ -15,8 +29,8 @@ const Page: FC = () => {
 
       <View className='page-space-wing'>
         <View className={'list'}>
-          {Array.from({ length: 10 }).map((_, i) => (
-            <OrderItem key={i} />
+          {list.map((item, i) => (
+            <OrderItem key={i} data={item} />
           ))}
         </View>
       </View>
