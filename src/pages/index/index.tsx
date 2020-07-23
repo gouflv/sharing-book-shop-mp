@@ -20,6 +20,7 @@ export default () => {
   }, [])
 
   function redirect() {
+    // Taro.redirectTo({ url: '/pages/user-payment-log/index' })
     // Taro.redirectTo({ url: '/pages/buy-card/index' })
     // Taro.redirectTo({ url: '/pages/buy-card/result' })
     // Taro.redirectTo({ url: '/pages/auth/index?hideBack=1' })

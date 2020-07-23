@@ -13,8 +13,8 @@ const Page: FC = () => {
 
   async function fetch() {
     setLoading(true)
-    const data = await POST('wxMember/getMemberCard', {
-      data: { date: `${date}-01` }
+    const data = await POST('wxMember/getPayRecord', {
+      data: { date: `${date}` }
     })
     setItems(data)
     setLoading(false)
@@ -66,14 +66,14 @@ const Page: FC = () => {
               {items.map((item, i) => (
                 <View key={i} className='item'>
                   <View className='content'>
-                    <View className='title'>
-                      购买{item.memberCode} (书位{item.payName})
-                    </View>
+                    <View className='title'>{item.payName}</View>
                     <View className='desc text-second'>
-                      {item.purchaseDate}
+                      {dayjs(`${item.payTime[0]}-${item.payTime[1]}-${item.payTime[2]}
+                        ${item.payTime[3]}:${item.payTime[4]}:${item.payTime[5]}
+                      `).format('YYYY-MM-DD')}
                     </View>
                   </View>
-                  <View className='value'>¥{item.payMoney}</View>
+                  <View className='value'>¥{item.totalFee}</View>
                 </View>
               ))}
             </View>
