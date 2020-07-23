@@ -22,7 +22,7 @@ export const useAuthGuard = () => {
         callback()
       }
     } catch (e) {
-      console.error(e)
+      console.error('[useAuthGuard] error', e)
       if (e.code === 1001) {
         setAuthCallback({
           authType: 'useInfo',

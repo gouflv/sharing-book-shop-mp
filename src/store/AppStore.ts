@@ -87,6 +87,9 @@ class App {
 
   @action.bound
   async checkAuth() {
+    if (!this.token) {
+      throw { code: 1001, message: '[checkAuth] no token' }
+    }
     if (!this.user) {
       const data = await POST('wxMember/getMemberInfo', {
         preventAuthErrorHandler: true
