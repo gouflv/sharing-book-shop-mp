@@ -68,12 +68,10 @@ const Page: FC = () => {
   }
 
   // notification
-  const { items, fetchList, fetchActiveRecord } = useNotification()
+  const { items, fetchList } = useNotification()
   useDidShow(() => {
     setTimeout(() => {
       fetchList()
-      const active = fetchActiveRecord()
-      console.log('active', active)
     }, 500)
   })
 
@@ -237,12 +235,12 @@ const Page: FC = () => {
             </View>
           </View>
         </PageHeaderWrapper>
-      </View>
 
-      <UserRuleModal
-        visible={userRuleVisible}
-        onClose={() => setUserRuleVisible(false)}
-      />
+        <UserRuleModal
+          visible={userRuleVisible}
+          onClose={() => setUserRuleVisible(false)}
+        />
+      </View>
     </BasicPageView>
   )
 }
