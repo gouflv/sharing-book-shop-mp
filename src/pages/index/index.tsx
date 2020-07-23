@@ -1,4 +1,4 @@
-import Taro, { useEffect, useRouter } from '@tarojs/taro'
+import Taro, { useEffect } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { useAuthGuard } from '../../hooks/useAuthGuard'
 
