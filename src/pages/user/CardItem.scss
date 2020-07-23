@@ -67,11 +67,12 @@
         text-align: center;
         background: linear-gradient(90deg, #d9a381 0%, #f1dfcd 100%);
         border-radius: 44px;
-        box-shadow: 0 4px 8px rgba(#000, 0.1);
+        box-shadow: 0 2px 16px rgba(#000, 0.2);
 
         &--blue {
           color: #fff;
-          background: linear-gradient(90deg, $blue 0%, lighten($blue, 10%) 100%);
+          background: linear-gradient(90deg, #C9914D 0%, lighten(#B77737, 10%) 100%);
+          box-shadow: 0 2px 16px rgba(#B77737, 0.2);
         }
       }
     }

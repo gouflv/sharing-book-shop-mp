@@ -21,6 +21,7 @@ export default () => {
 
   function redirect() {
     // Taro.redirectTo({ url: '/pages/buy-card/index' })
+    // Taro.redirectTo({ url: '/pages/buy-card/result' })
     // Taro.redirectTo({ url: '/pages/auth/index?hideBack=1' })
     // Taro.redirectTo({ url: '/pages/user-bind-phone/index' })
     // Taro.redirectTo({ url: '/pages/feed-back/index' })

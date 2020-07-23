@@ -1,10 +1,36 @@
 import './index.scss'
-import Taro, { FC } from '@tarojs/taro'
+import Taro, { FC, useRouter, useState } from '@tarojs/taro'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
-import { View, Image, Button } from '@tarojs/components'
+import { Button, Image, View } from '@tarojs/components'
+import { hideLoading, showLoading, showToast } from '../../utils'
+import { defaultErrorHandler, POST } from '../../utils/ajax'
 
 const Page: FC = () => {
+  const router = useRouter()
+
+  const [isActive, setIsActive] = useState(false)
+  async function onActiveCardClick() {
+    if (isActive) {
+      showToast({ title: '激活成功', icon: 'success' })
+      return
+    }
+    if (router.params.orderNo) {
+      showLoading()
+      try {
+        await POST('wxMember/activeMemberCardByOrderNo', {
+          data: { orderNo: router.params.orderNo }
+        })
+        showToast({ title: '激活成功', icon: 'success' })
+        setIsActive(true)
+      } catch (e) {
+        defaultErrorHandler(e)
+      } finally {
+        hideLoading()
+      }
+    }
+  }
+
   return (
     <View className='page-buy-card-result'>
       <PageHeaderWrapper
@@ -34,11 +60,15 @@ const Page: FC = () => {
           <View className='action'>
             <Button
               className='btn-primary btn-primary--plain'
-              onClick={() => Taro.redirectTo({ url: '/pages' })}
+              onClick={() =>
+                Taro.redirectTo({ url: '/pages/user-payment-log/index' })
+              }
             >
               查看支付记录
             </Button>
-            <Button className='btn-primary'>立即激活会员卡</Button>
+            <Button className='btn-primary' onClick={onActiveCardClick}>
+              立即激活会员卡
+            </Button>
           </View>
           <View className='tip text-second'>
             激活说明：若未立即激活会员卡，您可在会员中心的对应会员卡上手动激活待激活的会员卡。

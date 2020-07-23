@@ -43,7 +43,8 @@ const Page: FC = () => {
     try {
       await POST('wxMember/borrowBooksResult', {
         data: {
-          ...meta,
+          type: meta.type,
+          eqCode: meta.eqCode,
           ids: list.map(it => it.rfidCode).join(',')
         }
       })

@@ -4,6 +4,7 @@ import { View, Image } from '@tarojs/components'
 import dayjs from 'dayjs'
 import { POST } from '../../../utils/ajax'
 import { hideLoading, showLoading, showToast } from '../../../utils'
+import classNames from 'classnames'
 
 export interface OrderBookItem {
   orderNo
@@ -16,6 +17,7 @@ export interface OrderBookItem {
   booksImg
   labelName
   isbn
+  remark
 }
 
 export const OrderItem: FC<{ data: OrderBookItem }> = ({ data }) => {
@@ -53,11 +55,13 @@ export const OrderItem: FC<{ data: OrderBookItem }> = ({ data }) => {
       <View className='content flex-fill'>
         <View className='d-flex align-start'>
           <View className='title flex-fill'>{data.booksName}</View>
-          {!!data.eqName ? (
-            <View className='tag flex-auto'>机柜</View>
-          ) : (
-            <View className='tag tag--orange flex-auto'>图书馆</View>
-          )}
+          <View
+            className={classNames('tag flex-auto', {
+              'tag--orange': data.remark !== '机柜'
+            })}
+          >
+            {data.remark}
+          </View>
         </View>
         {!!data.eqName && <View className='desc'>设备名称: {data.eqName}</View>}
         <View className='desc'>

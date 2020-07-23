@@ -52,7 +52,9 @@ const Page: FC = () => {
       Taro.requestPayment({
         ...orderData,
         success: res => {
-          Taro.redirectTo({ url: '/pages/buy-card/result' })
+          Taro.redirectTo({
+            url: `/pages/buy-card/result?orderNo=${orderData.orderNo}`
+          })
         },
         fail: res => {
           hideLoading()
