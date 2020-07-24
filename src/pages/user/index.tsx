@@ -156,6 +156,22 @@ const Page: FC = () => {
               <View
                 className='item'
                 onClick={() =>
+                  Taro.navigateTo({ url: '/pages/buy-card/index' })
+                }
+              >
+                <Image
+                  src={require('../../assets/ico_vip_pre@2x.png')}
+                  mode={'aspectFit'}
+                />
+                <View className='content'>购买会员</View>
+                <Image
+                  className='link'
+                  src={require('../../assets/vip_ico_arrow@2x.png')}
+                />
+              </View>
+              <View
+                className='item'
+                onClick={() =>
                   Taro.navigateTo({ url: '/pages/user-content/index' })
                 }
               >

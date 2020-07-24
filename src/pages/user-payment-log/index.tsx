@@ -67,11 +67,11 @@ const Page: FC = () => {
                 <View key={i} className='item'>
                   <View className='content'>
                     <View className='title'>{item.payName}</View>
-                    <View className='desc text-second'>
-                      {dayjs(`${item.payTime[0]}-${item.payTime[1]}-${item.payTime[2]}
-                        ${item.payTime[3]}:${item.payTime[4]}:${item.payTime[5]}
-                      `).format('YYYY-MM-DD')}
-                    </View>
+                    {item.payTime && (
+                      <View className='desc text-second'>
+                        {dayjs(item.payTime).format('YYYY-MM-DD')}
+                      </View>
+                    )}
                   </View>
                   <View className='value'>¥{item.totalFee}</View>
                 </View>
