@@ -16,7 +16,8 @@ import {
   Video,
   View,
   CoverView,
-  CoverImage
+  CoverImage,
+  Button
 } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import classNames from 'classnames'
@@ -274,12 +275,12 @@ const Page: FC = () => {
                 <View className='header'>
                   <View className='title'>{data.curriculumName}</View>
                   <View className='action text-second'>
-                    <View className='share'>
+                    <Button className='share' openType={'share'}>
                       <Image
                         src={require('../../assets/course_detail_ico_share@2x.png')}
                       />
                       分享
-                    </View>
+                    </Button>
                   </View>
                 </View>
                 <View className='desc text-second'>

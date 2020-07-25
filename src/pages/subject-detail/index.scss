@@ -36,6 +36,11 @@
           display: flex;
           align-items: center;
           font-size: $font-size-small + 2;
+          border: none;
+          background: transparent;
+          &::after {
+            display: none;
+          }
 
           image {
             width: 30px;
