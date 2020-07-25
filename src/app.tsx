@@ -16,6 +16,7 @@ class App extends Component {
       'pages/home/index',
       'pages/order/index',
 
+      'pages/subject-search/index',
       'pages/subject/index',
       'pages/subject-detail/index',
 

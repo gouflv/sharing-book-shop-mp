@@ -70,7 +70,12 @@ const Page: FC = () => {
   return (
     <BasicPageWrapper>
       <View className={'page-home'}>
-        <PageHeaderWrapper title={APP_NAME} hideBackArrow>
+        <PageHeaderWrapper
+          title={APP_NAME}
+          hideBackArrow
+          showSearch
+          isSearchNav
+        >
           <PageHeaderExt
             absolute
             height={`${305 / 2 - statusHeight - headerHeight}px`}

@@ -1,0 +1,32 @@
+@import "../../theme/var";
+
+.history-list {
+  .title {
+    font-size: 30px;
+  }
+  .list {
+    .item {
+      height: 88px;
+      padding-left: 16px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid $border-color;
+      .label {
+        flex: auto;
+        padding: 12px 0;
+        color: #777;
+      }
+      .btn {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 66px;
+        height: 66px;
+        image {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}

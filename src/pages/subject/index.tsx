@@ -43,7 +43,12 @@ const Page: FC = () => {
   return (
     <BasicPageWrapper>
       <View className='page-subject'>
-        <PageHeaderWrapper title={'精品课程'} hideBackArrow>
+        <PageHeaderWrapper
+          title={'精品课程'}
+          hideBackArrow
+          showSearch
+          isSearchNav
+        >
           <PageHeaderExt fixed height={'90rpx'}>
             <View className='tabs'>
               {tag.map((t, i) => (

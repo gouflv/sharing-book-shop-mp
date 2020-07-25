@@ -30,10 +30,42 @@
   }
 
   .title {
+    margin-right: 6px;
     max-width: 60vw;
     font-size: $font-size-xlarge;
     font-weight: bold;
     color: #fff;
+  }
+
+  .search {
+    width: 440px;
+    height: 44px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(#fff, 0.5);
+    border-radius: 44px;
+
+    &--center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 310px;
+    }
+
+    image {
+      flex: 0 0 30px;
+      width: 30px;
+      height: 30px;
+    }
+    input {
+      flex: auto;
+      height: 44px;
+      line-height: 44px;
+      padding: 0 20px;
+      font-size: $font-size-base;
+      color: #fff;
+    }
   }
 }
 
