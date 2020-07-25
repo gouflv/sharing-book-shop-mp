@@ -3,6 +3,7 @@ import { Image, View, Input } from '@tarojs/components'
 import { useHeaderSize } from '../../hooks/useHeaderSize'
 import './index.scss'
 import classNames from 'classnames'
+import { useAuthGuard } from '../../hooks/useAuthGuard'
 
 export type PageHeaderProps = {
   title: string
@@ -21,6 +22,7 @@ export type PageHeaderProps = {
 const PageHeader: FC<PageHeaderProps> = props => {
   const { title, hideBackArrow, onBack } = props
   const { statusHeight, headerHeight } = useHeaderSize()
+  const { withAuth } = useAuthGuard()
 
   function onBackClick() {
     if (hideBackArrow) {
@@ -57,10 +59,13 @@ const PageHeader: FC<PageHeaderProps> = props => {
               'search--center': !!title
             })}
             onClick={() => {
-              props.isSearchNav &&
-                Taro.navigateTo({
-                  url: '/pages/subject-search/index'
+              if (props.isSearchNav) {
+                withAuth(() => {
+                  Taro.navigateTo({
+                    url: '/pages/subject-search/index'
+                  })
                 })
+              }
             }}
           >
             <Image src={require('../../assets/icon-search.png')} />

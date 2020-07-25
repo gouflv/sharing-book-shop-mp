@@ -67,8 +67,9 @@ class App extends Component {
 
   componentDidMount() {}
 
-  componentDidShow() {
-    app.refreshToken()
+  async componentDidShow() {
+    await app.refreshToken()
+    await app.checkAuth()
   }
 
   componentDidHide() {}
