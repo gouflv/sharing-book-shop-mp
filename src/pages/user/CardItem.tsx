@@ -7,12 +7,16 @@ import dayjs from 'dayjs'
 export interface Card {
   memLeId
   cardName
+  //员卡种类 1普通卡 2活动卡
   cardClass: 1 | 2
   positionNum: number
+  //激活 1未激活 2激活
   isActive: 1 | 2
   endDate: string
   purchaseDate: string
   payMoney: number
+  //1未支付，2 已支付
+  isPay: 1 | 2
 }
 
 export interface CardItemProps {
@@ -93,11 +97,11 @@ export const CardItem: FC<CardItemProps> = ({
               {card.isActive === 1 && (
                 <View>
                   {/* 未购买 */}
-                  {card.payMoney && !card.purchaseDate && (
+                  {card.isPay === 1 && (
                     <View className='price'>¥{card.payMoney}</View>
                   )}
-                  {/* 不需要购买 */}
-                  {!card.payMoney && (
+                  {/* 购买 */}
+                  {card.isPay === 2 && (
                     <View>
                       将在{dayjs(card.endDate).format('YYYY/M/D')}到期
                     </View>
@@ -116,13 +120,13 @@ export const CardItem: FC<CardItemProps> = ({
             {card.isActive === 1 && (
               <View>
                 {/* 未购买 */}
-                {card.payMoney && !card.purchaseDate && (
+                {card.isPay === 1 && (
                   <View className='btn-active' onClick={() => onBuyCard(card)}>
                     立即购买
                   </View>
                 )}
-                {/* 不需要购买 */}
-                {!card.payMoney && (
+                {/* 购买 */}
+                {card.isPay === 2 && (
                   <View
                     className='btn-active'
                     onClick={() => onActiveCard(card)}

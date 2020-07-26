@@ -41,11 +41,29 @@ const Page: FC = () => {
   async function onBuyCard(card: Card) {
     try {
       showLoading()
-      await POST('wxMember/buyConfigCard', {
-        data: { cardId: card.memLeId }
+      const orderData = await POST('wxMember/buyActivityConfigCard', {
+        data: { memLeId: card.memLeId }
       })
-      showToast({ title: '购买成功', icon: 'success' })
-      fetchCards()
+      if (orderData) {
+        showLoading()
+        Taro.requestPayment({
+          ...orderData,
+          success: res => {
+            showToast({ title: '购买成功', icon: 'success' })
+            fetchCards()
+          },
+          fail: res => {
+            showToast({ title: res.errMsg })
+          },
+          complete: () => {
+            hideLoading()
+          }
+        })
+      } else {
+        hideLoading()
+        showToast({ title: '购买成功', icon: 'success' })
+        fetchCards()
+      }
     } catch (e) {
       defaultErrorHandler(e)
     } finally {

@@ -38,9 +38,9 @@ export default () => {
     // })
 
     Taro.switchTab({ url: '/pages/home/index' })
-    // Taro.switchTab({ url: '/pages/user/index' })
-    // Taro.switchTab({ url: '/pages/subject/index' })
     // Taro.switchTab({ url: '/pages/order/index' })
+    // Taro.switchTab({ url: '/pages/subject/index' })
+    // Taro.switchTab({ url: '/pages/user/index' })
   }
 
   return <View />

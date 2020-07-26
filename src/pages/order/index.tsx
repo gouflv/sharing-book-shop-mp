@@ -6,7 +6,7 @@ import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { OrderBookItem, OrderItem } from './OrderItem'
 import dayjs from 'dayjs'
 import { defaultErrorHandler, POST } from '../../utils/ajax'
-import { hideLoading, showLoading } from '../../utils'
+import { hideLoading, showLoading, showToast } from '../../utils'
 import BasicPageWrapper from '../../components/BasicPageWrapper'
 
 const Page: FC = () => {
@@ -39,6 +39,38 @@ const Page: FC = () => {
     await fetchSummary()
     fetchList()
   })
+
+  //
+  async function onPayClick() {
+    try {
+      showLoading()
+      const orderData = await POST('wxMember/payOwe', {})
+      if (orderData) {
+        showLoading()
+        Taro.requestPayment({
+          ...orderData,
+          success: res => {
+            showToast({ title: '支付成功', icon: 'success' })
+            fetchSummary()
+          },
+          fail: res => {
+            showToast({ title: res.errMsg })
+          },
+          complete: () => {
+            hideLoading()
+          }
+        })
+      } else {
+        hideLoading()
+        showToast({ title: '支付成功', icon: 'success' })
+        fetchSummary()
+      }
+    } catch (e) {
+      defaultErrorHandler(e)
+    } finally {
+      hideLoading()
+    }
+  }
 
   return (
     <BasicPageWrapper>
@@ -96,7 +128,11 @@ const Page: FC = () => {
                 >
                   查看详情
                 </View>
-                <Button className='btn-primary' size={'mini'}>
+                <Button
+                  className='btn-primary'
+                  size={'mini'}
+                  onClick={onPayClick}
+                >
                   支付
                 </Button>
               </View>
