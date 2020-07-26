@@ -65,8 +65,7 @@ export const OrderItem: FC<{ data: OrderBookItem }> = ({ data }) => {
         </View>
         {!!data.eqName && <View className='desc'>设备名称: {data.eqName}</View>}
         <View className='desc'>
-          借阅时间: {dayjs(data.createTime).format('YYYY/MM/DD')}-
-          {dayjs(data.returnTime).format('YYYY/MM/DD')}
+          借阅时间: {dayjs(data.createTime).format('YYYY/MM/DD')}
         </View>
         <View className='desc'>书籍分类: {data.labelName}</View>
       </View>
