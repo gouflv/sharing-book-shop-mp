@@ -13,7 +13,7 @@
     "dev:weapp": "npm run build:weapp -- --watch",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "lint:style": "stylelint --fix \"src/**/*.scss\" --syntax scss",
-    "preview": "/Applications/wechatwebdevtools.app/Contents/MacOS/cli auto-preview --project /Users/gouflv/Develops/workspace/wechat/sharing-book-shop/dist"
+    "preview": "/Applications/wechatwebdevtools.app/Contents/MacOS/cli auto-preview --project /Users/gouflv/Develops/workspace/sharing-book-shop/dist"
   },
   "author": "",
   "license": "MIT",
@@ -36,6 +36,7 @@
     "dayjs": "^1.8.29",
     "eventemitter3": "^4.0.4",
     "js-base64": "^2.6.3",
+    "lodash.curryright": "^4.1.1",
     "lodash.throttle": "^4.1.1",
     "mobx": "4.8.0",
     "nerv-devtools": "^1.5.5",

@@ -8062,6 +8062,11 @@ lodash.assign@^4.0.1:
   resolved "https://registry.npm.taobao.org/lodash.assign/download/lodash.assign-4.2.0.tgz#0d99f3ccd7a6d261d19bdaeb9245005d285808e7"
   integrity sha1-DZnzzNem0mHRm9rrkkUAXShYCOc=
 
+lodash.curryright@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npm.taobao.org/lodash.curryright/download/lodash.curryright-4.1.1.tgz#e0391df95537b527f3c21f3170abe1f0882e9308"
+  integrity sha1-4Dkd+VU3tSfzwh8xcKvh8Igukwg=
+
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.npm.taobao.org/lodash.debounce/download/lodash.debounce-4.0.8.tgz?cache=0&sync_timestamp=1571657605147&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flodash.debounce%2Fdownload%2Flodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
