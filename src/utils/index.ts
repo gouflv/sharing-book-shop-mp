@@ -32,3 +32,9 @@ export function textToRichText(val: string = '') {
 export function addResTimestamp(url: string = '') {
   return `${url.trim()}?t=${dayjs().format('YYYY_MM_DD_HH')}`
 }
+
+export function encodePhone(val: string) {
+  return val.replace(/(\d{3})(\d{4})(.*)/, (_match, $1, _$2, $3) => {
+    return [$1, '****', $3].join('')
+  })
+}

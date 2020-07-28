@@ -8,7 +8,7 @@ import { Banner } from './Banner'
 import { UserRuleModal } from './UserRuleModal'
 import { AppStore } from '../../store/AppStore'
 import { observer } from '@tarojs/mobx'
-import { hideLoading, showLoading, showToast } from '../../utils'
+import { encodePhone, hideLoading, showLoading, showToast } from '../../utils'
 import { defaultErrorHandler, POST } from '../../utils/ajax'
 import { useNotification } from '../user-message/useNotification'
 import { Card } from './CardItem'
@@ -132,11 +132,11 @@ const Page: FC = () => {
                       className='desc'
                       onClick={() =>
                         Taro.navigateTo({
-                          url: '/pages/user-bind-phone/index?change=1'
+                          url: '/pages/user-change-phone/index'
                         })
                       }
                     >
-                      {user.tel}
+                      {encodePhone(user.tel)}
                       <View className='unbind-phone'>解绑</View>
                     </View>
                   </View>

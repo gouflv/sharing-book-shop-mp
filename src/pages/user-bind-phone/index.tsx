@@ -45,7 +45,7 @@ const Page: FC = () => {
     showLoading()
     try {
       await POST('common/sendMsg', {
-        data: { tel: phone }
+        data: { tel: phone, type: router.params.change ? 2 : 1 }
       })
       setSmsCode('')
       setHasSend(true)

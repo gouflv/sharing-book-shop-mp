@@ -31,7 +31,7 @@ export const CodeNumberInput: Taro.FC<CodeNumberInputProps> = props => {
         setFocus(true)
       }}
     >
-      {Array.from({ length: 6 }).map((_, index) => {
+      {Array.from({ length: 4 }).map((_, index) => {
         return (
           <View
             key={index}

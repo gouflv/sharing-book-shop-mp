@@ -1,12 +1,12 @@
 import './index.scss'
-import { Button, View, Text } from '@tarojs/components'
+import { Button, Text, View } from '@tarojs/components'
 import { CodeNumberInput } from '../../components/CodeInput'
-import Taro, { FC, useContext, useState, useEffect } from '@tarojs/taro'
+import Taro, { FC, useContext, useEffect, useState } from '@tarojs/taro'
 import { AppStore } from '../../store/AppStore'
 import { useCountDownResume } from '../../hooks/useCountDownResume'
-import useDidShow = Taro.useDidShow
-import { hideLoading, showLoading, showToast } from '../../utils'
+import { encodePhone, hideLoading, showLoading, showToast } from '../../utils'
 import { defaultErrorHandler, POST } from '../../utils/ajax'
+import useDidShow = Taro.useDidShow
 
 export const Step1: FC<{ onSuccess: () => void }> = props => {
   const { user } = useContext(AppStore)
@@ -42,7 +42,7 @@ export const Step1: FC<{ onSuccess: () => void }> = props => {
     showLoading()
     try {
       await POST('common/sendMsg', {
-        data: { tel: user && user.tel }
+        data: { tel: user && user.tel, type: 2 }
       })
     } catch (e) {
       defaultErrorHandler(e)
@@ -81,7 +81,9 @@ export const Step1: FC<{ onSuccess: () => void }> = props => {
 
   return (
     <View className='page-user-change-phone'>
-      <View className='title'>已发送短信验证码至 {user && user.tel}</View>
+      <View className='title'>
+        已发送短信验证码至 {user && encodePhone(user.tel)}
+      </View>
       <View className='countdown'>
         {timeLeft > 0 ? (
           <Text>{(timeLeft as number) / 1000}s</Text>
