@@ -21,6 +21,9 @@ const Page: FC = () => {
   const { checkNotify } = useContext(NotificationService)
   const { statusHeight, headerHeight } = useHeaderSize()
 
+  const sys = Taro.getSystemInfoSync()
+  const [windowHeight, setWindowHeight] = useState(sys.windowHeight)
+
   useDidShow(() => {
     async function init() {
       showLoading()
@@ -101,16 +104,17 @@ const Page: FC = () => {
         <PageHeaderWrapper
           title={'会员中心'}
           hideBackArrow
-          bg={require('../../assets/vip_top_bg.jpg')}
-          bgHeight={'650rpx'}
+          bg={require('../../assets/vip_top_bg_xl.jpg')}
+          bgHeight={'690rpx'}
+          bgOffset={690 / 2 - statusHeight - headerHeight - 536 / 2 + 10}
         >
           <PageHeaderExt
             absolute
-            height={`${650 / 2 - statusHeight - headerHeight}px`}
-            bg={require('../../assets/vip_top_bg.jpg')}
-            bgHeight={'650rpx'}
+            height={'536rpx'}
+            bg={require('../../assets/vip_top_bg_xl.jpg')}
+            bgHeight={'690rpx'}
+            bgOffset={690 / 2 - statusHeight - headerHeight - 536 / 2 + 10}
           />
-
           <View className='page-space-wing'>
             <View className='user-header'>
               {user && (
@@ -146,128 +150,126 @@ const Page: FC = () => {
             onBuyCard={onBuyCard}
             onActiveCard={onActiveCard}
           />
+        </PageHeaderWrapper>
 
-          <View className='page-space-wing'>
+        <View className='page-space-wing'>
+          <View
+            className='baby-info'
+            onClick={() =>
+              Taro.navigateTo({ url: '/pages/baby-profile/index' })
+            }
+          >
+            <Image
+              className='bg'
+              src={require('../../assets/vip_baby_bg.png')}
+              mode={'aspectFill'}
+            />
+            <View className='title'>我的宝宝</View>
+            <View className='desc text-second'>完善宝宝基本信息</View>
+          </View>
+
+          <View className='menu'>
             <View
-              className='baby-info'
+              className='item'
+              onClick={() => Taro.navigateTo({ url: '/pages/buy-card/index' })}
+            >
+              <Image
+                src={require('../../assets/ico_vip_pre@2x.png')}
+                mode={'aspectFit'}
+              />
+              <View className='content'>购买会员</View>
+              <Image
+                className='link'
+                src={require('../../assets/vip_ico_arrow@2x.png')}
+              />
+            </View>
+            <View
+              className='item'
               onClick={() =>
-                Taro.navigateTo({ url: '/pages/baby-profile/index' })
+                Taro.navigateTo({ url: '/pages/user-content/index' })
               }
             >
               <Image
-                className='bg'
-                src={require('../../assets/vip_baby_bg.png')}
-                mode={'aspectFill'}
+                src={require('../../assets/vip_ico_works@2x.png')}
+                mode={'aspectFit'}
               />
-              <View className='title'>我的宝宝</View>
-              <View className='desc text-second'>完善宝宝基本信息</View>
+              <View className='content'>我的作品</View>
+              <Image
+                className='link'
+                src={require('../../assets/vip_ico_arrow@2x.png')}
+              />
             </View>
-
-            <View className='menu'>
-              <View
-                className='item'
-                onClick={() =>
-                  Taro.navigateTo({ url: '/pages/buy-card/index' })
-                }
-              >
-                <Image
-                  src={require('../../assets/ico_vip_pre@2x.png')}
-                  mode={'aspectFit'}
-                />
-                <View className='content'>购买会员</View>
-                <Image
-                  className='link'
-                  src={require('../../assets/vip_ico_arrow@2x.png')}
-                />
+            <View
+              className='item'
+              onClick={() =>
+                Taro.navigateTo({ url: '/pages/user-order/index' })
+              }
+            >
+              <Image
+                src={require('../../assets/vip_ico_borrow@2x.png')}
+                mode={'aspectFit'}
+              />
+              <View className='content'>借阅记录</View>
+              <Image
+                className='link'
+                src={require('../../assets/vip_ico_arrow@2x.png')}
+              />
+            </View>
+            <View
+              className='item'
+              onClick={() =>
+                Taro.navigateTo({ url: '/pages/user-message/index' })
+              }
+            >
+              <Image
+                src={require('../../assets/vip_ico_message@2x.png')}
+                mode={'aspectFit'}
+              />
+              <View className='content'>
+                我的消息
+                {user && user.notReadNum && (
+                  <View className='badge'>
+                    {user.notReadNum > 99 ? '99+' : user.notReadNum}
+                  </View>
+                )}
               </View>
-              <View
-                className='item'
-                onClick={() =>
-                  Taro.navigateTo({ url: '/pages/user-content/index' })
-                }
-              >
-                <Image
-                  src={require('../../assets/vip_ico_works@2x.png')}
-                  mode={'aspectFit'}
-                />
-                <View className='content'>我的作品</View>
-                <Image
-                  className='link'
-                  src={require('../../assets/vip_ico_arrow@2x.png')}
-                />
-              </View>
-              <View
-                className='item'
-                onClick={() =>
-                  Taro.navigateTo({ url: '/pages/user-order/index' })
-                }
-              >
-                <Image
-                  src={require('../../assets/vip_ico_borrow@2x.png')}
-                  mode={'aspectFit'}
-                />
-                <View className='content'>借阅记录</View>
-                <Image
-                  className='link'
-                  src={require('../../assets/vip_ico_arrow@2x.png')}
-                />
-              </View>
-              <View
-                className='item'
-                onClick={() =>
-                  Taro.navigateTo({ url: '/pages/user-message/index' })
-                }
-              >
-                <Image
-                  src={require('../../assets/vip_ico_message@2x.png')}
-                  mode={'aspectFit'}
-                />
-                <View className='content'>
-                  我的消息
-                  {user && user.notReadNum && (
-                    <View className='badge'>{user.notReadNum}</View>
-                  )}
-                </View>
-                <Image
-                  className='link'
-                  src={require('../../assets/vip_ico_arrow@2x.png')}
-                />
-              </View>
-              <View
-                className='item'
-                onClick={() =>
-                  Taro.navigateTo({ url: '/pages/user-payment-log/index' })
-                }
-              >
-                <Image
-                  src={require('../../assets/vip_ico_pay@2x.png')}
-                  mode={'aspectFit'}
-                />
-                <View className='content'>支付记录</View>
-                <Image
-                  className='link'
-                  src={require('../../assets/vip_ico_arrow@2x.png')}
-                />
-              </View>
-              <View
-                className='item'
-                onClick={() =>
-                  Taro.navigateTo({ url: '/pages/feed-back/index' })
-                }
-              >
-                <Image
-                  src={require('../../assets/vip_ico_sug@2x.png')}
-                  mode={'aspectFit'}
-                />
-                <View className='content'>意见反馈</View>
-                <Image
-                  className='link'
-                  src={require('../../assets/vip_ico_arrow@2x.png')}
-                />
-              </View>
+              <Image
+                className='link'
+                src={require('../../assets/vip_ico_arrow@2x.png')}
+              />
+            </View>
+            <View
+              className='item'
+              onClick={() =>
+                Taro.navigateTo({ url: '/pages/user-payment-log/index' })
+              }
+            >
+              <Image
+                src={require('../../assets/vip_ico_pay@2x.png')}
+                mode={'aspectFit'}
+              />
+              <View className='content'>支付记录</View>
+              <Image
+                className='link'
+                src={require('../../assets/vip_ico_arrow@2x.png')}
+              />
+            </View>
+            <View
+              className='item'
+              onClick={() => Taro.navigateTo({ url: '/pages/feed-back/index' })}
+            >
+              <Image
+                src={require('../../assets/vip_ico_sug@2x.png')}
+                mode={'aspectFit'}
+              />
+              <View className='content'>意见反馈</View>
+              <Image
+                className='link'
+                src={require('../../assets/vip_ico_arrow@2x.png')}
+              />
             </View>
           </View>
-        </PageHeaderWrapper>
+        </View>
 
         <UserRuleModal
           visible={userRuleVisible}

@@ -54,6 +54,10 @@
     }
   }
 
+  .page-space-wing {
+    padding-top: 10px;
+  }
+
   .baby-info {
     position: relative;
     width: 690px;
@@ -125,7 +129,7 @@
 }
 
 .banner-wrapper {
-  height: 386px;
+  height: 396px;
   margin-bottom: 20px;
 
   .swiper {
@@ -147,7 +151,7 @@
   .indicator {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 16px;
 
     .dot {
       width: 16px;

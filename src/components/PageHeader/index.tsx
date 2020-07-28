@@ -12,6 +12,7 @@ export type PageHeaderProps = {
 
   bg?: string
   bgHeight?: string
+  bgOffset?: number
 
   showSearch?: boolean
   isSearchNav?: boolean
@@ -40,7 +41,10 @@ const PageHeader: FC<PageHeaderProps> = props => {
       <Image
         className='brand-image'
         src={props.bg || require('../../assets/home_top_bg.jpg')}
-        style={{ height: props.bgHeight || '305rpx' }}
+        style={{
+          height: props.bgHeight || '305rpx',
+          top: `-${props.bgOffset || 0}px`
+        }}
       />
       <View className='status' style={{ height: `${statusHeight}px` }} />
       <View className='content' style={{ height: `${headerHeight}px` }}>

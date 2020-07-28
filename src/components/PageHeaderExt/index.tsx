@@ -9,6 +9,7 @@ const PageHeaderExt: FC<{
   absolute?: boolean
   bg?: string
   bgHeight?: string
+  bgOffset?: number
 }> = props => {
   const { statusHeight, headerHeight } = useHeaderSize()
 
@@ -43,7 +44,7 @@ const PageHeaderExt: FC<{
           src={props.bg || require('../../assets/home_top_bg.jpg')}
           className={'brand-image'}
           style={{
-            top: `-${statusHeight + headerHeight}px`,
+            top: `-${statusHeight + headerHeight + (props.bgOffset || 0)}px`,
             height: props.bgHeight || '305rpx'
           }}
         />

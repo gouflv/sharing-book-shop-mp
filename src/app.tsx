@@ -68,6 +68,8 @@ class App extends Component {
   componentDidMount() {}
 
   async componentDidShow() {
+    const sys = Taro.getSystemInfoSync()
+    console.log(sys)
     await app.refreshToken()
     await app.checkAuth()
   }
