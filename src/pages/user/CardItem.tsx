@@ -37,10 +37,15 @@ export const CardItem: FC<CardItemProps> = ({
           src={require('../../assets/vip_ico_crown@2x.png')}
           className={'crown'}
         />
-        {card.isActive === 2 && (
+        {card.isActive === 2 ? (
           <Image
             className='mark'
             src={require('../../assets/vip_card_mark1.png')}
+          />
+        ) : (
+          <Image
+            className='mark'
+            src={require('../../assets/vip_card_mark2.png')}
           />
         )}
         <View className='label'>VIP</View>
@@ -81,10 +86,15 @@ export const CardItem: FC<CardItemProps> = ({
     return (
       <View className='vip-card vip-card--pink'>
         <Image src={require('../../assets/vip_card_1.png')} className={'bg'} />
-        {card.isActive === 2 && (
+        {card.isActive === 2 ? (
           <Image
             className='mark'
             src={require('../../assets/vip_card_mark1.png')}
+          />
+        ) : (
+          <Image
+            className='mark'
+            src={require('../../assets/vip_card_mark2.png')}
           />
         )}
         <View className='label'>活动卡</View>

@@ -1,6 +1,7 @@
 import Taro, { useEffect } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { useAuthGuard } from '../../hooks/useAuthGuard'
+import { isDev } from '../../config'
 
 export default () => {
   const { withAuth } = useAuthGuard()
@@ -20,6 +21,10 @@ export default () => {
   }, [])
 
   function redirect() {
+    if (!isDev) {
+      Taro.switchTab({ url: '/pages/home/index' })
+      return
+    }
     // Taro.redirectTo({ url: '/pages/subject-search/index' })
     // Taro.redirectTo({ url: '/pages/user-payment-log/index' })
     // Taro.redirectTo({ url: '/pages/buy-card/index' })
@@ -37,10 +42,10 @@ export default () => {
     //   url: '/pages/subject-detail/index?id=202007171021314159'
     // })
 
-    Taro.switchTab({ url: '/pages/home/index' })
+    // Taro.switchTab({ url: '/pages/home/index' })
     // Taro.switchTab({ url: '/pages/order/index' })
     // Taro.switchTab({ url: '/pages/subject/index' })
-    // Taro.switchTab({ url: '/pages/user/index' })
+    Taro.switchTab({ url: '/pages/user/index' })
   }
 
   return <View />

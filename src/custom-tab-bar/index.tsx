@@ -86,7 +86,7 @@ const Tabbar: FC = () => {
       return
     }
     withAuth(() => {
-      Taro.redirectTo({
+      Taro.navigateTo({
         url: `/pages/shelf-books/index?id=${id}&from=tabBarScan`
       })
     })

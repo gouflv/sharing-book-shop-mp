@@ -34,12 +34,13 @@ const Page: FC = () => {
   const [subjectItems, setSubjectItems] = useState<any[]>([])
 
   async function fetchBanner() {
-    showLoading()
+    setLoading(true)
     const res = await POST('common/getBanner', { withoutToken: !user })
     setBanners(res)
+    setLoading(false)
   }
   async function fetchList() {
-    showLoading()
+    setLoading(true)
     const res = await POST('curriculum/getIndexCurriculum', {
       withoutToken: !user
     })
@@ -56,7 +57,9 @@ const Page: FC = () => {
   }, [user])
 
   useEffect(() => {
-    if (!loading) {
+    if (loading) {
+      showLoading()
+    } else {
       hideLoading()
     }
   }, [loading])
