@@ -12,6 +12,7 @@ interface User {
   nickName
   memberImage
   tel
+  notReadNum
 }
 
 class App {

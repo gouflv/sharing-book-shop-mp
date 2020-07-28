@@ -9,6 +9,7 @@ import { VideoStateForUpdate } from '../index'
 import { useRecorder } from './useRecorder'
 import { useAudioPlayer } from './useAudioPlayer'
 import { commonUpload } from '../../../utils/upload'
+import curryright from 'lodash.curryright'
 
 interface AudioListProps {
   subjectId
@@ -95,20 +96,21 @@ export const AudioList: FC<AudioListProps> = props => {
     })
 
     // Recorder
+    const onRecordFinishCurried = curryright(onRecorderFinish)(currentItemIndex)
     setTimeout(() => {
       startRecord({
         duration: props.videoDuration,
-        onFinish: onRecorderFinish
+        onFinish: file => onRecordFinishCurried(file)
       })
     }, 100)
   }
 
-  async function onRecorderFinish(file: string) {
+  async function onRecorderFinish(file: string, index: number) {
     try {
       const url = await commonUpload(file)
       setRecordData(prevState => {
         const copy = [...prevState]
-        copy[currentItemIndex] = { file: url }
+        copy[index] = { file: url }
         return copy
       })
     } catch (e) {
@@ -175,7 +177,7 @@ export const AudioList: FC<AudioListProps> = props => {
   // watch currentItemIndex
   useEffect(() => {
     if (isRecording) {
-      return
+      onCurrentItemRecordStop()
     }
 
     if (isPlaying) {

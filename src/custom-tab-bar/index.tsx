@@ -94,6 +94,8 @@ const Tabbar: FC = () => {
 
   return (
     <CoverView className='tabbar'>
+      <CoverView className='safe-area' />
+
       <CoverView className='content'>
         {tabList.map((tab, i) => (
           <CoverView

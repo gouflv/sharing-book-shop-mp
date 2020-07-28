@@ -10,7 +10,6 @@ import { AppStore } from '../../store/AppStore'
 import { observer } from '@tarojs/mobx'
 import { encodePhone, hideLoading, showLoading, showToast } from '../../utils'
 import { defaultErrorHandler, POST } from '../../utils/ajax'
-import { useNotification } from '../user-message/useNotification'
 import { Card } from './CardItem'
 import BasicPageView from '../../components/BasicPageWrapper'
 import { MessageService } from '../../store/MessageService'
@@ -87,12 +86,6 @@ const Page: FC = () => {
   }
 
   // notification
-  const { items, fetchList } = useNotification()
-  useDidShow(() => {
-    setTimeout(() => {
-      fetchList()
-    }, 500)
-  })
   useDidShow(() => {
     setTimeout(() => {
       checkNotify()
@@ -231,8 +224,8 @@ const Page: FC = () => {
                 />
                 <View className='content'>
                   我的消息
-                  {items && items.length && (
-                    <View className='badge'>{items.length}</View>
+                  {user && user.notReadNum && (
+                    <View className='badge'>{user.notReadNum}</View>
                   )}
                 </View>
                 <Image

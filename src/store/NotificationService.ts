@@ -3,6 +3,7 @@ import { createContext } from '@tarojs/taro'
 import { POST } from '../utils/ajax'
 import { UserNotification } from '../pages/user-message'
 import { app } from './AppStore'
+import { isDev } from '../config'
 
 class Notification {
   @observable visible = false
@@ -11,13 +12,14 @@ class Notification {
   @action.bound
   async checkNotify() {
     if (app.token) {
-      const data = await POST('wxMember/getMemberMsg', {
-        preventAuthErrorHandler: true,
-        data: { type: 6 }
+      const data = await POST('wxMember/getMemberActivityMsg', {
+        preventAuthErrorHandler: true
       })
-      const res: UserNotification = data.length ? data[0] : null
+      const res: UserNotification = data.length
+        ? data.find(d => !!d.content && d.isRead === 1)
+        : null
 
-      if (res && (res.isRead === 1 || res.isRead === false)) {
+      if (res) {
         this.showNotify(res)
       }
     }

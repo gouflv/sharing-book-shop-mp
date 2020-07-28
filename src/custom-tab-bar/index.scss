@@ -10,6 +10,15 @@
   padding-bottom: $safe-area-bottom;
   z-index: 2000;
 
+  .safe-area {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: $safe-area-bottom;
+    background-color: #fff;
+  }
+
   .content {
     display: flex;
     align-items: flex-end;
@@ -50,9 +59,10 @@
     bottom: calc(36px + #{$safe-area-bottom});
     left: 50%;
     transform: translateX(-50%);
+    z-index: 2001;
 
     .scan-btn {
-      z-index: 1;
+      z-index: 2002;
       width: 84px;
       height: 84px;
       background-color: $blue;
