@@ -21,9 +21,6 @@ const Page: FC = () => {
   const { checkNotify } = useContext(NotificationService)
   const { statusHeight, headerHeight } = useHeaderSize()
 
-  const sys = Taro.getSystemInfoSync()
-  const [windowHeight, setWindowHeight] = useState(sys.windowHeight)
-
   useDidShow(() => {
     async function init() {
       showLoading()
@@ -178,6 +175,22 @@ const Page: FC = () => {
                 mode={'aspectFit'}
               />
               <View className='content'>购买会员</View>
+              <Image
+                className='link'
+                src={require('../../assets/vip_ico_arrow@2x.png')}
+              />
+            </View>
+            <View
+              className='item'
+              onClick={() =>
+                Taro.navigateTo({ url: '/pages/buy-card/index?gift=1' })
+              }
+            >
+              <Image
+                src={require('../../assets/vip_ico_Merchant@2x.png')}
+                mode={'aspectFit'}
+              />
+              <View className='content'>商户购卡</View>
               <Image
                 className='link'
                 src={require('../../assets/vip_ico_arrow@2x.png')}

@@ -1,6 +1,12 @@
 import './index.scss'
-import Taro, { FC, useState, useEffect, useContext } from '@tarojs/taro'
-import { View, Button } from '@tarojs/components'
+import Taro, {
+  FC,
+  useContext,
+  useEffect,
+  useRouter,
+  useState
+} from '@tarojs/taro'
+import { Button, Input, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { hideLoading, showLoading, showToast } from '../../utils'
@@ -8,6 +14,7 @@ import { defaultErrorHandler, POST } from '../../utils/ajax'
 import classNames from 'classnames'
 import { MessageService } from '../../store/MessageService'
 import BasicPageWrapper from '../../components/BasicPageWrapper'
+import { Message } from '../../components/Message'
 
 interface BuyCardItem {
   cardId: string
@@ -19,6 +26,8 @@ interface BuyCardItem {
 }
 
 const Page: FC = () => {
+  const router = useRouter()
+
   const { showConfirm } = useContext(MessageService)
   const [items, setItems] = useState<BuyCardItem[]>([])
   const [selected, setSelected] = useState<BuyCardItem>()
@@ -32,6 +41,27 @@ const Page: FC = () => {
     }
     fetch()
   }, [])
+
+  //#region gift
+  const [isGiftBuy] = useState(!!router.params.gift)
+  const [sendGiftVisible, setSendGiftVisible] = useState(false)
+  const [sendGiftPhone, setSendGiftPhone] = useState('')
+  async function onSendGiftConfirm() {
+    if (!/^1\d{10}$/.test(sendGiftPhone)) {
+      showToast({ title: '请输入正确的手机号' })
+      return
+    }
+    try {
+      showLoading()
+      setSendGiftVisible(false)
+      showToast({ title: '赠送成功', icon: 'success' })
+    } catch (e) {
+      defaultErrorHandler(e)
+    } finally {
+      hideLoading()
+    }
+  }
+  //#endregion
 
   async function onSubmit() {
     if (!selected) {
@@ -52,9 +82,14 @@ const Page: FC = () => {
       Taro.requestPayment({
         ...orderData,
         success: res => {
-          Taro.redirectTo({
-            url: `/pages/buy-card/result?orderNo=${orderData.orderNo}`
-          })
+          if (!isGiftBuy) {
+            Taro.redirectTo({
+              url: `/pages/buy-card/result?orderNo=${orderData.orderNo}`
+            })
+          } else {
+            setSendGiftPhone('')
+            setSendGiftVisible(true)
+          }
         },
         fail: res => {
           hideLoading()
@@ -118,6 +153,23 @@ const Page: FC = () => {
             </View>
           </View>
         </PageHeaderWrapper>
+
+        {sendGiftVisible && (
+          <Message
+            className={'send-gift-card'}
+            title={'赠送'}
+            content={''}
+            onCancel={() => setSendGiftVisible(false)}
+            onConfirm={onSendGiftConfirm}
+          >
+            <Input
+              className='send-gift-card__input'
+              value={sendGiftPhone}
+              onInput={e => setSendGiftPhone(e.detail.value)}
+              placeholder={'请输入用户手机号'}
+            />
+          </Message>
+        )}
       </View>
     </BasicPageWrapper>
   )

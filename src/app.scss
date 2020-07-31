@@ -290,3 +290,16 @@ image {
     margin-bottom: 20px;
   }
 }
+
+.send-gift-card {
+  .title {
+    text-align: center;
+  }
+  &__input {
+    margin-top: 20px;
+    height: 60px;
+    width: 380px;
+    font-size: $font-size-base;
+    background-color: $bg-color;
+  }
+}
