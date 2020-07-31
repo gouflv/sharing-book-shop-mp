@@ -1,9 +1,10 @@
-import Taro, { FC, useEffect, useState, useRouter } from '@tarojs/taro'
+import Taro, { FC, useEffect, useRouter, useState } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { OrderItem } from './OrderItem'
 import { POST } from '../../utils/ajax'
+import { hideLoading, showLoading } from '../../utils'
 
 const Page: FC = () => {
   const routers = useRouter()
@@ -11,10 +12,12 @@ const Page: FC = () => {
 
   useEffect(() => {
     async function f() {
+      showLoading()
       const data = await POST('wxMember/getDayOrderDetail', {
         data: { memberBorrowingDaySummaryId: routers.params.id }
       })
       setList(data)
+      hideLoading()
     }
     f()
   }, [])

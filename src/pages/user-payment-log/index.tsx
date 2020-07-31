@@ -5,6 +5,7 @@ import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import dayjs from 'dayjs'
 import { POST } from '../../utils/ajax'
+import { hideLoading, showLoading } from '../../utils'
 
 const Page: FC = () => {
   const [date, setDate] = useState(dayjs().format('YYYY-MM'))
@@ -12,12 +13,14 @@ const Page: FC = () => {
   const [loading, setLoading] = useState(true)
 
   async function fetch() {
+    showLoading()
     setLoading(true)
     const data = await POST('wxMember/getPayRecord', {
       data: { date }
     })
     setItems(data)
     setLoading(false)
+    hideLoading()
   }
 
   useEffect(() => {

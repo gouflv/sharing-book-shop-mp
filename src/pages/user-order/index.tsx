@@ -5,6 +5,7 @@ import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { POST } from '../../utils/ajax'
 import dayjs from 'dayjs'
+import { hideLoading, showLoading } from '../../utils'
 
 const Page: FC = () => {
   const [date, setDate] = useState(dayjs().format('YYYY-MM'))
@@ -12,11 +13,13 @@ const Page: FC = () => {
   const [loading, setLoading] = useState(true)
 
   async function fetch() {
+    showLoading()
     const data = await POST('wxMember/getDayOrder', {
       data: { date }
     })
     setItems(data)
     setLoading(false)
+    hideLoading()
   }
 
   useEffect(() => {
