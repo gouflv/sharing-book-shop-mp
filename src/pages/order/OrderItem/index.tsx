@@ -1,6 +1,6 @@
 import './index.scss'
-import { FC, useEffect } from '@tarojs/taro'
-import { View, Image } from '@tarojs/components'
+import Taro, { FC } from '@tarojs/taro'
+import { Image, View } from '@tarojs/components'
 import dayjs from 'dayjs'
 import { POST } from '../../../utils/ajax'
 import { hideLoading, showLoading, showToast } from '../../../utils'
@@ -66,6 +66,7 @@ export const OrderItem: FC<{ data: OrderBookItem }> = ({ data }) => {
         {!!data.eqName && <View className='desc'>设备名称: {data.eqName}</View>}
         <View className='desc'>
           借阅时间: {dayjs(data.createTime).format('YYYY/MM/DD')}
+          {data.returnTime && `-${dayjs(data.returnTime).format('YYYY/MM/DD')}`}
         </View>
         <View className='desc'>书籍分类: {data.labelName}</View>
       </View>

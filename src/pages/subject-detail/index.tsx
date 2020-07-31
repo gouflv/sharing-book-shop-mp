@@ -10,15 +10,7 @@ import Taro, {
   useState,
   VideoContext
 } from '@tarojs/taro'
-import {
-  Image,
-  RichText,
-  Video,
-  View,
-  CoverView,
-  CoverImage,
-  Button
-} from '@tarojs/components'
+import { Button, Image, RichText, Video, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import classNames from 'classnames'
 import { AudioList } from './AudioList'
@@ -88,9 +80,9 @@ const Page: FC = () => {
   //#endregion
 
   //#region tab
-  const [tab, setTab] = useState<'summary' | 'audioList' | 'comments'>(
-    'summary'
-  )
+  const [tab, setTab] = useState<
+    'summary' | 'audioList' | 'comments' | 'guide'
+  >('summary')
   const [showAudioList, setShowAudioList] = useState(true)
 
   useEffect(() => {
@@ -200,21 +192,27 @@ const Page: FC = () => {
           className={classNames('tab-item', { active: tab === 'summary' })}
           onClick={() => setTab('summary')}
         >
-          简介
+          阅前必读
+        </View>
+        <View
+          className={classNames('tab-item', { active: tab === 'guide' })}
+          onClick={() => setTab('guide')}
+        >
+          过程指导
         </View>
         {showAudioList && (
           <View
             className={classNames('tab-item', { active: tab === 'audioList' })}
             onClick={() => setTab('audioList')}
           >
-            配音
+            互动配音
           </View>
         )}
         <View
           className={classNames('tab-item', { active: tab === 'comments' })}
           onClick={() => setTab('comments')}
         >
-          评论
+          阅后游戏
         </View>
       </View>
     )

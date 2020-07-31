@@ -12,6 +12,7 @@ export interface Card {
   positionNum: number
   //激活 1未激活 2激活
   isActive: 1 | 2
+  startDate: string
   endDate: string
   purchaseDate: string
   payMoney: number
@@ -54,11 +55,18 @@ export const CardItem: FC<CardItemProps> = ({
             {card.cardName}(书位{card.positionNum})
           </View>
           <View className='desc'>
-            {card.endDate && (
+            {card.isActive === 2 && card.endDate && (
               <View className='date'>
                 将在{dayjs(card.endDate).format('YYYY/M/D')}到期
               </View>
             )}
+            {card.isActive === 1 && card.endDate && (
+              <View>
+                {dayjs(card.startDate).format('YYYY/M/D')}-
+                {dayjs(card.endDate).format('YYYY/M/D')}
+              </View>
+            )}
+
             {card.isActive === 2 ? (
               <View
                 className='link'
@@ -121,7 +129,7 @@ export const CardItem: FC<CardItemProps> = ({
               {card.isActive === 2 && (
                 //已激活
                 <View>
-                  {dayjs(card.purchaseDate).format('YYYY/M/D')}-
+                  {dayjs(card.startDate).format('YYYY/M/D')}-
                   {dayjs(card.endDate).format('YYYY/M/D')}
                 </View>
               )}

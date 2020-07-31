@@ -82,7 +82,10 @@ class App {
   @action.bound
   async fetchUserInfo() {
     const data = await POST('wxMember/getMemberInfo')
-    this.user = { ...data, nickName: decodeURIComponent(data.nickName) }
+    this.user = {
+      ...data,
+      nickName: decodeURIComponent(data.nickName)
+    }
     return this.user
   }
 
@@ -95,7 +98,10 @@ class App {
       const data = await POST('wxMember/getMemberInfo', {
         preventAuthErrorHandler: true
       })
-      this.user = { ...data, nickName: decodeURIComponent(data.nickName) }
+      this.user = {
+        ...data,
+        nickName: decodeURIComponent(data.nickName)
+      }
     }
     return this.user
   }

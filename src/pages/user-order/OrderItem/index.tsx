@@ -26,9 +26,11 @@ export const OrderItem: FC<{ data }> = ({ data }) => {
         <View className='desc'>
           借阅时间: {dayjs(data.createTime).format('YYYY/MM/DD')}
         </View>
-        <View className='desc'>
-          还书时间: {dayjs(data.returnTime).format('YYYY/MM/DD')}
-        </View>
+        {data.returnTime && (
+          <View className='desc'>
+            还书时间: {dayjs(data.returnTime).format('YYYY/MM/DD')}
+          </View>
+        )}
       </View>
       {data.subStatus === 1 && (
         <Image
