@@ -13,6 +13,7 @@ interface User {
   memberImage
   tel
   notReadNum
+  posFlag: boolean
 }
 
 class App {

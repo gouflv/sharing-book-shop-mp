@@ -28,7 +28,7 @@ export default () => {
     // Taro.redirectTo({ url: '/pages/subject-search/index' })
     // Taro.redirectTo({ url: '/pages/user-payment-log/index' })
     // Taro.redirectTo({ url: '/pages/buy-card/index' })
-    Taro.redirectTo({ url: '/pages/buy-card/index?gift=1' })
+    // Taro.redirectTo({ url: '/pages/buy-card/index?gift=1' })
     // Taro.redirectTo({ url: '/pages/buy-card/result' })
     // Taro.redirectTo({ url: '/pages/auth/index?hideBack=1' })
     // Taro.redirectTo({ url: '/pages/user-bind-phone/index' })

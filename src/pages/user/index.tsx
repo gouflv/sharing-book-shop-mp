@@ -23,8 +23,8 @@ const Page: FC = () => {
 
   useDidShow(() => {
     async function init() {
-      showLoading()
-      !user && (await fetchUserInfo())
+      !user && showLoading()
+      await fetchUserInfo()
       await fetchCards()
       hideLoading()
     }
@@ -180,22 +180,24 @@ const Page: FC = () => {
                 src={require('../../assets/vip_ico_arrow@2x.png')}
               />
             </View>
-            <View
-              className='item'
-              onClick={() =>
-                Taro.navigateTo({ url: '/pages/buy-card/index?gift=1' })
-              }
-            >
-              <Image
-                src={require('../../assets/vip_ico_Merchant@2x.png')}
-                mode={'aspectFit'}
-              />
-              <View className='content'>商户购卡</View>
-              <Image
-                className='link'
-                src={require('../../assets/vip_ico_arrow@2x.png')}
-              />
-            </View>
+            {user && user.posFlag && (
+              <View
+                className='item'
+                onClick={() =>
+                  Taro.navigateTo({ url: '/pages/buy-card/index?gift=1' })
+                }
+              >
+                <Image
+                  src={require('../../assets/vip_ico_Merchant@2x.png')}
+                  mode={'aspectFit'}
+                />
+                <View className='content'>商户购卡</View>
+                <Image
+                  className='link'
+                  src={require('../../assets/vip_ico_arrow@2x.png')}
+                />
+              </View>
+            )}
             <View
               className='item'
               onClick={() =>

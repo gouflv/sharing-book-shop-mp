@@ -86,6 +86,21 @@
   .btn-primary {
 
   }
+
+  .send-gift-card {
+    .input {
+      box-sizing: border-box;
+      margin-top: 16px;
+      margin-bottom: 16px;
+      height: 80px;
+      padding: 0 20px;
+      width: 100%;
+      font-size: $font-size-base;
+      background-color: $bg-color;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+    }
+  }
 }
 
 .page-buy-card-result {
