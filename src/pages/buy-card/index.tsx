@@ -35,7 +35,7 @@ const Page: FC = () => {
     async function fetch() {
       showLoading()
       const data = await POST('wxMember/getConfigCard', {
-        // data: { type: isGiftBuy ? 2 : 1 }
+        data: { type: isGiftBuy ? 2 : 1 }
       })
       setItems(data)
       hideLoading()
@@ -70,9 +70,12 @@ const Page: FC = () => {
         data.tel = sendGiftPhone
       }
 
-      const orderData = await POST('wxMember/buyConfigCard', {
-        data
-      })
+      const orderData = await POST(
+        isGiftBuy ? 'wxMember/buyGivingConfigCard' : 'wxMember/buyConfigCard',
+        {
+          data
+        }
+      )
 
       Taro.requestPayment({
         ...orderData,
