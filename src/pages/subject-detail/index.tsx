@@ -168,12 +168,12 @@ const Page: FC = () => {
     if (loading) {
       return
     }
-    if (tab === 'summary') {
+    if (tab !== 'audioList' && videoSrc !== videoSrcOrigin) {
       setVideoState({
         src: videoSrcOrigin,
         desc: '',
         muted: false,
-        play: !isDev,
+        play: false,
         audio: ''
       })
     } else {
@@ -301,6 +301,13 @@ const Page: FC = () => {
                 </View>
               </View>
             )}
+            {tab === 'guide' && (
+              <View className='subject-summary'>
+                <View className='content'>
+                  <RichText nodes={textToRichText(data.guidance)} />
+                </View>
+              </View>
+            )}
 
             {tab === 'audioList' && (
               <AudioList
@@ -312,7 +319,13 @@ const Page: FC = () => {
               />
             )}
 
-            {tab === 'comments' && <CommentList subjectId={subjectId} />}
+            {tab === 'comments' && (
+              <View className='subject-summary'>
+                <View className='content'>
+                  <RichText nodes={textToRichText(data.interaction)} />
+                </View>
+              </View>
+            )}
           </View>
         )}
       </PageHeaderWrapper>

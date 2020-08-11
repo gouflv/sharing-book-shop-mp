@@ -14,7 +14,6 @@ import { defaultErrorHandler, POST } from '../../utils/ajax'
 import classNames from 'classnames'
 import { MessageService } from '../../store/MessageService'
 import BasicPageWrapper from '../../components/BasicPageWrapper'
-import { Message } from '../../components/Message'
 
 interface BuyCardItem {
   cardId: string
@@ -35,7 +34,9 @@ const Page: FC = () => {
   useEffect(() => {
     async function fetch() {
       showLoading()
-      const data = await POST('wxMember/getConfigCard')
+      const data = await POST('wxMember/getConfigCard', {
+        data: { type: isGiftBuy ? 2 : 1 }
+      })
       setItems(data)
       hideLoading()
     }
@@ -44,28 +45,17 @@ const Page: FC = () => {
 
   //#region gift
   const [isGiftBuy] = useState(!!router.params.gift)
-  const [sendGiftVisible, setSendGiftVisible] = useState(false)
   const [sendGiftPhone, setSendGiftPhone] = useState('')
-  async function onSendGiftConfirm() {
-    if (!/^1\d{10}$/.test(sendGiftPhone)) {
-      showToast({ title: '请输入正确的手机号' })
-      return
-    }
-    try {
-      showLoading()
-      setSendGiftVisible(false)
-      showToast({ title: '赠送成功', icon: 'success' })
-    } catch (e) {
-      defaultErrorHandler(e)
-    } finally {
-      hideLoading()
-    }
-  }
   //#endregion
 
   async function onSubmit() {
     if (!selected) {
       showToast({ title: '请选择', mask: false })
+      return
+    }
+
+    if (isGiftBuy && !/^1\d{10}$/.test(sendGiftPhone)) {
+      showToast({ title: '请输入正确的手机号' })
       return
     }
 
@@ -75,9 +65,17 @@ const Page: FC = () => {
 
     try {
       showLoading()
-      const orderData = await POST('wxMember/buyConfigCard', {
-        data: { cardId: selected.cardId }
-      })
+      const data = { cardId: selected.cardId } as any
+      if (isGiftBuy) {
+        data.tel = sendGiftPhone
+      }
+
+      const orderData = await POST(
+        isGiftBuy ? 'wxMember/buyGivingConfigCard' : 'wxMember/buyConfigCard',
+        {
+          data
+        }
+      )
 
       Taro.requestPayment({
         ...orderData,
@@ -87,19 +85,19 @@ const Page: FC = () => {
               url: `/pages/buy-card/result?orderNo=${orderData.orderNo}`
             })
           } else {
+            hideLoading()
             setSendGiftPhone('')
-            setSendGiftVisible(true)
+            showToast({ title: '赠送成功', icon: 'success' })
           }
         },
         fail: res => {
           hideLoading()
-          showToast({ title: res.errMsg })
+          showToast({ title: '未支付成功' })
         }
       })
     } catch (e) {
-      defaultErrorHandler(e)
-    } finally {
       hideLoading()
+      defaultErrorHandler(e)
     }
   }
 
@@ -139,6 +137,20 @@ const Page: FC = () => {
                 ))}
               </View>
 
+              {isGiftBuy && (
+                <View className='send-gift-card'>
+                  <View className='label'>用户手机号</View>
+                  <View>
+                    <Input
+                      className='input'
+                      value={sendGiftPhone}
+                      onInput={e => setSendGiftPhone(e.detail.value)}
+                      placeholder={'请输入用户手机号'}
+                    />
+                  </View>
+                </View>
+              )}
+
               <View className='summary'>
                 <View className='label'>合计</View>
                 <View className='value'>
@@ -153,23 +165,6 @@ const Page: FC = () => {
             </View>
           </View>
         </PageHeaderWrapper>
-
-        {sendGiftVisible && (
-          <Message
-            className={'send-gift-card'}
-            title={'赠送'}
-            content={''}
-            onCancel={() => setSendGiftVisible(false)}
-            onConfirm={onSendGiftConfirm}
-          >
-            <Input
-              className='send-gift-card__input'
-              value={sendGiftPhone}
-              onInput={e => setSendGiftPhone(e.detail.value)}
-              placeholder={'请输入用户手机号'}
-            />
-          </Message>
-        )}
       </View>
     </BasicPageWrapper>
   )
