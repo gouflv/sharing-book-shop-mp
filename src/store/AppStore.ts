@@ -156,6 +156,13 @@ class App {
       Taro.reLaunch({ url: '/pages/home/index' })
     }
   }
+
+  @action.bound
+  async bindUserDevice(eqCode: string) {
+    await POST('wxMember/setMemberEqCode', {
+      data: { eqCode }
+    })
+  }
 }
 
 export const app = new App()

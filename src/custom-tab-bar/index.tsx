@@ -6,6 +6,7 @@ import { observer } from '@tarojs/mobx'
 import { AppStore } from '../store/AppStore'
 import { useAuthGuard } from '../hooks/useAuthGuard'
 import { showToast } from '../utils'
+import qs from 'query-string'
 
 type TabBar = {
   text: string
@@ -66,28 +67,32 @@ const Tabbar: FC = () => {
     Taro.scanCode({
       onlyFromCamera: true,
       scanType: ['qrCode'],
-      success: result => _onScanCode(getParamsOfScan(result.path))
+      success: result => {
+        const params = getParamsOfScan(result.path)
+        if (!params || !params.id) {
+          showToast({ title: '可能是无效的小程序码' })
+          return
+        }
+        _onScanCode(params.id, params.scene || '')
+      }
     })
   }
 
-  function getParamsOfScan(codePath: string) {
+  function getParamsOfScan(codePath: string): { id; scene } | undefined {
     if (!codePath) {
       return
     }
-    const sp = codePath.split('?id=')
-    if (sp.length === 2) {
-      return sp[1]
+    const sp = codePath.split('?')
+    if (sp[1]) {
+      return qs.parse(sp[1]) as any
     }
+    return
   }
 
-  function _onScanCode(id?: string) {
-    if (!id) {
-      showToast({ title: '可能是无效的小程序码' })
-      return
-    }
+  function _onScanCode(id: string, eqCode: string) {
     withAuth(() => {
       Taro.navigateTo({
-        url: `/pages/shelf-books/index?id=${id}&from=tabBarScan`
+        url: `/pages/shelf-books/index?id=${id}&eqCode=${eqCode}&from=tabBarScan`
       })
     })
   }

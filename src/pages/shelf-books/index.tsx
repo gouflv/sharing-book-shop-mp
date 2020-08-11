@@ -1,13 +1,22 @@
 import './index.scss'
-import Taro, { FC, useDidShow, useRouter, useState } from '@tarojs/taro'
+import Taro, {
+  FC,
+  useContext,
+  useDidShow,
+  useEffect,
+  useRouter,
+  useState
+} from '@tarojs/taro'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
-import { Image, View, Button } from '@tarojs/components'
+import { Button, Image, View } from '@tarojs/components'
 import { hideLoading, showLoading, showToast } from '../../utils'
 import { defaultErrorHandler, POST } from '../../utils/ajax'
 import { ShelfBookItem } from './ShelfBookItem'
+import { AppStore } from '../../store/AppStore'
 
 const Page: FC = () => {
+  const { bindUserDevice } = useContext(AppStore)
   const { params } = useRouter()
   const fromWeChatScan = params.from === 'weChatScan'
 
@@ -18,6 +27,11 @@ const Page: FC = () => {
   async function fetch() {
     try {
       showLoading()
+
+      if (params.eqCode) {
+        bindUserDevice(params.eqCode)
+      }
+
       const data = await POST('wxMember/getQrcodeContent', {
         data: { id: params.id }
       })

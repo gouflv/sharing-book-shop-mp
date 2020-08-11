@@ -12,7 +12,7 @@ export default () => {
     if (scene === 1047 && query.id) {
       withAuth(() => {
         Taro.redirectTo({
-          url: `/pages/shelf-books/index?id=${query.id}&from=weChatScan`
+          url: `/pages/shelf-books/index?id=${query.id}&eqCode=${query.scene}&from=weChatScan`
         })
       })
     } else {
@@ -28,7 +28,7 @@ export default () => {
     // Taro.redirectTo({ url: '/pages/subject-search/index' })
     // Taro.redirectTo({ url: '/pages/user-payment-log/index' })
     // Taro.redirectTo({ url: '/pages/buy-card/index' })
-    Taro.redirectTo({ url: '/pages/buy-card/index?gift=1' })
+    // Taro.redirectTo({ url: '/pages/buy-card/index?gift=1' })
     // Taro.redirectTo({ url: '/pages/buy-card/result' })
     // Taro.redirectTo({ url: '/pages/auth/index?hideBack=1' })
     // Taro.redirectTo({ url: '/pages/user-bind-phone/index' })
@@ -36,17 +36,17 @@ export default () => {
     // Taro.redirectTo({ url: '/pages/baby-profile/index' })
     // Taro.redirectTo({ url: '/pages/user-order/index' })
     // Taro.redirectTo({ url: '/pages/user-message/index' })
-    // Taro.redirectTo({
-    //   url: '/pages/subject-detail/index?id=202007171018176257'
-    // })
+    Taro.redirectTo({
+      url: '/pages/subject-detail/index?id=202007171018176257'
+    })
     // Taro.redirectTo({
     //   url: '/pages/subject-detail/index?id=202007171021314159'
     // })
 
-    // Taro.switchTab({ url: '/pages/home/index' })
+    Taro.switchTab({ url: '/pages/home/index' })
     // Taro.switchTab({ url: '/pages/order/index' })
     // Taro.switchTab({ url: '/pages/subject/index' })
-    Taro.switchTab({ url: '/pages/user/index' })
+    // Taro.switchTab({ url: '/pages/user/index' })
   }
 
   return <View />
