@@ -28,6 +28,7 @@ import { isDev } from '../../config'
 import { VideoDescBtn } from './VideoDesc/Btn'
 import { VideoDescModal } from './VideoDesc/Modal'
 import { useAudioPlayer } from './AudioList/useAudioPlayer'
+import { useAppShare } from '../../hooks/useAppShareMessage'
 
 export interface VideoStateForUpdate {
   src: string
@@ -40,7 +41,9 @@ export interface VideoStateForUpdate {
 const Page: FC = () => {
   const router = useRouter()
   const scope = useScope()
-  const [subjectId, setSubjectId] = useState('')
+  const [subjectId] = useState(router.params.id)
+
+  useAppShare(`/pages/subject-detail/index?id=${subjectId}`)
 
   //#region data
   const [data, setData] = useState<any>({})
@@ -73,7 +76,6 @@ const Page: FC = () => {
   }
 
   useEffect(() => {
-    setSubjectId(router.params.id)
     fetch()
     report()
   }, [])

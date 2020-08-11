@@ -2,23 +2,35 @@ import Taro, { useEffect } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { useAuthGuard } from '../../hooks/useAuthGuard'
 import { isDev } from '../../config'
+import useDidShow = Taro.useDidShow
 
 export default () => {
   const { withAuth } = useAuthGuard()
 
-  useEffect(() => {
+  useDidShow(() => {
     const { scene, query } = Taro.getApp().$router.params
-    console.debug('wx scene', scene, query)
+    console.log('[App useDidShow] scene', scene, query)
+
     if (scene === 1047 && query.id) {
       withAuth(() => {
         Taro.redirectTo({
           url: `/pages/shelf-books/index?id=${query.id}&eqCode=${query.scene}&from=weChatScan`
         })
       })
-    } else {
-      redirect()
+      return
     }
-  }, [])
+
+    if (query.landPage) {
+      withAuth(() => {
+        Taro.redirectTo({
+          url: decodeURIComponent(query.landPage)
+        })
+      })
+      return
+    }
+
+    redirect()
+  })
 
   function redirect() {
     if (!isDev) {
@@ -36,9 +48,9 @@ export default () => {
     // Taro.redirectTo({ url: '/pages/baby-profile/index' })
     // Taro.redirectTo({ url: '/pages/user-order/index' })
     // Taro.redirectTo({ url: '/pages/user-message/index' })
-    Taro.redirectTo({
-      url: '/pages/subject-detail/index?id=202007171018176257'
-    })
+    // Taro.redirectTo({
+    //   url: '/pages/subject-detail/index?id=202007171018176257'
+    // })
     // Taro.redirectTo({
     //   url: '/pages/subject-detail/index?id=202007171021314159'
     // })

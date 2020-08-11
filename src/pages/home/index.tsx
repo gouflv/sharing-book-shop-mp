@@ -20,6 +20,7 @@ import { useAuthGuard } from '../../hooks/useAuthGuard'
 import { APP_NAME } from '../../config'
 import { NotificationService } from '../../store/NotificationService'
 import BasicPageWrapper from '../../components/BasicPageWrapper'
+import { useAppShare } from '../../hooks/useAppShareMessage'
 
 const Page: FC = () => {
   const { user } = useContext(AppStore)
@@ -69,6 +70,8 @@ const Page: FC = () => {
       checkNotify()
     }, 500)
   })
+
+  useAppShare()
 
   return (
     <BasicPageWrapper>

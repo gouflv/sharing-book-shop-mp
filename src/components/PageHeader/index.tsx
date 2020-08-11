@@ -32,7 +32,11 @@ const PageHeader: FC<PageHeaderProps> = props => {
     if (onBack) {
       onBack()
     } else {
-      Taro.navigateBack()
+      Taro.navigateBack({
+        fail: () => {
+          Taro.switchTab({ url: '/pages/home/index' })
+        }
+      })
     }
   }
 

@@ -69,9 +69,12 @@ class App extends Component {
 
   async componentDidShow() {
     const sys = Taro.getSystemInfoSync()
-    console.log(sys)
+    console.log('[getSystemInfoSync]', sys)
     await app.refreshToken()
     await app.checkAuth()
+
+    const { scene, query } = Taro.getApp().$router.params
+    console.log('[componentDidShow]', { scene, query })
   }
 
   componentDidHide() {}
