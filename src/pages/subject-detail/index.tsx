@@ -81,7 +81,7 @@ const Page: FC = () => {
 
   //#region tab
   const [tab, setTab] = useState<
-    'summary' | 'audioList' | 'comments' | 'guide'
+    'summary' | 'guide' | 'audioList' | 'interaction'
   >('summary')
   const [showAudioList, setShowAudioList] = useState(true)
 
@@ -209,8 +209,8 @@ const Page: FC = () => {
           </View>
         )}
         <View
-          className={classNames('tab-item', { active: tab === 'comments' })}
-          onClick={() => setTab('comments')}
+          className={classNames('tab-item', { active: tab === 'interaction' })}
+          onClick={() => setTab('interaction')}
         >
           阅后游戏
         </View>
@@ -321,7 +321,7 @@ const Page: FC = () => {
               />
             )}
 
-            {tab === 'comments' && (
+            {tab === 'interaction' && (
               <View className='subject-summary'>
                 <View className='content'>
                   <RichText nodes={textToRichText(data.interaction || '')} />
