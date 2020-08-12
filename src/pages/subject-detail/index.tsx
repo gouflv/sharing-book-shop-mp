@@ -14,7 +14,6 @@ import { Button, Image, RichText, Video, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import classNames from 'classnames'
 import { AudioList } from './AudioList'
-import { CommentList } from './CommentList'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { POST } from '../../utils/ajax'
 import {
@@ -24,7 +23,6 @@ import {
   textToRichText
 } from '../../utils'
 import _debounce from 'lodash.debounce'
-import { isDev } from '../../config'
 import { VideoDescBtn } from './VideoDesc/Btn'
 import { VideoDescModal } from './VideoDesc/Modal'
 import { useAudioPlayer } from './AudioList/useAudioPlayer'
@@ -299,14 +297,16 @@ const Page: FC = () => {
                   </View>
                 </View>
                 <View className='content'>
-                  <RichText nodes={textToRichText(data.curriculumIntroduce)} />
+                  <RichText
+                    nodes={textToRichText(data.curriculumIntroduce || '')}
+                  />
                 </View>
               </View>
             )}
             {tab === 'guide' && (
               <View className='subject-summary'>
                 <View className='content'>
-                  <RichText nodes={textToRichText(data.guidance)} />
+                  <RichText nodes={textToRichText(data.guidance || '')} />
                 </View>
               </View>
             )}
@@ -324,7 +324,7 @@ const Page: FC = () => {
             {tab === 'comments' && (
               <View className='subject-summary'>
                 <View className='content'>
-                  <RichText nodes={textToRichText(data.interaction)} />
+                  <RichText nodes={textToRichText(data.interaction || '')} />
                 </View>
               </View>
             )}

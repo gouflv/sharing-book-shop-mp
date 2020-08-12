@@ -27,26 +27,28 @@ interface BuyCardItem {
 const Page: FC = () => {
   const router = useRouter()
 
+  //#region gift
+  const [isGiftBuy, setIsGiftBuy] = useState(false)
+  const [sendGiftPhone, setSendGiftPhone] = useState('')
+  //#endregion
+
   const { showConfirm } = useContext(MessageService)
   const [items, setItems] = useState<BuyCardItem[]>([])
   const [selected, setSelected] = useState<BuyCardItem>()
 
   useEffect(() => {
+    const isGift = !!router.params.gift
+    setIsGiftBuy(isGift)
     async function fetch() {
       showLoading()
       const data = await POST('wxMember/getConfigCard', {
-        data: { type: isGiftBuy ? 2 : 1 }
+        data: { type: isGift ? 2 : 1 }
       })
       setItems(data)
       hideLoading()
     }
     fetch()
   }, [])
-
-  //#region gift
-  const [isGiftBuy] = useState(!!router.params.gift)
-  const [sendGiftPhone, setSendGiftPhone] = useState('')
-  //#endregion
 
   async function onSubmit() {
     if (!selected) {

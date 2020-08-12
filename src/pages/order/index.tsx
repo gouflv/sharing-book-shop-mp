@@ -136,7 +136,7 @@ const Page: FC = () => {
                   支付
                 </Button>
               </View>
-              {summary.isHaveCard == 2 && (
+              {summary && summary.isHaveCard == 2 && (
                 <Image
                   className='mark'
                   src={require('../../assets/order_mark0.png')}

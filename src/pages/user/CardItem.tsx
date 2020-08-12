@@ -171,6 +171,10 @@ export const CardItem: FC<CardItemProps> = ({
     )
   }
 
+  if (!card) {
+    return <View />
+  }
+
   return (
     <View>
       {card.cardClass === 1 ? renderVIPCard(card) : renderActiveCard(card)}

@@ -1,10 +1,14 @@
 import './index.scss'
-import { FC } from '@tarojs/taro'
+import Taro, { FC } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 
 export const OrderItem: FC<{ data }> = ({ data }) => {
+  if (!data) {
+    return <View />
+  }
+
   return (
     <View className='order-item d-flex'>
       <Image
