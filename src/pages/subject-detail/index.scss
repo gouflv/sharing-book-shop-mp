@@ -18,6 +18,14 @@
     }
   }
 
+  .brand-container {
+    height: 422px;
+    margin: 10px 0;
+    image {
+      width: 100%;
+    }
+  }
+
   .subject-summary {
     .header {
       display: flex;

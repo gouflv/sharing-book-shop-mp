@@ -185,7 +185,7 @@ const Page: FC = () => {
     return (
       <View
         className={classNames('tabs', {
-          'tabs--header': !hasVideo
+          'tabs--header': false
         })}
       >
         <View
@@ -258,10 +258,14 @@ const Page: FC = () => {
               </View>
             ) : (
               <View>
-                <PageHeaderExt fixed height={'90rpx'}>
-                  {renderTabs()}
-                </PageHeaderExt>
-                <View style={{ height: '90rpx' }} />
+                {/*<PageHeaderExt fixed height={'90rpx'}>*/}
+                {/*  {renderTabs()}*/}
+                {/*</PageHeaderExt>*/}
+                {/*<View style={{ height: '90rpx' }} />*/}
+                <View className='brand-container'>
+                  <Image src={data.curriculumImageUrl} mode={'aspectFit'} />
+                </View>
+                {renderTabs()}
               </View>
             )}
           </View>
