@@ -9,6 +9,12 @@
     overflow-x: auto;
     border-bottom: 0;
 
+    &::after {
+      content: ' ';
+      flex: 0 0 15px;
+      height: 64px;
+    }
+
     .tab-item {
       position: relative;
       display: flex;
