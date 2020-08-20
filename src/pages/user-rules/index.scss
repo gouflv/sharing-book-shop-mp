@@ -1,0 +1,13 @@
+@import "../../theme/var";
+
+.page-user-rules {
+  .content {
+    padding: 20px 30px;
+    background-color: #fff;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+  }
+  .section {
+    margin-bottom: 1em;
+  }
+}

@@ -233,6 +233,22 @@ const Page: FC = () => {
             <View
               className='item'
               onClick={() =>
+                Taro.navigateTo({ url: '/pages/user-rules/index' })
+              }
+            >
+              <Image
+                src={require('../../assets/vip_ico_borrow@2x.png')}
+                mode={'aspectFit'}
+              />
+              <View className='content'>借阅规则</View>
+              <Image
+                className='link'
+                src={require('../../assets/vip_ico_arrow@2x.png')}
+              />
+            </View>
+            <View
+              className='item'
+              onClick={() =>
                 Taro.navigateTo({ url: '/pages/user-message/index' })
               }
             >

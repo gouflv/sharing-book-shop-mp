@@ -33,7 +33,8 @@ class App extends Component {
       'pages/feed-back/index',
 
       'pages/auth/index',
-      'pages/user-bind-phone/index'
+      'pages/user-bind-phone/index',
+      'pages/user-rules/index'
     ],
     window: {
       backgroundTextStyle: 'light',

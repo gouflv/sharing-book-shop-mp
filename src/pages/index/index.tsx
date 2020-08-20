@@ -55,7 +55,7 @@ export default () => {
     //   url: '/pages/subject-detail/index?id=202007171021314159'
     // })
 
-    Taro.switchTab({ url: '/pages/home/index' })
+    // Taro.switchTab({ url: '/pages/home/index' })
     // Taro.switchTab({ url: '/pages/order/index' })
     // Taro.switchTab({ url: '/pages/subject/index' })
     // Taro.switchTab({ url: '/pages/user/index' })
