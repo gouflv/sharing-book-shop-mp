@@ -89,6 +89,9 @@ const Page: FC = () => {
     if (!hasVideo) {
       Taro.pageScrollTo({ scrollTop: 0, duration: 0 })
     }
+    if (tab !== 'audioList') {
+      stopPlay()
+    }
   }, [tab])
   //#endregion
 

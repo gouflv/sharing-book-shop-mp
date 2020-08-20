@@ -52,9 +52,9 @@ export default () => {
     // Taro.redirectTo({
     //   url: '/pages/subject-detail/index?id=202007171018176257'
     // })
-    // Taro.redirectTo({
-    //   url: '/pages/subject-detail/index?id=202007171021314159'
-    // })
+    Taro.redirectTo({
+      url: '/pages/subject-detail/index?id=202008141010362137'
+    })
 
     Taro.switchTab({ url: '/pages/home/index' })
     // Taro.switchTab({ url: '/pages/order/index' })
