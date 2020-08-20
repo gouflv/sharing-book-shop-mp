@@ -18,4 +18,20 @@
   .subject-list {
     margin-bottom: calc(140px + #{$safe-area-bottom});
   }
+
+  .contact-btn {
+    position: fixed;
+    bottom: calc(150px + env(safe-area-inset-bottom));
+    right: 40px;
+    width: 80px;
+    height: 80px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 100%;
+    image {
+      width: 80px;
+      height: 80px;
+    }
+  }
 }

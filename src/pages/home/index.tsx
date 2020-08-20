@@ -6,7 +6,7 @@ import Taro, {
   useState,
   useDidShow
 } from '@tarojs/taro'
-import { Image, Swiper, SwiperItem, View } from '@tarojs/components'
+import { Image, Swiper, SwiperItem, View, Button } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { useHeaderSize } from '../../hooks/useHeaderSize'
 import { SubjectListItem } from './SubjectListItem'
@@ -132,6 +132,10 @@ const Page: FC = () => {
             </View>
           )}
         </PageHeaderWrapper>
+
+        <Button openType={'contact'} className={'contact-btn'}>
+          <Image src={'../../assets/home_icon_surve.png'} />
+        </Button>
       </View>
     </BasicPageWrapper>
   )
