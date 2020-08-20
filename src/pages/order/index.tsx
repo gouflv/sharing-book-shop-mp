@@ -8,6 +8,7 @@ import dayjs from 'dayjs'
 import { defaultErrorHandler, POST } from '../../utils/ajax'
 import { hideLoading, showLoading, showToast } from '../../utils'
 import BasicPageWrapper from '../../components/BasicPageWrapper'
+import classNames from 'classnames'
 
 const Page: FC = () => {
   const [summary, setSummary] = useState<any>()
@@ -90,7 +91,7 @@ const Page: FC = () => {
                 </View>
                 <View className='content'>
                   <View className='title'>
-                    当前会员收益
+                    当前会员权益
                     <Text className='date'>{dayjs().format('YYYY/MM/DD')}</Text>
                   </View>
                   <View className='summary-list'>
@@ -104,15 +105,33 @@ const Page: FC = () => {
                     </View>
                     <View className='item'>
                       超权益:
-                      <Text className='num danger'>{summary.beyondNum}</Text>
+                      <Text
+                        className={classNames('num', {
+                          danger: summary.beyondNum > 0
+                        })}
+                      >
+                        {summary.beyondNum}
+                      </Text>
                     </View>
                     <View className='item'>
                       昨日欠费:
-                      <Text className='num danger'>¥{summary.owe}</Text>
+                      <Text
+                        className={classNames('num', {
+                          danger: summary.owe > 0
+                        })}
+                      >
+                        ¥{summary.owe}
+                      </Text>
                     </View>
                     <View className='item'>
                       累计欠费:
-                      <Text className='num danger'>¥{summary.totalOwe}</Text>
+                      <Text
+                        className={classNames('num', {
+                          danger: summary.totalOwe > 0
+                        })}
+                      >
+                        ¥{summary.totalOwe}
+                      </Text>
                     </View>
                   </View>
                 </View>

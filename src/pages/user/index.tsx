@@ -14,6 +14,7 @@ import { Card } from './CardItem'
 import BasicPageView from '../../components/BasicPageWrapper'
 import { MessageService } from '../../store/MessageService'
 import { NotificationService } from '../../store/NotificationService'
+import dayjs from 'dayjs'
 
 const Page: FC = () => {
   const { user, fetchUserInfo } = useContext(AppStore)
@@ -103,14 +104,14 @@ const Page: FC = () => {
           hideBackArrow
           bg={require('../../assets/vip_top_bg_xl.jpg')}
           bgHeight={'690rpx'}
-          bgOffset={690 / 2 - statusHeight - headerHeight - 536 / 2 + 10}
+          bgOffset={690 / 2 - statusHeight - headerHeight - 550 / 2 + 10}
         >
           <PageHeaderExt
             absolute
-            height={'536rpx'}
+            height={'550rpx'}
             bg={require('../../assets/vip_top_bg_xl.jpg')}
             bgHeight={'690rpx'}
-            bgOffset={690 / 2 - statusHeight - headerHeight - 536 / 2 + 10}
+            bgOffset={690 / 2 - statusHeight - headerHeight - 550 / 2 + 10}
           />
           <View className='page-space-wing'>
             <View className='user-header'>
@@ -131,7 +132,11 @@ const Page: FC = () => {
                       }
                     >
                       {encodePhone(user.tel)}
-                      <View className='unbind-phone'>解绑</View>
+                      {/*<View className='unbind-phone'>解绑</View>*/}
+                    </View>
+                    <View className='desc desc2'>
+                      <View>{dayjs().format('YYYY/MM/DD')}</View>
+                      <View>当前书位权益: 0</View>
                     </View>
                   </View>
                 </View>
@@ -217,6 +222,23 @@ const Page: FC = () => {
             <View
               className='item'
               onClick={() =>
+                Taro.navigateTo({ url: '/pages/user-order/index' })
+              }
+            >
+              <Image
+                src={require('../../assets/vip_ico_borrow@2x.png')}
+                mode={'aspectFit'}
+              />
+              <View className='content'>账单记录</View>
+              <Image
+                className='link'
+                src={require('../../assets/vip_ico_arrow@2x.png')}
+              />
+            </View>
+            <View
+              className='item'
+              onClick={() =>
+                //TODO add user-borrow-log
                 Taro.navigateTo({ url: '/pages/user-order/index' })
               }
             >

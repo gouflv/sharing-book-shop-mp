@@ -8,8 +8,7 @@
   .user-header {
     position: relative;
     display: flex;
-    padding: 20px;
-    margin-bottom: 16px;
+    padding: 20px 20px 10px;
     color: #fff;
 
     .user-info {
@@ -41,6 +40,12 @@
             font-size: $font-size-xsmall;
             border: 1px solid #fff;
             border-radius: 40px;
+          }
+        }
+
+        .desc2 {
+          view {
+            margin-right: 1em;
           }
         }
       }
@@ -151,7 +156,7 @@
   .indicator {
     display: flex;
     justify-content: center;
-    margin-top: 16px;
+    margin-top: 10px;
 
     .dot {
       width: 16px;

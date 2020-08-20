@@ -62,7 +62,7 @@ const Page: FC = () => {
     }
 
     await showConfirm({
-      content: `会员卡有效时间${selected.days}天，书位权益${selected.positionNum}个，购卡后自动激活`
+      content: `会员卡有效时间${selected.days}天，书位权益${selected.positionNum}个，购卡后需手动激活`
     })
 
     try {
