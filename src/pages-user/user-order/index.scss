@@ -37,14 +37,13 @@
       }
 
       .left {
-        border-right: 1px solid $border-color;
         color: #333;
+        border-right: 1px solid $border-color;
       }
 
       .right {
         padding-left: 80px;
       }
-
     }
   }
 }

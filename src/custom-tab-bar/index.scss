@@ -3,12 +3,12 @@
 .tabbar {
   position: fixed;
   bottom: 0;
+  z-index: 2000;
   box-sizing: content-box;
   display: flex;
   align-items: flex-end;
   height: 100px + 20px;
   padding-bottom: $safe-area-bottom;
-  z-index: 2000;
 
   .safe-area {
     position: absolute;
@@ -58,8 +58,8 @@
     position: absolute;
     bottom: calc(36px + #{$safe-area-bottom});
     left: 50%;
-    transform: translateX(-50%);
     z-index: 2001;
+    transform: translateX(-50%);
 
     .scan-btn {
       z-index: 2002;

@@ -21,14 +21,15 @@
 
   .contact-btn {
     position: fixed;
-    bottom: calc(150px + env(safe-area-inset-bottom));
     right: 40px;
+    bottom: calc(150px + env(safe-area-inset-bottom));
     width: 80px;
     height: 80px;
     padding: 0;
     background-color: transparent;
     border: none;
     border-radius: 100%;
+
     image {
       width: 80px;
       height: 80px;

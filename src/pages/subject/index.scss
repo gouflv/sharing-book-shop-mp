@@ -10,9 +10,9 @@
     border-bottom: 0;
 
     &::after {
-      content: ' ';
       flex: 0 0 15px;
       height: 64px;
+      content: ' ';
     }
 
     .tab-item {
