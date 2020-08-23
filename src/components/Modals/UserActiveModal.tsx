@@ -2,7 +2,7 @@ import '../../app.scss'
 import Taro, { FC } from '@tarojs/taro'
 import { Image, View } from '@tarojs/components'
 import { AtModal } from 'taro-ui'
-import { UserNotification } from '../../pages/user-message'
+import { UserNotification } from '../../pages-user/user-message'
 
 export const UserActiveModal: FC<{
   data: UserNotification

@@ -41,7 +41,7 @@ const Page: FC = () => {
   const scope = useScope()
   const [subjectId] = useState(router.params.id)
 
-  useAppShare(`/pages/subject-detail/index?id=${subjectId}`)
+  useAppShare(`/pages-subject/subject-detail/index?id=${subjectId}`)
 
   //#region data
   const [data, setData] = useState<any>({})

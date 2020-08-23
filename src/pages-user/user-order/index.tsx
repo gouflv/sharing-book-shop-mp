@@ -70,7 +70,7 @@ const Page: FC = () => {
                     className='link primary'
                     onClick={() =>
                       Taro.navigateTo({
-                        url: `/pages/user-order/detail?id=${data.memberBorrowingDaySummaryId}`
+                        url: `/pages-user/user-order/detail?id=${data.memberBorrowingDaySummaryId}`
                       })
                     }
                   >

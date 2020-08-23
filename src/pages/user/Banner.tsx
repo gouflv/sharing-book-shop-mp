@@ -16,7 +16,7 @@ export const Banner: FC<
       <SwiperItem>
         <View
           className='vip-card vip-card--dark'
-          onClick={() => Taro.navigateTo({ url: '/pages/buy-card/index' })}
+          onClick={() => Taro.navigateTo({ url: '/pages-user/buy-card/index' })}
         >
           <Image
             src={require('../../assets/vip_ico_crown@2x.png')}

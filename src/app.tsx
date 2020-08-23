@@ -12,29 +12,35 @@ class App extends Component {
   config: Config = {
     pages: [
       'pages/index/index',
-      'pages/shelf-books/index',
       'pages/home/index',
       'pages/order/index',
-
-      'pages/subject-search/index',
       'pages/subject/index',
-      'pages/subject-detail/index',
-
       'pages/user/index',
-      'pages/user-change-phone/index',
-      'pages/buy-card/index',
-      'pages/buy-card/result',
-      'pages/baby-profile/index',
-      'pages/user-content/index',
-      'pages/user-order/index',
-      'pages/user-order/detail',
-      'pages/user-message/index',
-      'pages/user-payment-log/index',
-      'pages/feed-back/index',
 
       'pages/auth/index',
-      'pages/user-bind-phone/index',
-      'pages/user-rules/index'
+      'pages/shelf-books/index',
+      'pages/user-bind-phone/index'
+    ],
+    subPackages: [
+      {
+        root: 'pages-subject',
+        pages: ['subject-search/index', 'subject-detail/index']
+      },
+      {
+        root: 'pages-user',
+        pages: [
+          'user-change-phone/index',
+          'buy-card/index',
+          'buy-card/result',
+          'baby-profile/index',
+          'user-content/index',
+          'user-order/index',
+          'user-order/detail',
+          'user-message/index',
+          'user-payment-log/index',
+          'feed-back/index'
+        ]
+      }
     ],
     window: {
       backgroundTextStyle: 'light',

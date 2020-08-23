@@ -141,7 +141,7 @@ const Page: FC = () => {
                   className='link primary'
                   onClick={() => {
                     Taro.navigateTo({
-                      url: '/pages/user-order/index'
+                      url: '/pages-user/user-order/index'
                     })
                   }}
                 >

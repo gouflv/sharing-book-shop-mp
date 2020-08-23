@@ -1,7 +1,7 @@
 import { action, observable } from 'mobx'
 import { createContext } from '@tarojs/taro'
 import { POST } from '../utils/ajax'
-import { UserNotification } from '../pages/user-message'
+import { UserNotification } from '../pages-user/user-message'
 import { app } from './AppStore'
 import { isDev } from '../config'
 

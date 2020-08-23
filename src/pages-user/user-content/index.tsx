@@ -57,7 +57,7 @@ const Page: FC = () => {
                 className='item'
                 onClick={() => {
                   Taro.navigateTo({
-                    url: `/pages/subject-detail/index?id=${item.curriculumId}`
+                    url: `/pages-subject/subject-detail/index?id=${item.curriculumId}`
                   })
                 }}
               >

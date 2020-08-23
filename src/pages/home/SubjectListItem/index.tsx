@@ -16,7 +16,7 @@ export const SubjectListItem: FC<{ data }> = props => {
         //TODO test
         withAuth(redirect => {
           ;(redirect ? Taro.redirectTo : Taro.navigateTo)({
-            url: `/pages/subject-detail/index?id=${data.curriculumId}`
+            url: `/pages-subject/subject-detail/index?id=${data.curriculumId}`
           })
         })
       }

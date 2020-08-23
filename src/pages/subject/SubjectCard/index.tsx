@@ -9,7 +9,7 @@ export const SubjectCard: FC<{ data }> = props => {
       className={'subject-card'}
       onClick={() =>
         Taro.navigateTo({
-          url: `/pages/subject-detail/index?id=${data.curriculumId}`
+          url: `/pages-subject/subject-detail/index?id=${data.curriculumId}`
         })
       }
     >

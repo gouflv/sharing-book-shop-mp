@@ -70,7 +70,7 @@ const PageHeader: FC<PageHeaderProps> = props => {
               if (props.isSearchNav) {
                 withAuth(() => {
                   Taro.navigateTo({
-                    url: '/pages/subject-search/index'
+                    url: '/pages-subject/subject-search/index'
                   })
                 })
               }

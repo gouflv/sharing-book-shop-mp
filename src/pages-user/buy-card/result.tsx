@@ -54,7 +54,7 @@ const Page: FC = () => {
             <Button
               className='btn-primary btn-primary--plain'
               onClick={() =>
-                Taro.redirectTo({ url: '/pages/user-payment-log/index' })
+                Taro.redirectTo({ url: '/pages-user/user-payment-log/index' })
               }
             >
               查看支付记录

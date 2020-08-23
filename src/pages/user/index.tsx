@@ -127,7 +127,7 @@ const Page: FC = () => {
                       className='desc'
                       onClick={() =>
                         Taro.navigateTo({
-                          url: '/pages/user-change-phone/index'
+                          url: '/pages-user/user-change-phone/index'
                         })
                       }
                     >
@@ -158,7 +158,7 @@ const Page: FC = () => {
           <View
             className='baby-info'
             onClick={() =>
-              Taro.navigateTo({ url: '/pages/baby-profile/index' })
+              Taro.navigateTo({ url: '/pages-user/baby-profile/index' })
             }
           >
             <Image
@@ -173,7 +173,9 @@ const Page: FC = () => {
           <View className='menu'>
             <View
               className='item'
-              onClick={() => Taro.navigateTo({ url: '/pages/buy-card/index' })}
+              onClick={() =>
+                Taro.navigateTo({ url: '/pages-user/buy-card/index' })
+              }
             >
               <Image
                 src={require('../../assets/ico_vip_pre@2x.png')}
@@ -189,7 +191,7 @@ const Page: FC = () => {
               <View
                 className='item'
                 onClick={() =>
-                  Taro.navigateTo({ url: '/pages/buy-card/index?gift=1' })
+                  Taro.navigateTo({ url: '/pages-user/buy-card/index?gift=1' })
                 }
               >
                 <Image
@@ -206,7 +208,7 @@ const Page: FC = () => {
             <View
               className='item'
               onClick={() =>
-                Taro.navigateTo({ url: '/pages/user-content/index' })
+                Taro.navigateTo({ url: '/pages-user/user-content/index' })
               }
             >
               <Image
@@ -222,7 +224,7 @@ const Page: FC = () => {
             <View
               className='item'
               onClick={() =>
-                Taro.navigateTo({ url: '/pages/user-order/index' })
+                Taro.navigateTo({ url: '/pages-user/user-order/index' })
               }
             >
               <Image
@@ -294,7 +296,7 @@ const Page: FC = () => {
             <View
               className='item'
               onClick={() =>
-                Taro.navigateTo({ url: '/pages/user-payment-log/index' })
+                Taro.navigateTo({ url: '/pages-user/user-payment-log/index' })
               }
             >
               <Image
@@ -309,7 +311,9 @@ const Page: FC = () => {
             </View>
             <View
               className='item'
-              onClick={() => Taro.navigateTo({ url: '/pages/feed-back/index' })}
+              onClick={() =>
+                Taro.navigateTo({ url: '/pages-user/feed-back/index' })
+              }
             >
               <Image
                 src={require('../../assets/vip_ico_sug@2x.png')}

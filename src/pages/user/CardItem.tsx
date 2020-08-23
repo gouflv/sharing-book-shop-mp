@@ -71,7 +71,7 @@ export const CardItem: FC<CardItemProps> = ({
               <View
                 className='link'
                 onClick={() =>
-                  Taro.navigateTo({ url: '/pages/buy-card/index' })
+                  Taro.navigateTo({ url: '/pages-user/buy-card/index' })
                 }
               >
                 购买会员卡 &gt;
@@ -159,7 +159,7 @@ export const CardItem: FC<CardItemProps> = ({
               <View
                 className='link'
                 onClick={() =>
-                  Taro.navigateTo({ url: '/pages/buy-card/index' })
+                  Taro.navigateTo({ url: '/pages-user/buy-card/index' })
                 }
               >
                 购买会员卡 &gt;

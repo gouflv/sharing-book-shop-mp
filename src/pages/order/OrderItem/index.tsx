@@ -29,7 +29,7 @@ export const OrderItem: FC<{ data: OrderBookItem }> = ({ data }) => {
       })
       if (res && res.curriculumId) {
         Taro.navigateTo({
-          url: `/pages/subject-detail/index?id=${res.curriculumId}`
+          url: `/pages-subject/subject-detail/index?id=${res.curriculumId}`
         })
       } else {
         showToast({ title: '暂无课程' })
