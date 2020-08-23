@@ -17,7 +17,9 @@ export const useAudioPlayer = () => {
   }
 
   useEffect(() => {
-    player.current = Taro.createInnerAudioContext()
+    if (!player.current) {
+      player.current = Taro.createInnerAudioContext()
+    }
     return () => {
       if (player.current) {
         player.current.destroy()
@@ -27,9 +29,10 @@ export const useAudioPlayer = () => {
 
   function startPlay(params: {
     src: string
+    play?: boolean
     loop?: boolean
     onGetDuration?: (duration: number) => void
-    onFinish: () => void
+    onFinish?: () => void
   }) {
     console.log('[Player] startPlay', params)
 
@@ -55,7 +58,9 @@ export const useAudioPlayer = () => {
         })
       }
 
-      player.current.play()
+      if (typeof params.play === 'undefined' || params.play) {
+        player.current.play()
+      }
     }
   }
 
@@ -70,12 +75,13 @@ export const useAudioPlayer = () => {
         console.log('[Player] run', player.current && player.current.duration)
         if (player.current && player.current.duration) {
           console.log('[Player] getDuration', player.current.duration)
-          resolve(player.current.duration)
+          resolve(player.current.duration * 1000)
         } else {
           if (tryCount < 20) {
             setTimeout(run, 100)
           } else {
-            reject('[Player] getDuration failed')
+            console.error('[Player] getDuration failed')
+            resolve(120 * 1000)
           }
           tryCount += 1
         }

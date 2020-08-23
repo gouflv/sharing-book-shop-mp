@@ -33,7 +33,6 @@ export interface VideoStateForUpdate {
   desc: string
   muted: boolean
   play: boolean
-  audio: string
 }
 
 const Page: FC = () => {
@@ -89,9 +88,6 @@ const Page: FC = () => {
     if (!hasVideo) {
       Taro.pageScrollTo({ scrollTop: 0, duration: 0 })
     }
-    if (tab !== 'audioList') {
-      stopPlay()
-    }
   }, [tab])
   //#endregion
 
@@ -103,45 +99,37 @@ const Page: FC = () => {
   const [videoSrcOrigin, setVideoSrcOrigin] = useState('')
   const [videoSrc, setVideoSrc] = useState('')
   const [muted, setMuted] = useState(false)
-  const [videoDuration, setVideoDuration] = useState(0)
+  const [videoDuration, setVideoDuration] = useState(120 * 1000)
 
   const setVideoState = _debounce((params: VideoStateForUpdate) => {
     console.log('[SetVideoState]', params)
-    if (hasVideo) {
-      if (params.src !== videoSrc) {
-        setVideoDuration(0)
-        setVideoSrc(params.src)
-      }
-      setMuted(params.muted)
-      setDescModalContent(params.desc)
+    setVideoDuration(0)
 
-      if (videoContext.current) {
-        videoContext.current.seek(0)
-        if (params.play) {
-          setTimeout(() => {
-            videoContext.current && videoContext.current.play()
-          }, 100)
-        } else {
-          videoContext.current.stop()
-        }
-      }
-    } else {
-      //TODO test
-      if (!params.muted) {
-        startPlay({
-          src: addResTimestamp(params.audio),
-          loop: true,
-          onGetDuration: duration => setVideoDuration(duration),
-          onFinish: () => {}
-        })
+    if (params.src !== videoSrc) {
+      setVideoSrc(params.src)
+    }
+    setMuted(params.muted)
+    setDescModalContent(params.desc)
+
+    if (videoContext.current) {
+      videoContext.current.seek(0)
+      if (params.play) {
+        setTimeout(() => {
+          videoContext.current && videoContext.current.play()
+        }, 100)
+      } else {
+        videoContext.current.stop()
       }
     }
-  }, 800)
+  }, 1000)
 
   function setVideoStop() {
-    if (videoContext.current) {
+    if (hasVideo && videoContext.current) {
       videoContext.current.stop()
       videoContext.current.seek(0)
+    }
+    if (!hasVideo) {
+      stopPlay()
     }
   }
 
@@ -171,16 +159,17 @@ const Page: FC = () => {
     if (loading) {
       return
     }
-    if (tab !== 'audioList' && videoSrc !== videoSrcOrigin) {
+    if (hasVideo && tab !== 'audioList' && videoSrc !== videoSrcOrigin) {
       setVideoState({
         src: videoSrcOrigin,
         desc: '',
         muted: false,
-        play: false,
-        audio: ''
+        play: false
+        // audio: ''
       })
-    } else {
-      //
+    }
+    if (!hasVideo && tab !== 'audioList') {
+      stopPlay()
     }
   }, [loading, tab])
 
@@ -323,6 +312,7 @@ const Page: FC = () => {
                 subjectId={subjectId}
                 hasVideo={hasVideo}
                 videoDuration={videoDuration}
+                setAudioDuration={setVideoDuration}
                 onSetVideoState={setVideoState}
                 onSetVideoStop={setVideoStop}
               />

@@ -15,6 +15,7 @@ interface AudioListProps {
   subjectId
   hasVideo: boolean
   videoDuration: number
+  setAudioDuration: (duration: number) => void
   onSetVideoState: (params: VideoStateForUpdate) => void
   onSetVideoStop: () => void
 }
@@ -35,6 +36,7 @@ export interface RecordPart {
 }
 
 export const AudioList: FC<AudioListProps> = props => {
+  // layout
   const { contentHeight, setHasVideo } = useContentHeight()
   useEffect(() => {
     setHasVideo(props.hasVideo)
@@ -87,13 +89,17 @@ export const AudioList: FC<AudioListProps> = props => {
     setIsRecording(true)
 
     // Video
-    props.onSetVideoState({
-      src: list[currentItemIndex].videoResourcesUrl,
-      desc: list[currentItemIndex].videoDescribes,
-      muted: true,
-      play: true,
-      audio: list[currentItemIndex].voiceResourcesUrl
-    })
+    if (props.hasVideo) {
+      props.onSetVideoState({
+        src: list[currentItemIndex].videoResourcesUrl,
+        desc: list[currentItemIndex].videoDescribes,
+        muted: true,
+        play: true
+        // audio: list[currentItemIndex].voiceResourcesUrl
+      })
+    } else {
+      stopPlay()
+    }
 
     // Recorder
     const onRecordFinishCurried = curryright(onRecorderFinish)(currentItemIndex)
@@ -120,15 +126,14 @@ export const AudioList: FC<AudioListProps> = props => {
 
   function onCurrentItemRecordStop() {
     setIsRecording(false)
-
-    // Recorder
+    if (props.hasVideo) {
+      props.onSetVideoStop()
+    }
     stopRecord()
-
-    // Video
-    props.onSetVideoStop()
   }
 
   function onCurrentItemRemoveRecord() {
+    onCurrentItemRecordStop()
     setRecordData(prevState => {
       const copy = [...prevState]
       copy[currentItemIndex] = null
@@ -138,44 +143,42 @@ export const AudioList: FC<AudioListProps> = props => {
 
   function onCurrentItemRecordPlay() {
     if (isPlaying) {
-      setIsPlaying(false)
-      stopPlay()
-
-      // Video
-      props.onSetVideoStop()
-
-      return
+      if (props.hasVideo) {
+        props.onSetVideoStop()
+      } else {
+        stopPlay()
+      }
+    } else {
+      debugger
+      if (props.hasVideo) {
+        props.onSetVideoState({
+          src: list[currentItemIndex].videoResourcesUrl,
+          desc: list[currentItemIndex].videoDescribes,
+          muted: true,
+          play: true
+          // audio: list[currentItemIndex].voiceResourcesUrl
+        })
+      }
+      if (recordData[currentItemIndex]) {
+        startPlay({
+          // @ts-ignore
+          src: recordData[currentItemIndex].file,
+          onFinish: () => {
+            setIsPlaying(false)
+          }
+        })
+      }
     }
-
-    setIsPlaying(true)
-
-    // Player
-    if (recordData[currentItemIndex]) {
-      startPlay({
-        // @ts-ignore
-        src: recordData[currentItemIndex].file,
-        onFinish: () => {
-          setIsPlaying(false)
-
-          // Video
-          props.onSetVideoStop()
-        }
-      })
-    }
-
-    // Video
-    props.onSetVideoState({
-      src: list[currentItemIndex].videoResourcesUrl,
-      desc: list[currentItemIndex].videoDescribes,
-      muted: true,
-      play: true,
-      audio: list[currentItemIndex].voiceResourcesUrl
-    })
+    setIsPlaying(!isPlaying)
   }
   //#endregion
 
   // watch currentItemIndex
   useEffect(() => {
+    if (!list.length) {
+      return
+    }
+
     if (isRecording) {
       onCurrentItemRecordStop()
     }
@@ -185,15 +188,29 @@ export const AudioList: FC<AudioListProps> = props => {
       stopPlay()
     }
 
-    if (list.length) {
+    if (props.hasVideo) {
       props.onSetVideoState({
         src: list[currentItemIndex].videoResourcesUrl,
         desc: list[currentItemIndex].videoDescribes,
         muted: false,
         // 有录音时不自动播放
-        play: false, //!recordData[currentItemIndex],
-        audio: list[currentItemIndex].voiceResourcesUrl
+        play: false //!recordData[currentItemIndex],
+        // audio: list[currentItemIndex].voiceResourcesUrl
       })
+    } else {
+      if (recordData[currentItemIndex]) {
+        props.setAudioDuration(0)
+        startPlay({
+          src: list[currentItemIndex].voiceResourcesUrl,
+          play: false,
+          onGetDuration: duration => props.setAudioDuration(duration)
+        })
+      } else {
+        startPlay({
+          src: list[currentItemIndex].voiceResourcesUrl,
+          loop: true
+        })
+      }
     }
   }, [list, currentItemIndex])
 
