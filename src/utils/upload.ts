@@ -19,7 +19,7 @@ export async function commonUpload(file: string) {
       filePath: file,
       success: res => {
         try {
-          const url: string = JSON.parse(res.data).data
+          const { url } = JSON.parse(res.data).data
           console.log('[CommonUpload] result', url)
           resolve(url)
         } catch (e) {

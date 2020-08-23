@@ -13,7 +13,7 @@
     "dev:weapp": "npm run build:weapp -- --watch",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "lint:style": "stylelint --fix \"src/**/*.scss\" --syntax scss",
-    "preview": "/Applications/wechatwebdevtools.app/Contents/MacOS/cli auto-preview --project /Users/gouflv/Develops/workspace/sharing-book-shop/dist"
+    "preview": "/Applications/wechatwebdevtools.app/Contents/MacOS/cli auto-preview --project /Users/gouflv/Develops/workspace/wechat/sharing-book-shop/dist"
   },
   "author": "",
   "license": "MIT",

@@ -31,7 +31,7 @@ export const Uploader: FC<{
       filePath: choose.tempFilePaths[0],
       success: res => {
         try {
-          const url: string = JSON.parse(res.data).data
+          const { url } = JSON.parse(res.data).data
           props.onChange([...props.value, { url }])
         } catch (e) {
           console.error(e)

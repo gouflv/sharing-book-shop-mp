@@ -125,10 +125,11 @@ const Page: FC = () => {
                     <View className='title'>{user.nickName}</View>
                     <View
                       className='desc'
-                      onClick={() =>
-                        Taro.navigateTo({
-                          url: '/pages-user/user-change-phone/index'
-                        })
+                      onClick={
+                        () => {}
+                        // Taro.navigateTo({
+                        //   url: '/pages-user/user-change-phone/index'
+                        // })
                       }
                     >
                       {encodePhone(user.tel)}
