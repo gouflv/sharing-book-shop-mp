@@ -38,7 +38,8 @@ class App extends Component {
           'user-order/detail',
           'user-message/index',
           'user-payment-log/index',
-          'feed-back/index'
+          'feed-back/index',
+          'user-rules/index'
         ]
       }
     ],

@@ -242,7 +242,7 @@ const Page: FC = () => {
               className='item'
               onClick={() =>
                 //TODO add user-borrow-log
-                Taro.navigateTo({ url: '/pages/user-order/index' })
+                Taro.navigateTo({ url: '/pages-user/user-order/index' })
               }
             >
               <Image
@@ -258,7 +258,7 @@ const Page: FC = () => {
             <View
               className='item'
               onClick={() =>
-                Taro.navigateTo({ url: '/pages/user-rules/index' })
+                Taro.navigateTo({ url: '/pages-user/user-rules/index' })
               }
             >
               <Image
@@ -274,7 +274,7 @@ const Page: FC = () => {
             <View
               className='item'
               onClick={() =>
-                Taro.navigateTo({ url: '/pages/user-message/index' })
+                Taro.navigateTo({ url: '/pages-user/user-message/index' })
               }
             >
               <Image
