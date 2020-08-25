@@ -41,19 +41,20 @@ export default () => {
     // Taro.redirectTo({ url: '/pages-user/user-payment-log/index' })
     // Taro.redirectTo({ url: '/pages-user/buy-card/index' })
     // Taro.redirectTo({ url: '/pages-user/buy-card/index?gift=1' })
-    // Taro.redirectTo({ url: '/pages/buy-card/result' })
+    // Taro.redirectTo({ url: '/pages-user/buy-card/result' })
     // Taro.redirectTo({ url: '/pages/auth/index?hideBack=1' })
     // Taro.redirectTo({ url: '/pages/user-bind-phone/index' })
     // Taro.redirectTo({ url: '/pages-user/feed-back/index' })
     // Taro.redirectTo({ url: '/pages-user/baby-profile/index' })
     // Taro.redirectTo({ url: '/pages-user/user-order/index' })
     // Taro.redirectTo({ url: '/pages-user/user-message/index' })
+    Taro.redirectTo({ url: '/pages-user/user-borrow-log/index' })
     // Taro.redirectTo({
     //   url: '/pages-subject/subject-detail/index?id=202007171018176257'
     // })
-    Taro.redirectTo({
-      url: '/pages-subject/subject-detail/index?id=202008141010362137'
-    })
+    // Taro.redirectTo({
+    //   url: '/pages-subject/subject-detail/index?id=202008141010362137'
+    // })
 
     // Taro.switchTab({ url: '/pages/home/index' })
     // Taro.switchTab({ url: '/pages/order/index' })

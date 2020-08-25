@@ -9,11 +9,12 @@ export interface AuthCallback {
 }
 
 interface User {
-  nickName
-  memberImage
-  tel
-  notReadNum
+  nickName: string
+  memberImage: string
+  tel: string
+  notReadNum: number
   posFlag: boolean
+  totalPositionNum: number
 }
 
 class App {

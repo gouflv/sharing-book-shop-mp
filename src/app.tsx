@@ -36,6 +36,7 @@ class App extends Component {
           'user-content/index',
           'user-order/index',
           'user-order/detail',
+          'user-borrow-log/index',
           'user-message/index',
           'user-payment-log/index',
           'feed-back/index',

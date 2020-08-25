@@ -137,7 +137,7 @@ const Page: FC = () => {
                     </View>
                     <View className='desc desc2'>
                       <View>{dayjs().format('YYYY/MM/DD')}</View>
-                      <View>当前书位权益: 0</View>
+                      <View>当前书位权益: {user.totalPositionNum}</View>
                     </View>
                   </View>
                 </View>
@@ -241,8 +241,7 @@ const Page: FC = () => {
             <View
               className='item'
               onClick={() =>
-                //TODO add user-borrow-log
-                Taro.navigateTo({ url: '/pages-user/user-order/index' })
+                Taro.navigateTo({ url: '/pages-user/user-borrow-log/index' })
               }
             >
               <Image
