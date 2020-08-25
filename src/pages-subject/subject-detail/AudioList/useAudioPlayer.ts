@@ -8,6 +8,7 @@ import Taro, {
 export const useAudioPlayer = () => {
   const player = useRef<InnerAudioContext>()
   const callbackFun = useRef<() => void>()
+  const [playing, setPlaying] = useState(false)
 
   function execCallback() {
     if (callbackFun.current) {
@@ -49,6 +50,7 @@ export const useAudioPlayer = () => {
       player.current.offEnded()
       player.current.onEnded(() => {
         console.log('[Player] onEnd')
+        setPlaying(false)
         execCallback()
       })
 
@@ -59,6 +61,7 @@ export const useAudioPlayer = () => {
       }
 
       if (typeof params.play === 'undefined' || params.play) {
+        setPlaying(true)
         player.current.play()
       }
     }
@@ -96,6 +99,7 @@ export const useAudioPlayer = () => {
 
   return {
     startPlay,
-    stopPlay
+    stopPlay,
+    playing
   }
 }

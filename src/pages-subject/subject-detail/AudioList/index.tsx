@@ -95,18 +95,19 @@ export const AudioList: FC<AudioListProps> = props => {
         desc: list[currentItemIndex].videoDescribes,
         muted: true,
         play: true
-        // audio: list[currentItemIndex].voiceResourcesUrl
       })
     } else {
       stopPlay()
     }
 
     // Recorder
-    const onRecordFinishCurried = curryright(onRecorderFinish)(currentItemIndex)
+    const onRecordFinishBindIndex = curryright(onRecorderFinish)(
+      currentItemIndex
+    )
     setTimeout(() => {
       startRecord({
-        duration: props.videoDuration,
-        onFinish: file => onRecordFinishCurried(file)
+        duration: 120_000, //props.videoDuration,
+        onFinish: file => onRecordFinishBindIndex(file)
       })
     }, 100)
   }
@@ -156,7 +157,6 @@ export const AudioList: FC<AudioListProps> = props => {
           desc: list[currentItemIndex].videoDescribes,
           muted: true,
           play: true
-          // audio: list[currentItemIndex].voiceResourcesUrl
         })
       }
       if (recordData[currentItemIndex]) {
@@ -266,9 +266,9 @@ export const AudioList: FC<AudioListProps> = props => {
               isRecording={i === currentItemIndex && isRecording}
               isPlaying={i === currentItemIndex && isPlaying}
               disabled={
-                (isRecording && i !== currentItemIndex) || !props.videoDuration
+                isRecording && i !== currentItemIndex // || !props.videoDuration
               }
-              duration={props.videoDuration}
+              duration={120_000 || props.videoDuration}
               onRecordStart={onCurrentItemRecordStart}
               onRecordStop={onCurrentItemRecordStop}
               onRemoveRecord={onCurrentItemRemoveRecord}

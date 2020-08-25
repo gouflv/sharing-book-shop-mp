@@ -93,13 +93,13 @@ const Page: FC = () => {
 
   //#region video state
   const videoContext = useRef<VideoContext>()
-  const { startPlay, stopPlay } = useAudioPlayer()
+  const { stopPlay, playing } = useAudioPlayer()
 
   const [hasVideo, setHasVideo] = useState(true)
   const [videoSrcOrigin, setVideoSrcOrigin] = useState('')
   const [videoSrc, setVideoSrc] = useState('')
   const [muted, setMuted] = useState(false)
-  const [videoDuration, setVideoDuration] = useState(120 * 1000)
+  const [videoDuration, setVideoDuration] = useState(120_000)
 
   const setVideoState = _debounce((params: VideoStateForUpdate) => {
     console.log('[SetVideoState]', params)
@@ -136,6 +136,12 @@ const Page: FC = () => {
   function onLoadedMetaData(durationInSec: number) {
     setVideoDuration(durationInSec * 1000)
     console.log('[onLoadedMetaData]: videoDuration', durationInSec * 1000)
+  }
+
+  function onVideoPlayEnd() {
+    if (playing) {
+      stopPlay()
+    }
   }
 
   useLayoutEffect(() => {
@@ -225,6 +231,7 @@ const Page: FC = () => {
                     title={data.curriculumName}
                     muted={muted}
                     onLoadedMetaData={e => onLoadedMetaData(e.detail.duration)}
+                    onEnded={onVideoPlayEnd}
                     onFullscreenChange={e =>
                       onFullscreenChange(e.detail.fullScreen as boolean)
                     }
@@ -312,7 +319,7 @@ const Page: FC = () => {
                 subjectId={subjectId}
                 hasVideo={hasVideo}
                 videoDuration={videoDuration}
-                setAudioDuration={setVideoDuration}
+                setAudioDuration={duration => setVideoDuration(duration)}
                 onSetVideoState={setVideoState}
                 onSetVideoStop={setVideoStop}
               />
