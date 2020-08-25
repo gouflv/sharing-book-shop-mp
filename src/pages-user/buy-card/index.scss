@@ -1,6 +1,10 @@
 @import "../../theme/var";
 
 .page-buy-card {
+  .page-space-around {
+    padding-bottom: 0;
+  }
+
   .box {
     padding: 80px 60px;
     background-color: #fff;

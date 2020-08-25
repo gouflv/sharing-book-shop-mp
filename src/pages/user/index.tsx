@@ -53,7 +53,7 @@ const Page: FC = () => {
             fetchCards()
           },
           fail: res => {
-            showToast({ title: res.errMsg })
+            showToast({ title: '支付失败' })
           },
           complete: () => {
             hideLoading()

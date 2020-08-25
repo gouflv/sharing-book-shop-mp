@@ -61,7 +61,7 @@ export const OrderItem: FC<{
             afterPayment()
           },
           fail: res => {
-            showToast({ title: res.errMsg })
+            showToast({ title: '支付失败' })
           },
           complete: () => {
             hideLoading()

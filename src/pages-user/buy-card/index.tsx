@@ -66,37 +66,50 @@ const Page: FC = () => {
     })
 
     try {
-      showLoading()
       const data = { cardId: selected.cardId } as any
       if (isGiftBuy) {
         data.tel = sendGiftPhone
       }
 
-      const orderData = await POST(
-        isGiftBuy ? 'wxMember/buyGivingConfigCard' : 'wxMember/buyConfigCard',
-        {
-          data
-        }
-      )
-
-      Taro.requestPayment({
-        ...orderData,
-        success: res => {
-          if (!isGiftBuy) {
-            Taro.redirectTo({
-              url: `/pages/buy-card/result?orderNo=${orderData.orderNo}`
-            })
-          } else {
-            hideLoading()
-            setSendGiftPhone('')
-            showToast({ title: '赠送成功', icon: 'success' })
+      async function requestPayment() {
+        showLoading()
+        const orderData = await POST(
+          isGiftBuy ? 'wxMember/buyGivingConfigCard' : 'wxMember/buyConfigCard',
+          {
+            data
           }
-        },
-        fail: res => {
-          hideLoading()
-          showToast({ title: '未支付成功' })
-        }
-      })
+        )
+        Taro.requestPayment({
+          ...orderData,
+          success: () => {
+            if (!isGiftBuy) {
+              Taro.redirectTo({
+                url: `/pages/buy-card/result?orderNo=${orderData.orderNo}`
+              })
+            } else {
+              setSendGiftPhone('')
+              showToast({ title: '赠送成功', icon: 'success' })
+            }
+          },
+          fail: () => {
+            showToast({ title: '支付失败' })
+          },
+          complete: () => {
+            hideLoading()
+          }
+        })
+      }
+
+      if (!isGiftBuy) {
+        Taro.requestSubscribeMessage({
+          tmplIds: ['7eKXRRiZzOLkONoxt4lYJbBncZj4MUaa6r01scNroUE'],
+          complete: () => {
+            requestPayment()
+          }
+        })
+      } else {
+        requestPayment()
+      }
     } catch (e) {
       hideLoading()
       defaultErrorHandler(e)
@@ -166,6 +179,17 @@ const Page: FC = () => {
               </Button>
             </View>
           </View>
+          {selected && (
+            <View className='page-space-around'>
+              <View className='box'>
+                <View>1.默认书位权益：{selected.positionNum}个</View>
+                <View>2.有效时间：{selected.days}天（至激活后开始生效）</View>
+                <View>
+                  3.注意：购买会员卡后如未激活卡片，借阅时将自动激活会员卡
+                </View>
+              </View>
+            </View>
+          )}
         </PageHeaderWrapper>
       </View>
     </BasicPageWrapper>
