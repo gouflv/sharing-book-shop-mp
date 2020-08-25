@@ -89,12 +89,8 @@
   }
 
   .list {
-    margin-top: 276px;
-    margin-bottom: calc(140px + #{$safe-area-bottom});
-    overflow: hidden;
-    background-color: #fff;
-    border-radius: $border-radius;
-    box-shadow: $box-shadow;
+    margin-top: 280px;
+    margin-bottom: calc(160px + #{$safe-area-bottom});
   }
 
   .empty-list {

@@ -48,7 +48,7 @@ export default () => {
     // Taro.redirectTo({ url: '/pages-user/baby-profile/index' })
     // Taro.redirectTo({ url: '/pages-user/user-order/index' })
     // Taro.redirectTo({ url: '/pages-user/user-message/index' })
-    Taro.redirectTo({ url: '/pages-user/user-borrow-log/index' })
+    // Taro.redirectTo({ url: '/pages-user/user-borrow-log/index' })
     // Taro.redirectTo({
     //   url: '/pages-subject/subject-detail/index?id=202007171018176257'
     // })
@@ -57,7 +57,7 @@ export default () => {
     // })
 
     // Taro.switchTab({ url: '/pages/home/index' })
-    // Taro.switchTab({ url: '/pages/order/index' })
+    Taro.switchTab({ url: '/pages/order/index' })
     // Taro.switchTab({ url: '/pages/subject/index' })
     // Taro.switchTab({ url: '/pages/user/index' })
   }

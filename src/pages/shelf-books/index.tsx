@@ -91,7 +91,7 @@ const Page: FC = () => {
           }
         }}
       >
-        <PageHeaderExt absolute height={'90rpx'} />
+        {!loading && list.length && <PageHeaderExt absolute height={'90rpx'} />}
       </PageHeaderWrapper>
 
       <View className='page-space-wing'>

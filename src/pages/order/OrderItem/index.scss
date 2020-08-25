@@ -6,6 +6,15 @@
   background-color: #fff;
   border-bottom: 1px solid $border-color;
 
+  &--mb {
+    margin-bottom: 20px;
+    border-bottom: none;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+  }
+
   .thumb {
     flex: 0 0 120px;
     height: 150px;
@@ -23,6 +32,19 @@
     margin-bottom: 4px;
     font-size: $font-size-small;
     color: $text-gray;
+  }
+
+  .footer {
+    margin-top: 10px;
+    margin-bottom: -10px;
+    padding-top: 20px;
+    border-top: 1px solid $border-color;
+    font-size: $font-size-small;
+    color: #555;
+    button {
+      margin: 0 0 4px 16px;
+      line-height: 2;
+    }
   }
 
   .mark1 {

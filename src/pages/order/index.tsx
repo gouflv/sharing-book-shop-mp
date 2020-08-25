@@ -36,9 +36,13 @@ const Page: FC = () => {
     }
   }
 
-  useDidShow(async () => {
+  async function reload() {
     await fetchSummary()
     fetchList()
+  }
+
+  useDidShow(() => {
+    reload()
   })
 
   //
@@ -176,7 +180,7 @@ const Page: FC = () => {
           {list.length && (
             <View className={'list'}>
               {list.map((item, i) => (
-                <OrderItem key={i} data={item} />
+                <OrderItem key={i} data={item} afterPayment={reload} />
               ))}
             </View>
           )}
