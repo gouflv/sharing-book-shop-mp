@@ -7,7 +7,7 @@ export const useContentHeight = () => {
   const [hasVideo, setHasVideo] = useState(true)
 
   function calc() {
-    const videoHeight = hasVideo ? Taro.pxTransform(422) : '0px'
+    const videoHeight = Taro.pxTransform(422)
     const tabHeight = Taro.pxTransform(90)
     setContentHeight(
       `calc(100vh - ${
