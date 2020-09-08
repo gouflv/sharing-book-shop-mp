@@ -18,14 +18,16 @@ export default () => {
         if (query.scene) {
           try {
             await bindUserDevice(query.scene)
-          } catch (e) {
-            redirect()
+          } catch (e) {}
+
+          if (query.id) {
+            Taro.redirectTo({
+              url: `/pages/shelf-books/index?id=${query.id}&eqCode=${query.scene}&from=weChatScan`
+            })
+            return
           }
-        }
-        if (query.scene && query.id) {
-          Taro.redirectTo({
-            url: `/pages/shelf-books/index?id=${query.id}&eqCode=${query.scene}&from=weChatScan`
-          })
+
+          redirect()
         }
       })
       return
@@ -60,6 +62,7 @@ export default () => {
     // Taro.redirectTo({ url: '/pages-user/user-order/index' })
     // Taro.redirectTo({ url: '/pages-user/user-message/index' })
     // Taro.redirectTo({ url: '/pages-user/user-borrow-log/index' })
+    // Taro.redirectTo({ url: '/pages/shelf-books/index' })
     // Taro.redirectTo({
     //   url: '/pages-subject/subject-detail/index?id=202007171018176257'
     // })
@@ -67,8 +70,8 @@ export default () => {
     //   url: '/pages-subject/subject-detail/index?id=202008141010362137'
     // })
 
-    // Taro.switchTab({ url: '/pages/home/index' })
-    Taro.switchTab({ url: '/pages/order/index' })
+    Taro.switchTab({ url: '/pages/home/index' })
+    // Taro.switchTab({ url: '/pages/order/index' })
     // Taro.switchTab({ url: '/pages/subject/index' })
     // Taro.switchTab({ url: '/pages/user/index' })
   }

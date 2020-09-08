@@ -14,6 +14,7 @@ import { defaultErrorHandler, POST } from '../../utils/ajax'
 import classNames from 'classnames'
 import { MessageService } from '../../store/MessageService'
 import BasicPageWrapper from '../../components/BasicPageWrapper'
+import { useSubscribeMessage } from '../../hooks/useSubscribeMessage'
 
 interface BuyCardItem {
   cardId: string
@@ -26,6 +27,9 @@ interface BuyCardItem {
 
 const Page: FC = () => {
   const router = useRouter()
+  const { subscribe } = useSubscribeMessage(
+    '7eKXRRiZzOLkONoxt4lYJbBncZj4MUaa6r01scNroUE'
+  )
 
   //#region gift
   const [isGiftBuy, setIsGiftBuy] = useState(false)
@@ -101,15 +105,9 @@ const Page: FC = () => {
       }
 
       if (!isGiftBuy) {
-        Taro.requestSubscribeMessage({
-          tmplIds: ['7eKXRRiZzOLkONoxt4lYJbBncZj4MUaa6r01scNroUE'],
-          complete: () => {
-            requestPayment()
-          }
-        })
-      } else {
-        requestPayment()
+        await subscribe()
       }
+      requestPayment()
     } catch (e) {
       hideLoading()
       defaultErrorHandler(e)

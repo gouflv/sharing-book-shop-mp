@@ -2,13 +2,19 @@ import './index.scss'
 import Taro, { FC, useDidShow, useRouter, useState } from '@tarojs/taro'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
-import { Button, Image, View } from '@tarojs/components'
+import { Button, Form, Image, View } from '@tarojs/components'
 import { hideLoading, showLoading, showToast } from '../../utils'
 import { defaultErrorHandler, POST } from '../../utils/ajax'
 import { ShelfBookItem } from './ShelfBookItem'
+import { useSubscribeMessage } from '../../hooks/useSubscribeMessage'
+import { FormProps } from '@tarojs/components/types/Form'
 
 const Page: FC = () => {
   const { params } = useRouter()
+  const { subscribe } = useSubscribeMessage(
+    'zA8TQIs1KZyHxYDCbo6Khm5HpOMT_VYfByewU6a5oRc'
+  )
+
   const fromWeChatScan = params.from === 'weChatScan'
 
   const [meta, setMeta] = useState<{ type: 1 | 2; eqCode; eqName }>()
@@ -35,17 +41,22 @@ const Page: FC = () => {
     fetch()
   })
 
-  async function onSubmit() {
+  async function onSubmit(detail: FormProps.onSubmitEventDetail) {
+    console.log('[onSubmit]', detail)
     if (!meta) {
       return
     }
+
+    await subscribe()
+
     showLoading()
     try {
       await POST('wxMember/borrowBooksResult', {
         data: {
           type: meta.type,
           eqCode: meta.eqCode,
-          ids: list.map(it => it.rfidCode).join(',')
+          ids: list.map(it => it.rfidCode).join(','),
+          formId: detail.formId
         }
       })
       showToast({
@@ -103,9 +114,11 @@ const Page: FC = () => {
             </View>
 
             <View className='footer'>
-              <Button className='btn-primary' onClick={onSubmit}>
-                {meta.type === 1 ? '借阅' : '归还'}
-              </Button>
+              <Form reportSubmit onSubmit={e => onSubmit(e.detail)}>
+                <Button formType={'submit'} className='btn-primary'>
+                  {meta.type === 1 ? '借阅' : '归还'}
+                </Button>
+              </Form>
             </View>
           </View>
         )}
