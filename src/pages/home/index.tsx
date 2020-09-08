@@ -132,10 +132,6 @@ const Page: FC = () => {
             </View>
           )}
         </PageHeaderWrapper>
-
-        <Button openType={'contact'} className={'contact-btn'}>
-          <Image src={'../../assets/home_icon_surve.png'} />
-        </Button>
       </View>
     </BasicPageWrapper>
   )

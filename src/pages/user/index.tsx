@@ -1,6 +1,6 @@
 import './index.scss'
 import Taro, { FC, useContext, useDidShow, useState } from '@tarojs/taro'
-import { Image, View } from '@tarojs/components'
+import { Button, Image, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
 import { useHeaderSize } from '../../hooks/useHeaderSize'
@@ -332,6 +332,10 @@ const Page: FC = () => {
           visible={userRuleVisible}
           onClose={() => setUserRuleVisible(false)}
         />
+
+        <Button openType={'contact'} className={'contact-btn'}>
+          <Image src={'../../assets/home_icon_surve.png'} />
+        </Button>
       </View>
     </BasicPageView>
   )

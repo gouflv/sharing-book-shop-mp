@@ -1,5 +1,5 @@
 import './index.scss'
-import Taro, { FC, useDidShow, useState } from '@tarojs/taro'
+import Taro, { FC, useDidShow, useState, useContext } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
 import { PageHeaderWrapper } from '../../components/PageHeaderWrapper'
 import { PageHeaderExt } from '../../components/PageHeaderExt'
@@ -9,8 +9,12 @@ import { defaultErrorHandler, POST } from '../../utils/ajax'
 import { hideLoading, showLoading, showToast } from '../../utils'
 import BasicPageWrapper from '../../components/BasicPageWrapper'
 import classNames from 'classnames'
+import { AppStore } from '../../store/AppStore'
+import { observer } from '@tarojs/mobx'
 
 const Page: FC = () => {
+  const { user } = useContext(AppStore)
+
   const [summary, setSummary] = useState<any>()
   async function fetchSummary() {
     try {
@@ -97,6 +101,11 @@ const Page: FC = () => {
                   <View className='title'>
                     当前会员权益
                     <Text className='date'>{dayjs().format('YYYY/MM/DD')}</Text>
+                    {user && (
+                      <Text className='sub-title'>
+                        当前书位权益: {user.totalPositionNum}
+                      </Text>
+                    )}
                   </View>
                   <View className='summary-list'>
                     <View className='item'>
@@ -190,4 +199,4 @@ const Page: FC = () => {
   )
 }
 
-export default Page
+export default observer(Page)
