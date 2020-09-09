@@ -43,7 +43,13 @@ const Page: FC = () => {
 
   async function onSubmit(detail: FormProps.onSubmitEventDetail) {
     console.log('[onSubmit]', detail)
+
     if (!meta) {
+      return
+    }
+
+    if (detail.formId && detail.formId.indexOf('requestFormId:fail')) {
+      showToast({ title: '网络开小差了' })
       return
     }
 
@@ -114,7 +120,11 @@ const Page: FC = () => {
             </View>
 
             <View className='footer'>
-              <Form reportSubmit onSubmit={e => onSubmit(e.detail)}>
+              <Form
+                reportSubmit
+                reportSubmitTimeout={100}
+                onSubmit={e => onSubmit(e.detail)}
+              >
                 <Button formType={'submit'} className='btn-primary'>
                   {meta.type === 1 ? '借阅' : '归还'}
                 </Button>
