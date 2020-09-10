@@ -55,14 +55,12 @@ const Page: FC = () => {
     const user = await fetchUserInfo()
 
     if (user && user.tel) {
-      showToast({ title: '登录成功', icon: 'success' })
+      hideLoading()
       onAuthSuccess()
     } else {
-      setMode('phoneNumber')
       await wxLogin()
+      setMode('phoneNumber')
     }
-
-    hideLoading()
   }
 
   async function onGetPhoneNumber({ encryptedData, iv }) {
@@ -73,9 +71,7 @@ const Page: FC = () => {
 
     showLoading()
     await fetchUserInfo()
-    hideLoading()
 
-    showToast({ title: '绑定成功', icon: 'success' })
     setTimeout(() => {
       onAuthSuccess()
     }, 2000)
