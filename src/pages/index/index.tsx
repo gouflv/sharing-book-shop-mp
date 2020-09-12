@@ -13,22 +13,20 @@ export default () => {
     const { scene, query } = Taro.getApp().$router.params
     console.log('[App useDidShow] scene', scene, query)
 
-    if (scene === 1047) {
+    if (scene === 1011 || scene === 1047) {
       withAuth(async () => {
-        if (query.scene) {
-          try {
-            await bindUserDevice(query.scene)
-          } catch (e) {}
+        try {
+          await bindUserDevice(query.scene)
+        } catch (e) {}
 
-          if (query.id) {
-            Taro.redirectTo({
-              url: `/pages/shelf-books/index?id=${query.id}&eqCode=${query.scene}&from=weChatScan`
-            })
-            return
-          }
-
-          redirect()
+        if (query.id) {
+          Taro.redirectTo({
+            url: `/pages/shelf-books/index?id=${query.id}&eqCode=${query.scene}&from=weChatScan`
+          })
+          return
         }
+
+        redirect()
       })
       return
     }
